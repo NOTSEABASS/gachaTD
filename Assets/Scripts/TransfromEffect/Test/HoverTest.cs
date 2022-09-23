@@ -17,8 +17,28 @@ public class HoverTest : MonoBehaviour
                 var left = Quaternion.LookRotation(transform.right,Vector3.up);
                 transform.ShakeRotate(left,0.8f);
                 break;
+            case 2:
+                transform.DownToFlow(0.5f);
+                break;
+            case 3:
+                Debug.Log("Enter");
+                transform.FlowAndTilt(0.5f);
+                break;
         }
        
         
+    }
+
+    public void OnMouseExit()
+    {
+        switch (testIndex)
+        {
+            case 2:
+                transform.FlowToDown(0.5f);
+                break;
+            case 3:
+                transform.DownAndTilt(0.5f);
+                break;
+        }
     }
 }

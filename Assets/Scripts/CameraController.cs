@@ -6,12 +6,12 @@ public class CameraController : MonoBehaviour
 {
     public Transform targetCamera;
 
-    public Vector2 ZoomRange;
-    public int ZoomLevel;
-    public float ZoomUnitLength;
-    public float ZoomDuration;
-    public float RotateDuration;
-    public float MoveSpeed;
+    public Vector2 zoomRange;
+    public int zoomLevel;
+    public float zoomUnitLength;
+    public float zoomDuration;
+    public float rotateDuration;
+    public float moveSpeed;
 
     void Start()
     {
@@ -37,12 +37,12 @@ public class CameraController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            StartCoroutine(Rotate(90, RotateDuration));
+            StartCoroutine(Rotate(90, rotateDuration));
             return;
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
-            StartCoroutine(Rotate(-90, RotateDuration));
+            StartCoroutine(Rotate(-90, rotateDuration));
             return;
         }
     }
@@ -53,12 +53,12 @@ public class CameraController : MonoBehaviour
         var horizontalInput = Input.GetAxis("Horizontal");
         var direction = new Vector3(targetCamera.forward.x, 0, targetCamera.forward.z) * verticalInput;
         direction += new Vector3(targetCamera.right.x, 0, targetCamera.right.z) * horizontalInput;
-        targetCamera.localPosition += direction.normalized * Time.deltaTime * MoveSpeed;
+        targetCamera.localPosition += direction.normalized * Time.deltaTime * moveSpeed;
     }
 
     private void UpdateCameraPosition()
     {
-        StartCoroutine(Move(ZoomDuration));
+        StartCoroutine(Move(zoomDuration));
     }
 
     IEnumerator Rotate(float angle, float time)
@@ -90,26 +90,26 @@ public class CameraController : MonoBehaviour
 
     private void DecZoomLevel()
     {
-        if (ZoomLevel <= ZoomRange.x)
+        if (zoomLevel <= zoomRange.x)
         {
             return;
         }
-        ZoomLevel--;
+        zoomLevel--;
     }
 
     private void AddZoomLevel()
     {
-        if (ZoomLevel >= ZoomRange.y)
+        if (zoomLevel >= zoomRange.y)
         {
             return;
         }
-        ZoomLevel++;
+        zoomLevel++;
     }
 
     private Vector3 GetZoomPoint()
     {
         var lookingPoint = GetLookingPoint();
-        lookingPoint -= targetCamera.forward * ZoomUnitLength * ZoomLevel;
+        lookingPoint -= targetCamera.forward * zoomUnitLength * zoomLevel;
         return lookingPoint;
     }
 

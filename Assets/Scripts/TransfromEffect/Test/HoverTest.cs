@@ -6,23 +6,39 @@ using UnityEngine;
 public class HoverTest : MonoBehaviour
 {
     public int testIndex;
+    private SwitchTween switchTween;
+
+    private void Awake()
+    {
+        switchTween = new SwitchTween();
+        switchTween.RegisterTween("shake", ()=>transform.Shake(0.5f));
+        switchTween.RegisterTween("rotate",()=>
+        {
+            var left = Quaternion.LookRotation(transform.right,Vector3.up);
+            return transform.ShakeRotate(left, 0.5f);
+        });
+        switchTween.RegisterTween("flow",()=>transform.DownToFlow(0.5f));
+        switchTween.RegisterTween("flowTilt",()=>transform.FlowAndTilt(0.5f));
+        switchTween.RegisterTween("down",()=>transform.FlowToDown(0.5f));
+        switchTween.RegisterTween("flowTilt",()=>transform.FlowAndTilt(0.5f));
+        switchTween.RegisterTween("downTilt",()=>transform.DownAndTilt(0.5f));
+    }
+
     public void OnMouseEnter()
     {
         switch (testIndex)
         {
             case 0:
-            transform.Shake(0.5f);
+                switchTween.SwitchToTween("shake");
                 break;
             case 1:
-                var left = Quaternion.LookRotation(transform.right,Vector3.up);
-                transform.ShakeRotate(left,0.8f);
+                switchTween.SwitchToTween("rotate");
                 break;
             case 2:
-                transform.DownToFlow(0.5f);
+                switchTween.SwitchToTween("flow");
                 break;
             case 3:
-                Debug.Log("Enter");
-                transform.FlowAndTilt(0.5f);
+                switchTween.SwitchToTween("flowTilt");
                 break;
         }
        
@@ -34,10 +50,10 @@ public class HoverTest : MonoBehaviour
         switch (testIndex)
         {
             case 2:
-                transform.FlowToDown(0.5f);
+                switchTween.SwitchToTween("down");
                 break;
             case 3:
-                transform.DownAndTilt(0.5f);
+                switchTween.SwitchToTween("downTilt");
                 break;
         }
     }

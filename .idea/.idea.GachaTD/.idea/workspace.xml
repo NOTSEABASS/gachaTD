@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="584f06e9-6dd5-4421-be47-95a2231d4f86" name="Changes" comment="Import dotween">
+    <list default="true" id="584f06e9-6dd5-4421-be47-95a2231d4f86" name="Changes" comment="Update Version">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GachaTD/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GachaTD/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TransfromEffect/SwitchTween.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TransfromEffect/SwitchTween.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/TransfromEffect/Test/HoverTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TransfromEffect/Test/HoverTest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TransfromEffect/TransformEffects.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TransfromEffect/TransformEffects.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +26,8 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Tools/SerializeDict.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/TransfromEffect/SwitchTween.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/TransfromEffect/Test/HoverTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://D:/UnityPorject/GachaTD/Assets/Settings/UniversalRP-MediumQuality.asset" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/UnityPorject/GachaTD/ProjectSettings/URPProjectSettings.asset" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -50,7 +52,7 @@
 }</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="UnitTests (batch mode)" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="D:\Applications\Unity\2020.3.21f1c1\Editor\Unity.exe" />
+      <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\2021.3.10f1c1\Editor\Unity.exe" />
       <option name="PROGRAM_PARAMETERS" value="-runTests -batchmode -projectPath D:\UnityPorject\GachaTD -testResults Logs/results.xml -testPlatform EditMode -debugCodeOptimization" />
       <option name="WORKING_DIRECTORY" value="D:\UnityPorject\GachaTD" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -88,7 +90,7 @@
       <updated>1663667930221</updated>
       <workItem from="1663667942245" duration="1560000" />
       <workItem from="1663672815113" duration="794000" />
-      <workItem from="1663913391279" duration="9742000" />
+      <workItem from="1663913391279" duration="15312000" />
     </task>
     <task id="LOCAL-00001" summary="Version Update &amp; DoTween import">
       <created>1663671225027</created>
@@ -104,7 +106,14 @@
       <option name="project" value="LOCAL" />
       <updated>1663916637370</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Update Version">
+      <created>1663946529495</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1663946529495</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -128,6 +137,7 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="Version Update &amp; DoTween import" />
     <MESSAGE value="Import dotween" />
-    <option name="LAST_COMMIT_MESSAGE" value="Import dotween" />
+    <MESSAGE value="Update Version" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update Version" />
   </component>
 </project>

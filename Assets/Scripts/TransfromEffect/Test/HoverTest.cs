@@ -20,7 +20,6 @@ public class HoverTest : MonoBehaviour
         switchTween.RegisterTween("flow",()=>transform.DownToFlow(0.5f));
         switchTween.RegisterTween("flowTilt",()=>transform.FlowAndTilt(0.5f));
         switchTween.RegisterTween("down",()=>transform.FlowToDown(0.5f));
-        switchTween.RegisterTween("flowTilt",()=>transform.FlowAndTilt(0.5f));
         switchTween.RegisterTween("downTilt",()=>transform.DownAndTilt(0.5f));
     }
 

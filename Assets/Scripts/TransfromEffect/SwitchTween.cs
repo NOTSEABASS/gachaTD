@@ -18,24 +18,28 @@ public class SwitchTween
     {
         if (tweenSlot != null)
         {
-            //防止动画未播完时下一个动画在当前未完成状态基础上继续播放，优先将动画播完
-            tweenSlot.Goto(tweenSlot.Duration());
-            tweenSlot.Kill();
+            if (tweenSlot.IsActive())
+            {
+                // 防止动画未播完时下一个动画在当前未完成状态基础上继续播放，优先将动画播完
+                tweenSlot.Goto(tweenSlot.Duration());
+                tweenSlot.Kill();
+            }
         }
         Debug.Log("Play");
         tweenSlot = tween.Invoke();
         tweenSlot.Play();
     }
-    
+
     public void SwitchToTween(string tweenName)
     {
         Debug.Log("Switch To " + tweenName);
-        if (!tweenDict.ContainsKey(tweenName))
+        Func<Tween> tweenFunc;
+        if (!tweenDict.TryGetValue(tweenName, out tweenFunc))
         {
             Debug.LogWarning("Tween Not Exist");
             return;
         }
-        SwitchToTween(tweenDict[tweenName]);
+        SwitchToTween(tweenFunc);
     }
 
     public void RegisterTween(string name, Func<Tween> tween)

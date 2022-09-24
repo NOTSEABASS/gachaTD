@@ -53,7 +53,7 @@ public class CameraController : MonoBehaviour
         var horizontalInput = Input.GetAxis("Horizontal");
         var direction = new Vector3(targetCamera.forward.x, 0, targetCamera.forward.z) * verticalInput;
         direction += new Vector3(targetCamera.right.x, 0, targetCamera.right.z) * horizontalInput;
-        targetCamera.localPosition += direction * Time.deltaTime * MoveSpeed;
+        targetCamera.localPosition += direction.normalized * Time.deltaTime * MoveSpeed;
     }
 
     private void UpdateCameraPosition()

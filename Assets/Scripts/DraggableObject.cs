@@ -1,46 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class DraggableObject : MonoBehaviour, IMouseInputHandler
-{
-    private bool isDragging = false;
-    private 
+public class DraggableObject : MouseInputHandlerBase {
+  private bool isDragging = false;
 
-    void Start()
-    {
-        
+  private void Start() {
+
+  }
+
+  void Update() {
+    if (!isDragging) {
+      return;
     }
 
-    void Update()
-    {
-        if (!isDragging)
-        {
-            return;
-        }
-        
-    }
+  }
 
-    private void Place()
-    {
-        print("Place");
-    }
+  private void Place() {
+    print("Place");
+  }
 
-    public MouseInputHandleResult OnLeftMouseDown(MouseInputArgument arg)
-    {
-        isDragging = true;
-        return MouseInputHandleResult.Executing;
-    }
+  public override MouseResult OnLeftMouseDown(MouseInputArgument arg) {
+    isDragging = true;
+    return MouseResult.Executing;
+  }
 
-    public MouseInputHandleResult OnMouseExecuting(MouseInputArgument arg)
-    {
-        if (arg.leftState == MouseInput.MouseState.MouseUp)
-        {
-            isDragging = false;
-            Place();
-            return MouseInputHandleResult.Done;
-        }
-        return MouseInputHandleResult.Executing;
+  public override MouseResult OnMouseExecuting(MouseInputArgument arg) {
+    if (arg.leftState == MouseInput.MouseState.MouseUp) {
+      isDragging = false;
+      Place();
+      return MouseResult.None;
     }
+    return MouseResult.Executing;
+  }
 
 }

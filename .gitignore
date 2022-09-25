@@ -63,3 +63,4 @@ crashlytics-build.properties
 # Idea
 .idea/
 /[Uu]serSettings/
+*.dwlt

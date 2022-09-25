@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MouseInput : MonoSingleton<MouseInput>, IInputReceiver
+public class MouseInput : MonoSingleton<MouseInput>, IMouseInputHandler
 {
-
     private const int maxRayDistance = 1000;
     public enum MouseState
     {
@@ -16,6 +15,7 @@ public class MouseInput : MonoSingleton<MouseInput>, IInputReceiver
 
     private MouseState leftState;
     private MouseState rightState;
+    private List<IMouseInputHandler> executingDispachers = new List<IMouseInputHandler>();
 
     void Start()
     {
@@ -40,7 +40,8 @@ public class MouseInput : MonoSingleton<MouseInput>, IInputReceiver
         else if (Input.GetMouseButtonUp(button))
         {
             state = MouseState.MouseUp;
-        } else if (Input.GetMouseButton(button))
+        }
+        else if (Input.GetMouseButton(button))
         {
             state = MouseState.MousePress;
         }
@@ -55,128 +56,213 @@ public class MouseInput : MonoSingleton<MouseInput>, IInputReceiver
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         var hits = Physics.RaycastAll(ray, maxRayDistance);
         System.Array.Sort(hits, (x, y) => x.distance.CompareTo(y.distance));
-        var receivers = new List<IInputReceiver>();
+        var dispachers = new List<IMouseInputHandler>();
         foreach (var hit in hits)
         {
-            if (hit.transform.TryGetComponent(out IInputReceiver receiver))
+            if (hit.transform.TryGetComponent(out MouseInputDispacher dispacher))
             {
-                receivers.Add(receiver);
+                if (dispacher.isEnabled)
+                {
+                    dispachers.Add(dispacher);
+                }
             }
+        }
+
+        if (executingDispachers.Count > 0)
+        {
+            print(executingDispachers.Count);
+        }
+
+        var arg = new MouseInputArgument(dispachers, leftState, rightState);
+
+        for (int i = 0; i < executingDispachers.Count; i++)
+        {
+            var result = executingDispachers[i].OnMouseExecuting(arg);
+            if (IsBreakBehind(result))
+            {
+                return;
+            }
+            else if (IsDone(result))
+            {
+                executingDispachers.RemoveAt(i);
+                i--;
+            }
+        }
+
+        if (dispachers.Count == 0)
+        {
+            return;
         }
 
         switch (leftState)
         {
             case MouseState.MouseDown:
-                OnLeftMouseDown(receivers);
+                OnLeftMouseDown(arg);
                 break;
             case MouseState.MousePress:
-                OnLeftMousePress(receivers);
+                OnLeftMousePress(arg);
                 break;
             case MouseState.MouseUp:
-                OnLeftMouseUp(receivers);
+                OnLeftMouseUp(arg);
                 break;
         }
 
         switch (rightState)
         {
             case MouseState.MouseDown:
-                OnRightMouseDown(receivers);
+                OnRightMouseDown(arg);
                 break;
             case MouseState.MousePress:
-                OnRightMousePress(receivers);
+                OnRightMousePress(arg);
                 break;
             case MouseState.MouseUp:
-                OnRightMouseUp(receivers);
+                OnRightMouseUp(arg);
                 break;
         }
 
         if (leftState == MouseState.MouseHover)
         {
-            OnMouseHover(receivers);
+            OnMouseHover(arg);
         }
     }
 
-    public bool OnLeftMouseDown(List<IInputReceiver> receivers)
+    public MouseInputHandleResult OnLeftMouseDown(MouseInputArgument arg)
     {
-        foreach (var receiver in receivers)
+        foreach (var receiver in arg.handlers)
         {
-            if (receiver.OnLeftMouseDown(receivers))
+            var result = receiver.OnLeftMouseDown(arg);
+            if (IsBreakBehind(result))
             {
                 break;
             }
+            else if (IsExecuting(result))
+            {
+                executingDispachers.Add(receiver);
+            }
         }
-        return true;
+        return 0;
     }
 
-    public bool OnLeftMousePress(List<IInputReceiver> receivers)
+    public MouseInputHandleResult OnLeftMousePress(MouseInputArgument arg)
     {
-        foreach (var receiver in receivers)
+        foreach (var receiver in arg.handlers)
         {
-            if (receiver.OnLeftMousePress(receivers))
+            var result = receiver.OnLeftMousePress(arg);
+            if (IsBreakBehind(result))
             {
                 break;
             }
+            else if (IsExecuting(result))
+            {
+                executingDispachers.Add(receiver);
+            }
         }
-        return true;
+        return 0;
     }
 
-    public bool OnLeftMouseUp(List<IInputReceiver> receivers)
+    public MouseInputHandleResult OnLeftMouseUp(MouseInputArgument arg)
     {
-        foreach (var receiver in receivers)
+        foreach (var receiver in arg.handlers)
         {
-            if (receiver.OnLeftMouseUp(receivers))
+            var result = receiver.OnLeftMouseUp(arg);
+            if (IsBreakBehind(result))
             {
                 break;
             }
+            else if (IsExecuting(result))
+            {
+                executingDispachers.Add(receiver);
+            }
         }
-        return true;
+        return 0;
     }
 
-    public bool OnRightMouseDown(List<IInputReceiver> receivers)
+    public MouseInputHandleResult OnRightMouseDown(MouseInputArgument arg)
     {
-        foreach (var receiver in receivers)
+        foreach (var receiver in arg.handlers)
         {
-            if (receiver.OnRightMouseDown(receivers))
+            var result = receiver.OnRightMouseDown(arg);
+            if (IsBreakBehind(result))
             {
                 break;
             }
+            else if (IsExecuting(result))
+            {
+                executingDispachers.Add(receiver);
+            }
         }
-        return true;
+        return 0;
     }
 
-    public bool OnRightMousePress(List<IInputReceiver> receivers)
+    public MouseInputHandleResult OnRightMousePress(MouseInputArgument arg)
     {
-        foreach (var receiver in receivers)
+        foreach (var receiver in arg.handlers)
         {
-            if (receiver.OnRightMousePress(receivers))
+            var result = receiver.OnRightMousePress(arg);
+            if (IsBreakBehind(result))
             {
                 break;
             }
+            else if (IsExecuting(result))
+            {
+                executingDispachers.Add(receiver);
+            }
         }
-        return true;
+        return 0;
     }
 
-    public bool OnRightMouseUp(List<IInputReceiver> receivers)
+    public MouseInputHandleResult OnRightMouseUp(MouseInputArgument arg)
     {
-        foreach (var receiver in receivers)
+        foreach (var receiver in arg.handlers)
         {
-            if (receiver.OnRightMouseUp(receivers))
+            var result = receiver.OnRightMouseUp(arg);
+            if (IsBreakBehind(result))
             {
                 break;
             }
+            else if (IsExecuting(result))
+            {
+                executingDispachers.Add(receiver);
+            }
         }
-        return true;
+        return 0;
     }
 
-    public bool OnMouseHover(List<IInputReceiver> receivers)
+    public MouseInputHandleResult OnMouseHover(MouseInputArgument arg)
     {
-        foreach (var receiver in receivers)
+        foreach (var receiver in arg.handlers)
         {
-            if (receiver.OnMouseHover(receivers))
+            var result = receiver.OnMouseHover(arg);
+            if (IsBreakBehind(result))
             {
                 break;
             }
+            else if (IsExecuting(result))
+            {
+                executingDispachers.Add(receiver);
+            }
         }
-        return true;
+        return 0;
     }
+
+    public static bool IsBreakThis(MouseInputHandleResult result)
+    {
+        return (result & MouseInputHandleResult.BreakThis) > 0;
+    }
+
+    public static bool IsBreakBehind(MouseInputHandleResult result)
+    {
+        return (result & MouseInputHandleResult.BreakBehind) > 0;
+    }
+
+    public static bool IsExecuting(MouseInputHandleResult result)
+    {
+        return (result & MouseInputHandleResult.Executing) > 0;
+    }
+
+    public static bool IsDone(MouseInputHandleResult result)
+    {
+        return !IsExecuting(result);
+    }
+
 }

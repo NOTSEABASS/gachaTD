@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HoverReceiverTest : MonoBehaviour, IInputReceiver
+public class HoverReceiverTest : MonoBehaviour, IMouseInputHandler
 {
     private bool lastIsHovering = false;
     private bool isHovering = false;
@@ -30,9 +30,14 @@ public class HoverReceiverTest : MonoBehaviour, IInputReceiver
         isHovering = false;
     }
 
-    public bool OnMouseHover(List<IInputReceiver> receivers)
+    public MouseInputHandleResult OnMouseHover(MouseInputArgument arg)
     {
         isHovering = true;
+        return 0;
+    }
+
+    public bool Test()
+    {
         return true;
     }
 }

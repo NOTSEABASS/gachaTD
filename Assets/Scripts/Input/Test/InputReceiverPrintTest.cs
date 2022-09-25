@@ -2,57 +2,48 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputReceiverPrintTest : MonoBehaviour, IInputReceiver
+public class InputReceiverPrintTest : MonoBehaviour, IMouseInputHandler
 {
-    public bool OnLeftMouseDown(List<IInputReceiver> receivers)
+    public MouseInputHandleResult OnLeftMouseDown(MouseInputArgument arg)
     {
         print(gameObject.name + " OnLeftMouseDown");
-        return false;
+        return 0;
     }
 
-    public bool OnLeftMousePress(List<IInputReceiver> receivers)
+    public MouseInputHandleResult OnLeftMousePress(MouseInputArgument arg)
     {
         print(gameObject.name + " OnLeftMousePress");
-        return false;
+        return 0;
     }
 
-    public bool OnLeftMouseUp(List<IInputReceiver> receivers)
+    public MouseInputHandleResult OnLeftMouseUp(MouseInputArgument arg)
     {
         print(gameObject.name + " OnLeftMouseUp");
-        return false;
+        return 0;
     }
 
-    public bool OnMouseHover(List<IInputReceiver> receivers)
+    public MouseInputHandleResult OnMouseHover(MouseInputArgument arg)
     {
         print(gameObject.name + " OnMouseHover");
-        return true;
+        return 0;
     }
 
-    public bool OnRightMouseDown(List<IInputReceiver> receivers)
+    public MouseInputHandleResult OnRightMouseDown(MouseInputArgument arg)
     {
         print("OnRightMouseDown");
-        return false;
+        return 0;
     }
 
-    public bool OnRightMousePress(List<IInputReceiver> receivers)
+    public MouseInputHandleResult OnRightMousePress(MouseInputArgument arg)
     {
         print("OnRightMousePress");
-        return false;
+        return 0;
     }
 
-    public bool OnRightMouseUp(List<IInputReceiver> receivers)
+    public MouseInputHandleResult OnRightMouseUp(MouseInputArgument arg)
     {
         print("OnRightMouseUp");
-        return false;
+        return 0;
     }
 
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
 }

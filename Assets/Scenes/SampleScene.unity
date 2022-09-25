@@ -768,7 +768,9 @@ GameObject:
   - component: {fileID: 917909515}
   - component: {fileID: 917909514}
   - component: {fileID: 917909513}
+  - component: {fileID: 917909519}
   - component: {fileID: 917909517}
+  - component: {fileID: 917909518}
   m_Layer: 0
   m_Name: Cube (5)
   m_TagString: Untagged
@@ -846,7 +848,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 917909511}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 1.16, y: 0.84, z: -1.26}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
@@ -864,6 +866,84 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6273649cb1992af42b229a6bbff8554c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &917909518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 917909511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c442f69efcec86c44bbf8a446fe5b2dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEnabled: 1
+  onLeftMouseDown:
+  - _target: {fileID: 917909519}
+    _methodName: OnLeftMouseDown
+    _args:
+    - boolValue: 0
+      intValue: 0
+      floatValue: 0
+      stringValue: 
+      objectValue: {fileID: 0}
+      argType: 5
+      _typeName: MouseInputArgument, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    _dynamic: 1
+    _typeName: MouseInputCallback, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+    dirty: 0
+  onLeftMousePress: []
+  onLeftMouseUp: []
+  onRightMouseDown: []
+  onRightMousePress: []
+  onRightMouseUp: []
+  onMouseHover:
+  - _target: {fileID: 917909517}
+    _methodName: OnMouseHover
+    _args:
+    - boolValue: 0
+      intValue: 0
+      floatValue: 0
+      stringValue: 
+      objectValue: {fileID: 0}
+      argType: 5
+      _typeName: MouseInputArgument, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    _dynamic: 1
+    _typeName: MouseInputCallback, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+    dirty: 0
+  onMouseExecuting:
+  - _target: {fileID: 917909519}
+    _methodName: OnMouseExecuting
+    _args:
+    - boolValue: 0
+      intValue: 0
+      floatValue: 0
+      stringValue: 
+      objectValue: {fileID: 0}
+      argType: 5
+      _typeName: MouseInputArgument, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    _dynamic: 1
+    _typeName: MouseInputCallback, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+    dirty: 0
+--- !u!114 &917909519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 917909511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 942c1e06e8a8b4f459071ceddb7e5963, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1442865849
@@ -1212,12 +1292,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetCamera: {fileID: 1687258585}
-  zoomRange: {x: 0, y: 0}
-  zoomLevel: 0
-  zoomUnitLength: 0
-  zoomDuration: 0
-  rotateDuration: 0
-  moveSpeed: 0
+  zoomRange: {x: 5, y: 15}
+  zoomLevel: 5
+  zoomUnitLength: 5
+  zoomDuration: 0.1
+  rotateDuration: 0.2
+  moveSpeed: 5
 --- !u!1 &1870432533
 GameObject:
   m_ObjectHideFlags: 0

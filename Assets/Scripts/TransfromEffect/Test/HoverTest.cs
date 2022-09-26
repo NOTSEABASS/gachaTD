@@ -8,7 +8,7 @@ public class HoverTest : MonoBehaviour {
   public int testIndex;
   private SwitchTween switchTween;
   private Outline outlineComponent;
-  private Vector3 newPos = Vector3.zero;
+  
 
   private void Awake() {
     switchTween = new TestCubeTween(transform);
@@ -30,7 +30,6 @@ public class HoverTest : MonoBehaviour {
         switchTween.SwitchToTween("flowTilt");
         break;
       case 4:
-        newPos = new Vector3(Random.value*4-2, 0, Random.value*4-2);
         switchTween.SwitchToTween("throw");
         break;
     }

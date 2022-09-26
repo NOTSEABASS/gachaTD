@@ -5,7 +5,6 @@ using UnityEngine;
 public class TestCubeTween : SwitchTween {
 
   private Transform transform;
-
   public TestCubeTween(Transform transform) {
     this.transform = transform;
   }
@@ -21,6 +20,7 @@ public class TestCubeTween : SwitchTween {
     RegisterTween("flowTilt", () => transform.FlowAndTilt(0.5f));
     RegisterTween("down", () => transform.FlowToDown(0.5f));
     RegisterTween("downTilt", () => transform.DownAndTilt(0.5f));
+    RegisterTween("throw", () => transform.ThrowTo(transform.position + new Vector3(1,0,0),0.5f));
   }
 }
 

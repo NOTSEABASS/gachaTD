@@ -5,36 +5,18 @@ using System;
 using Object = UnityEngine.Object;
 
 public class MouseInput : MonoSingleton<MouseInput> {
-  #region Inner Classes
-  public struct ExcuteConfig {
-
-  }
-
-  public class Controller {
-    private Object lifeRef;
-    private MouseInput core;
-
-    public Controller(Object lifeRef, MouseInput core) {
-      this.lifeRef = lifeRef;
-      this.core = core;
-    }
-
-  }
-
   public enum MouseState {
     MouseDown,
     MousePress,
     MouseUp,
     MouseHover
   }
-  #endregion
+
   private const int maxRayDistance = 1000;
 
   private MouseState leftState;
   private MouseState rightState;
   private List<MouseInputHandlerBase> executingDispachers = new List<MouseInputHandlerBase>();
-
-  private Controller internalController;
 
   void Start() {
     leftState = MouseState.MouseHover;
@@ -73,8 +55,9 @@ public class MouseInput : MonoSingleton<MouseInput> {
       MouseInputHandlerBase handler = null;
       if (hit.transform.TryGetComponent(out dispacher) ||
           hit.transform.TryGetComponent(out handler)) {
-        if (dispacher.isEnabled) {
-          handlers.Add(dispacher ?? handler);
+        var handlerNotNull = dispacher ?? handler;
+        if (handlerNotNull.enabled) {
+          handlers.Add(handlerNotNull);
         }
       }
     }

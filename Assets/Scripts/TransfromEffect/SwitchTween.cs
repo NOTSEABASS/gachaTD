@@ -2,55 +2,67 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using DG.Tweening.Core.Enums;
 using UnityEngine;
 
-public class SwitchTween
-{
-    private Tween tweenSlot;
-    private Dictionary<string, Func<Tween>> tweenDict;
 
-    public SwitchTween()
-    {
-        tweenDict = new Dictionary<string, Func<Tween>>();
+public class UniqueTween {
+  private Tween m_tween;
+  public Tween Tween => m_tween;
+
+  public void SetAndPlay(Tween tween, bool finishLastOne = true) {
+    if (m_tween.IsActive()) {
+      if (finishLastOne) {
+        m_tween.Goto(m_tween.Duration());
+      }
+      m_tween.Kill();
     }
+    m_tween = tween.Play();
+  }
 
-    public void SwitchToTween(Func<Tween> tween)
-    {
-        if (tweenSlot != null)
-        {
-            if (tweenSlot.IsActive())
-            {
-                // 防止动画未播完时下一个动画在当前未完成状态基础上继续播放，优先将动画播完
-                tweenSlot.Goto(tweenSlot.Duration());
-                tweenSlot.Kill();
-            }
-        }
-        Debug.Log("Play");
-        tweenSlot = tween.Invoke();
-        tweenSlot.Play();
+  public void SetAfterKillAndPlay(Func<Tween> tweenFunc, bool finishLastOne = true) {
+    if (m_tween.IsActive()) {
+      if (finishLastOne) {
+        m_tween.Goto(m_tween.Duration());
+      }
+      m_tween.Kill();
     }
+    m_tween = tweenFunc.Invoke().Play();
+  }
 
-    public void SwitchToTween(string tweenName)
-    {
-        Debug.Log("Switch To " + tweenName);
-        Func<Tween> tweenFunc;
-        if (!tweenDict.TryGetValue(tweenName, out tweenFunc))
-        {
-            Debug.LogWarning("Tween Not Exist");
-            return;
-        }
-        SwitchToTween(tweenFunc);
+}
+
+public abstract class SwitchTween {
+  private UniqueTween uniqueTween = new UniqueTween();
+  private Dictionary<string, Func<Tween>> tweenDict;
+
+  public SwitchTween() {
+    tweenDict = new Dictionary<string, Func<Tween>>();
+    OnInit();
+  }
+
+  protected abstract void OnInit();
+
+  private void SwitchToTween(Func<Tween> tween, bool finishLastOne) {
+    uniqueTween.SetAfterKillAndPlay(tween, finishLastOne);
+  }
+
+  public void SwitchToTween(string tweenName, bool finishLastOne = true) {
+    Func<Tween> tweenFunc;
+    if (!tweenDict.TryGetValue(tweenName, out tweenFunc)) {
+      Debug.LogError("Tween Not Exist");
+      return;
     }
+    SwitchToTween(tweenFunc, finishLastOne);
+  }
 
-    public void RegisterTween(string name, Func<Tween> tween)
-    {
-        if (tweenDict.ContainsKey(name))
-        {
-            Debug.LogWarning("target Tween:" + name + " already registered");
-            return;
-        }
-        tweenDict[name] = tween;
+  protected void RegisterTween(string name, Func<Tween> tween) {
+    if (tweenDict.ContainsKey(name)) {
+      Debug.LogError("target Tween:" + name + " already registered");
+      return;
     }
+    tweenDict[name] = tween;
+  }
 
-    
+
 }

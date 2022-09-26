@@ -46,6 +46,7 @@ public class HoverTest : MonoBehaviour {
         switchTween.SwitchToTween("downTilt");
         break;
     }
+    outlineComponent.enabled = false;
   }
-  outlineComponent.enabled = false;
+  
 }

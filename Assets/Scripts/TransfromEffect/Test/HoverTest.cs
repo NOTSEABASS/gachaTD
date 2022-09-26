@@ -12,6 +12,7 @@ public class HoverTest : MonoBehaviour {
 
   private void Awake() {
     switchTween = new TestCubeTween(transform);
+    outlineComponent = GetComponent<Outline>();
   }
 
   public void OnMouseEnter() {

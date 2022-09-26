@@ -14,7 +14,7 @@ public class SwitchTween
         tweenDict = new Dictionary<string, Func<Tween>>();
     }
 
-    public void SwitchToTween(Func<Tween> tween)
+    private void SwitchToTween(Func<Tween> tween)
     {
         if (tweenSlot != null)
         {

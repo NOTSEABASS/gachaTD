@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="584f06e9-6dd5-4421-be47-95a2231d4f86" name="Changes" comment="SwitchTween">
+    <list default="true" id="584f06e9-6dd5-4421-be47-95a2231d4f86" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GachaTD/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GachaTD/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TransfromEffect/SwitchTween.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TransfromEffect/SwitchTween.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/TransfromEffect/Test/HoverTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TransfromEffect/Test/HoverTest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TransfromEffect/TransformEffects.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TransfromEffect/TransformEffects.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/gachaTD-Tools" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/gachaTD-Tools" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ShaderGraphSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ShaderGraphSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-2021.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-2021.dwlt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,17 +22,14 @@
         <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/de1f8ef4975b4eacbeb0accc1b22c9b02a000/4f/0cc4fffc/TweenCallback.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/de1f8ef4975b4eacbeb0accc1b22c9b02a000/54/9daffefa/TweenManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/de1f8ef4975b4eacbeb0accc1b22c9b02a000/e6/15a75a68/Tween.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/UnityPorject/GachaTD/Assets/Plugins/Demigiant/DOTween/Editor.meta" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/UnityPorject/GachaTD/Assets/Resources/DOTweenSettings.asset" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/TransfromEffect/SwitchTween.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/TransfromEffect/Test/HoverTest.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/UnityPorject/GachaTD/Assets/Settings/UniversalRP-MediumQuality.asset" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/UnityPorject/GachaTD/ProjectSettings/URPProjectSettings.asset" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -34,6 +38,7 @@
     <option name="selectedTabId" value="Toolset" />
   </component>
   <component name="ProjectId" id="2F1mNvvNIYxnxniRrVVciqTY0aT" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -89,6 +94,8 @@
       <workItem from="1663667942245" duration="1560000" />
       <workItem from="1663672815113" duration="794000" />
       <workItem from="1663913391279" duration="15642000" />
+      <workItem from="1664173127386" duration="3930000" />
+      <workItem from="1664186744776" duration="3135000" />
     </task>
     <task id="LOCAL-00001" summary="Version Update &amp; DoTween import">
       <created>1663671225027</created>

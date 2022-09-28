@@ -21,92 +21,106 @@ public class CameraController : MonoBehaviour {
   [SerializeField]
   private float moveSpeed;
   [SerializeField]
+  private float moveDuration;
+  [SerializeField]
   private float focusHeight;
   private Transform targetTransform => targetCamera.transform;
 
-  private float originDistance;
+  private Vector3 originVirtualPosition;
   private Vector3 originFlattenForward;
+
 
   private const int MAX_ROTATE_LEVEL = 4; // hard-coded 4 direction
 
-  private float axisDistance;
+  private Vector3 virtualPositoin; // x-y for plane move, z for zoom
   private float yawAxisAngle;
 
-  private UniqueTween moveUniqueTween = new UniqueTween();
+  private UniqueTween zoomUniqueTween = new UniqueTween();
   private UniqueTween rotateUniqueTween = new UniqueTween();
+  private UniqueTween moveUniqueTween = new UniqueTween();
 
   private void Start() {
     originFlattenForward = targetTransform.forward;
     originFlattenForward.y = 0;
-    originDistance = GetOriginAxisDistance();
-    UpdateCameraPosition();
+    originVirtualPosition = GetOriginVirtualPosition();
   }
 
   void Update() {
     var scrollInput = Input.GetAxis("Mouse ScrollWheel");
     if (scrollInput > 0) {
-      ChangeZoomLevel(-1);
-      UpdateCameraPosition();
+      ChangeZoomLevel(+1);
+      StartZoomTween();
       return;
     }
     if (scrollInput < 0) {
-      ChangeZoomLevel(+1);
-      UpdateCameraPosition();
+      ChangeZoomLevel(-1);
+      StartZoomTween();
       return;
     }
 
 
     if (Input.GetKeyDown(KeyCode.Q)) {
       rotateLevel = (rotateLevel + 1); //没有求余，因为会导致360-0的边界错误，所以没做
-      UpdateCameraRotation();
+      StartRotateTween();
       return;
     }
     if (Input.GetKeyDown(KeyCode.E)) {
       rotateLevel = (rotateLevel - 1);
-      UpdateCameraRotation();
+      StartRotateTween();
       return;
+    }
+
+    var horizontalInput = Input.GetAxis("Horizontal");
+    var verticalInput = Input.GetAxis("Vertical");
+    var deltaPosition = new Vector2(horizontalInput, verticalInput);
+    if (deltaPosition != Vector2.zero) {
+      StartMoveTween(deltaPosition.normalized * moveSpeed);
     }
   }
 
-  private void FixedUpdate() {
-    var verticalInput = Input.GetAxis("Vertical");
-    var horizontalInput = Input.GetAxis("Horizontal");
-    var direction = new Vector3(targetTransform.forward.x, 0, targetTransform.forward.z) * verticalInput;
-    direction += new Vector3(targetTransform.right.x, 0, targetTransform.right.z) * horizontalInput;
-    targetTransform.localPosition += direction.normalized * Time.deltaTime * moveSpeed;
+  private void StartMoveTween(Vector2 deltaPlanePosition) {
+    moveUniqueTween.SetAndPlay(GetMoveTween(deltaPlanePosition), finishLastOne: false);
   }
 
-  private void UpdateCameraPosition() {
-    moveUniqueTween.SetAndPlay(GetMoveTween(), finishLastOne: false);
+  private void StartZoomTween() {
+    zoomUniqueTween.SetAndPlay(GetZoomTween(), finishLastOne: false);
   }
 
-  private void UpdateCameraRotation() {
+  private void StartRotateTween() {
     rotateUniqueTween.SetAndPlay(GetRotateTween(), finishLastOne: false);
   }
 
-  private float GetOriginAxisDistance() {
+  private Vector3 GetOriginVirtualPosition() {
     var mat = targetTransform.worldToLocalMatrix;
-    var originInLocal = mat.MultiplyPoint(GetFocusPoint());
-    return originInLocal.z;
+    var worldFixedPointInLocal = mat.MultiplyPoint(Vector3.zero);
+    return worldFixedPointInLocal;
   }
 
-  private void SetAxisDistance(float d) {
-    axisDistance = d;
-    RecaculatePositionAndRotation();
+  private void SetPlanePosition(Vector2 pos) {
+    virtualPositoin = virtualPositoin.SetXY(pos);
+    RecaculateTransform();
+  }
+
+  private void SetAxisDistance(float distance) {
+    virtualPositoin = virtualPositoin.SetZ(distance);
+    RecaculateTransform();
   }
 
   private void SetYawAxisAngle(float deg) {
     yawAxisAngle = deg;
-    RecaculatePositionAndRotation();
+    RecaculateTransform();
   }
-
-  private void RecaculatePositionAndRotation() {
+  private void RecaculateTransform() {
     var mat = targetTransform.worldToLocalMatrix;
-    var focusPoint = GetFocusPoint();
-    var originInLocal = mat.MultiplyPoint(focusPoint);
-    var newLocalPosition = new Vector3(0, 0, originInLocal.z - axisDistance);
+
+    //virtual position 
+    var worldFixedPointInLocal = mat.MultiplyPoint(Vector3.zero);
+    var newLocalPosition = worldFixedPointInLocal + virtualPositoin - originVirtualPosition;
+
     targetTransform.position = targetTransform.localToWorldMatrix.MultiplyPoint(newLocalPosition);
 
+    //yaw axis angle
+    var focusPoint = GetFocusPoint();
     var flattenForward = targetTransform.forward;
     flattenForward.y = 0;
 
@@ -116,15 +130,21 @@ public class CameraController : MonoBehaviour {
     targetTransform.RotateAround(focusPoint, Vector3.up, delta);
   }
 
-  private Tween GetMoveTween() {
-    var d = zoomUnitLength * zoomLevel + originDistance;
-    return DOTween.To(() => axisDistance, SetAxisDistance, d, zoomDuration).SetEase(Ease.OutQuint);
+  //move 和 zoom不应该被合并， 因为这是两个可以并行Tween的操作
+  private Tween GetMoveTween(Vector2 delta) {
+    var targetPosition = virtualPositoin.XY() + delta;
+    return DOTween.To(() => virtualPositoin.XY(), SetPlanePosition, targetPosition, moveDuration).SetEase(Ease.OutQuint);
+  }
+
+  private Tween GetZoomTween() {
+    var targetDistance = zoomUnitLength * zoomLevel;
+    return DOTween.To(() => virtualPositoin.z, SetAxisDistance, targetDistance, zoomDuration).SetEase(Ease.OutQuint);
   }
 
   private Tween GetRotateTween() {
     var unit = 360f / MAX_ROTATE_LEVEL;
-    var angle = rotateLevel * unit;
-    return DOTween.To(() => yawAxisAngle, SetYawAxisAngle, angle, rotateDuration).SetEase(Ease.OutQuint);
+    var targetAngle = rotateLevel * unit;
+    return DOTween.To(() => yawAxisAngle, SetYawAxisAngle, targetAngle, rotateDuration).SetEase(Ease.OutQuint);
   }
 
   private void ChangeZoomLevel(int delta) {

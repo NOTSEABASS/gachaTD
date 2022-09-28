@@ -1719,12 +1719,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetCamera: {fileID: 1687258584}
-  zoomRange: {x: -5, y: 15}
-  zoomLevel: 5
+  zoomRange: {x: -15, y: 5}
+  zoomLevel: 0
   zoomUnitLength: 5
-  zoomDuration: 0.5
-  rotateDuration: 0.2
-  moveSpeed: 5
+  zoomDuration: 1
+  rotateDuration: 1
+  rotateLevel: 0
+  moveSpeed: 2
+  moveDuration: 1
+  focusHeight: 0
 --- !u!1 &1870432533
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,12 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="584f06e9-6dd5-4421-be47-95a2231d4f86" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GachaTD/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GachaTD/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TransfromEffect/SwitchTween.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TransfromEffect/SwitchTween.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TransfromEffect/Test/HoverTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TransfromEffect/Test/HoverTest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TransfromEffect/TransformEffects.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TransfromEffect/TransformEffects.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/DraggableObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/DraggableObject.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TransfromEffect/Test/HoverReceiverTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TransfromEffect/Test/HoverReceiverTest.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/gachaTD-Tools" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/gachaTD-Tools" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ShaderGraphSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ShaderGraphSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/gachaTD-Tools/SerializableCallback/Editor/Siccity.SerializableCallback.Editor.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/gachaTD-Tools/SerializableCallback/Editor/Siccity.SerializableCallback.Editor.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/gachaTD-Tools/SerializableCallback/Runtime/Siccity.SerializableCallback.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/gachaTD-Tools/SerializableCallback/Runtime/Siccity.SerializableCallback.asmdef" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-2021.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-2021.dwlt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -29,7 +28,13 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/de1f8ef4975b4eacbeb0accc1b22c9b02a000/54/9daffefa/TweenManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/de1f8ef4975b4eacbeb0accc1b22c9b02a000/e6/15a75a68/Tween.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/TransfromEffect/SwitchTween.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://D:/UnityPorject/GachaTD/gachaTD/Assets/Scripts/TransfromEffect/Test/HoverReceiverTest.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/TransfromEffect/Test/HoverTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://D:/UnityPorject/GachaTD/gachaTD/Assets/gachaTD-Tools.meta" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/UnityPorject/GachaTD/gachaTD/Assets/gachaTD-Tools.meta" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/UnityPorject/GachaTD/gachaTD/Assets/gachaTD-Tools/SerializableCallback/Runtime/Attributes.meta" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/UnityPorject/GachaTD/gachaTD/Assets/gachaTD-Tools/SerializableCallback/Runtime/InvokableCallback.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/UnityPorject/GachaTD/gachaTD/Assets/gachaTD-Tools/SerializeDict.cs.meta" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -50,6 +55,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;rider.run.widget.enabled.cache&quot;: &quot;false&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.C#&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -95,7 +101,9 @@
       <workItem from="1663672815113" duration="794000" />
       <workItem from="1663913391279" duration="15642000" />
       <workItem from="1664173127386" duration="3930000" />
-      <workItem from="1664186744776" duration="3135000" />
+      <workItem from="1664186744776" duration="6435000" />
+      <workItem from="1664283242301" duration="9913000" />
+      <workItem from="1664333256655" duration="3387000" />
     </task>
     <task id="LOCAL-00001" summary="Version Update &amp; DoTween import">
       <created>1663671225027</created>
@@ -125,7 +133,35 @@
       <option name="project" value="LOCAL" />
       <updated>1664001815604</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="OutLine and Throw">
+      <created>1664197255557</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1664197255557</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Fix HoverTest">
+      <created>1664197917794</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1664197917794</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Fix HoverTest Again....">
+      <created>1664198123704</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1664198123704</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Add Jump To HoverTest">
+      <created>1664198441694</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1664198441694</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -151,6 +187,14 @@
     <MESSAGE value="Import dotween" />
     <MESSAGE value="Update Version" />
     <MESSAGE value="SwitchTween" />
-    <option name="LAST_COMMIT_MESSAGE" value="SwitchTween" />
+    <MESSAGE value="OutLine and Throw" />
+    <MESSAGE value="Fix HoverTest" />
+    <MESSAGE value="Fix HoverTest Again...." />
+    <MESSAGE value="Add Jump To HoverTest" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add Jump To HoverTest" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

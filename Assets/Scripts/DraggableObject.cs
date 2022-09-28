@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class DraggableObject : MouseInputHandlerBase {
@@ -11,11 +12,24 @@ public class DraggableObject : MouseInputHandlerBase {
     if (!isDragging) {
       return;
     }
+    Drag();
+  }
 
+  private void Drag() {
+    Vector3 targetPos = Vector3.zero;
+    MapGrid.Instance.MouseRaycastAlignedPosition(Input.mousePosition, out targetPos);
+    targetPos = targetPos.SetY(transform.position.y);
+    // Debug.Log(targetPos);
+    if ((transform.position - targetPos).magnitude > 0.1f) {
+      transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * 10);
+    }
   }
 
   private void Place() {
-    print("Place");
+    print("Place");   
+    Vector3 targetPos = Vector3.zero;
+    MapGrid.Instance.MouseRaycastAlignedPosition(Input.mousePosition, out targetPos);
+    transform.position = targetPos;
   }
 
   public override MouseResult OnLeftMouseDown(MouseInputArgument arg) {

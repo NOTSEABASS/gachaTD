@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,8 +28,14 @@ public class TestCubeTween : SwitchTween {
 public class HoverReceiverTest : MouseInputHandlerBase {
   private bool lastIsHovering = false;
   private bool isHovering = false;
+  private bool isDragging = false;
 
+  private Outline outline;
   private SwitchTween switchTween;
+
+  private void Awake() {
+    outline = GetComponent<Outline>();
+  }
 
   void Start() {
     switchTween = new TestCubeTween(transform);
@@ -37,9 +44,13 @@ public class HoverReceiverTest : MouseInputHandlerBase {
   void Update() {
     if (isHovering && !lastIsHovering) {
       switchTween.SwitchToTween("flowTilt");
+      outline.enabled = true;
     }
     if (!isHovering && lastIsHovering) {
       switchTween.SwitchToTween("downTilt");
+      if (!isDragging) {
+        outline.enabled = false;
+      }
     }
     lastIsHovering = isHovering;
     isHovering = false;
@@ -48,6 +59,21 @@ public class HoverReceiverTest : MouseInputHandlerBase {
   public override MouseResult OnMouseHover(MouseInputArgument arg) {
     isHovering = true;
     return 0;
+  }
+
+  public override MouseResult OnLeftMouseDown(MouseInputArgument arg) {
+    isDragging = true;
+    outline.enabled = true;
+    return MouseResult.Executing;
+  }
+
+  public override MouseResult OnMouseExecuting(MouseInputArgument arg) {
+    if (arg.leftState == MouseInput.MouseState.MouseUp) {
+      isDragging = false;
+      outline.enabled = false;
+      return MouseResult.None;
+    }
+    return MouseResult.Executing;
   }
 
   public bool Test() {

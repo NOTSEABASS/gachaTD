@@ -16,7 +16,7 @@ public class MouseInput : MonoSingleton<MouseInput> {
 
   private MouseState leftState;
   private MouseState rightState;
-  private List<MouseInputHandlerBase> executingDispachers = new List<MouseInputHandlerBase>();
+  private List<IOnMouseExecuting> executings = new List<IOnMouseExecuting>();
 
   void Start() {
     leftState = MouseState.MouseHover;
@@ -46,163 +46,101 @@ public class MouseInput : MonoSingleton<MouseInput> {
   }
 
   private void Execute() {
-    var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-    var hits = Physics.RaycastAll(ray, maxRayDistance);
-    Array.Sort(hits, (x, y) => x.distance.CompareTo(y.distance));
-    var handlers = new List<MouseInputHandlerBase>();
-    foreach (var hit in hits) {
-      MouseInputDispacher dispacher = null;
-      MouseInputHandlerBase handler = null;
-      if (hit.transform.TryGetComponent(out dispacher) ||
-          hit.transform.TryGetComponent(out handler)) {
-        var handlerNotNull = dispacher ?? handler;
-        if (handlerNotNull.enabled) {
-          handlers.Add(handlerNotNull);
-        }
-      }
-    }
+    var arg = new MouseInputArgument(leftState, rightState);
 
-    if (executingDispachers.Count > 0) {
-      print(executingDispachers.Count);
-    }
-
-    var arg = new MouseInputArgument(handlers, leftState, rightState);
-
-    for (int i = 0; i < executingDispachers.Count; i++) {
-      var result = executingDispachers[i].OnMouseExecuting(arg);
+    for (int i = 0; i < executings.Count; i++) {
+      var result = executings[i].OnMouseExecuting(arg);
       if (result.HasFlag(MouseResult.BreakBehind)) {
         return;
       }
       else if (!result.HasFlag(MouseResult.Executing)) {
-        executingDispachers.RemoveAt(i);
+        executings.RemoveAt(i);
         i--;
       }
     }
 
-    if (handlers.Count == 0) {
-      return;
-    }
+    var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+    var hits = Physics.RaycastAll(ray, maxRayDistance);
+    Array.Sort(hits, (x, y) => x.distance.CompareTo(y.distance));
 
+    foreach (var hit in hits) {
+      CollectInterfacesAndInvoke(hit.transform, arg);
+    }
+  }
+
+  private void CollectInterfacesAndInvoke(Transform transform, MouseInputArgument arg) {
     switch (leftState) {
       case MouseState.MouseDown:
-        OnLeftMouseDown(arg);
+        CollectAndInvoke<IOnLeftMouseDown>(transform, arg);
         break;
       case MouseState.MousePress:
-        OnLeftMousePress(arg);
+        CollectAndInvoke<IOnLeftMousePress>(transform, arg);
         break;
       case MouseState.MouseUp:
-        OnLeftMouseUp(arg);
+        CollectAndInvoke<IOnLeftMouseUp>(transform, arg);
         break;
     }
 
     switch (rightState) {
       case MouseState.MouseDown:
-        OnRightMouseDown(arg);
+        CollectAndInvoke<IOnRightMouseDown>(transform, arg);
         break;
       case MouseState.MousePress:
-        OnRightMousePress(arg);
+        CollectAndInvoke<IOnRightMousePress>(transform, arg);
         break;
       case MouseState.MouseUp:
-        OnRightMouseUp(arg);
+        CollectAndInvoke<IOnRightMouseUp>(transform, arg);
         break;
     }
 
     if (leftState == MouseState.MouseHover) {
-      OnMouseHover(arg);
+      CollectAndInvoke<IOnMouseHover>(transform, arg);
     }
   }
 
-  public MouseResult OnLeftMouseDown(MouseInputArgument arg) {
-    foreach (var receiver in arg.handlers) {
-      var result = receiver.OnLeftMouseDown(arg);
-      if (result.HasFlag(MouseResult.BreakBehind)) {
-        break;
+  private MouseResult CollectAndInvoke<T>(Transform transform, MouseInputArgument arg) where T : IMouseInputHandler {
+    var leftMouseDowns = transform.GetComponents<T>();
+    MouseResult res = MouseResult.None;
+    foreach (var handler in leftMouseDowns) {
+      res = InvokeOnSpecificInterface<T>(handler, arg);
+      if (res.HasFlag(MouseResult.Executing)) {
+        if (handler is IOnMouseExecuting me) {
+          executings.Add(me);
+        }
+        else {
+          Debug.LogError(handler.GetType());
+        }
       }
-      else if (result.HasFlag(MouseResult.Executing)) {
-        executingDispachers.Add(receiver);
+      if (res.HasFlag(MouseResult.BreakBehind)) {
+        return res;
       }
-    }
-    return 0;
+    };
+    return res;
   }
 
-  public MouseResult OnLeftMousePress(MouseInputArgument arg) {
-    foreach (var receiver in arg.handlers) {
-      var result = receiver.OnLeftMousePress(arg);
-      if (result.HasFlag(MouseResult.BreakBehind)) {
-        break;
-      }
-      else if (result.HasFlag(MouseResult.Executing)) {
-        executingDispachers.Add(receiver);
-      }
+
+  private Dictionary<Type, Func<IMouseInputHandler, MouseInputArgument, MouseResult>> invokers = new();
+  private bool hasInitInvokers;
+  private void InitInvokersIfNot() {
+    if (hasInitInvokers) {
+      return;
     }
-    return 0;
+    invokers[typeof(IOnLeftMouseDown)] = (h, arg) => ((IOnLeftMouseDown)h).OnLeftMouseDown(arg);
+    invokers[typeof(IOnLeftMousePress)] = (h, arg) => ((IOnLeftMousePress)h).OnLeftMousePress(arg);
+    invokers[typeof(IOnLeftMouseUp)] = (h, arg) => ((IOnLeftMouseUp)h).OnLeftMouseUp(arg);
+    invokers[typeof(IOnRightMouseDown)] = (h, arg) => ((IOnRightMouseDown)h).OnRightMouseDown(arg);
+    invokers[typeof(IOnRightMousePress)] = (h, arg) => ((IOnRightMousePress)h).OnRightMousePress(arg);
+    invokers[typeof(IOnRightMouseUp)] = (h, arg) => ((IOnRightMouseUp)h).OnRightMouseUp(arg);
+    invokers[typeof(IOnMouseHover)] = (h, arg) => ((IOnMouseHover)h).OnMouseHover(arg);
   }
-
-  public MouseResult OnLeftMouseUp(MouseInputArgument arg) {
-    foreach (var receiver in arg.handlers) {
-      var result = receiver.OnLeftMouseUp(arg);
-      if (result.HasFlag(MouseResult.BreakBehind)) {
-        break;
-      }
-      else if (result.HasFlag(MouseResult.Executing)) {
-        executingDispachers.Add(receiver);
-      }
+  private MouseResult InvokeOnSpecificInterface<T>(IMouseInputHandler handler, MouseInputArgument arg) {
+    InitInvokersIfNot();
+    if (invokers.TryGetValue(typeof(T), out var invoker)) {
+      var res = invoker(handler, arg);
+      return res;
     }
-    return 0;
+
+    Debug.LogError(typeof(T));
+    return MouseResult.None;
   }
-
-  public MouseResult OnRightMouseDown(MouseInputArgument arg) {
-    foreach (var receiver in arg.handlers) {
-      var result = receiver.OnRightMouseDown(arg);
-      if (result.HasFlag(MouseResult.BreakBehind)) {
-        break;
-      }
-      else if (result.HasFlag(MouseResult.Executing)) {
-        executingDispachers.Add(receiver);
-      }
-    }
-    return 0;
-  }
-
-  public MouseResult OnRightMousePress(MouseInputArgument arg) {
-    foreach (var receiver in arg.handlers) {
-      var result = receiver.OnRightMousePress(arg);
-      if (result.HasFlag(MouseResult.BreakBehind)) {
-        break;
-      }
-      else if (result.HasFlag(MouseResult.Executing)) {
-        executingDispachers.Add(receiver);
-      }
-    }
-    return 0;
-  }
-
-  public MouseResult OnRightMouseUp(MouseInputArgument arg) {
-    foreach (var receiver in arg.handlers) {
-      var result = receiver.OnRightMouseUp(arg);
-
-      result.HasFlag(MouseResult.BreakBehind);
-      if (result.HasFlag(MouseResult.BreakBehind)) {
-        break;
-      }
-      else if (result.HasFlag(MouseResult.Executing)) {
-        executingDispachers.Add(receiver);
-      }
-    }
-    return 0;
-  }
-
-  public MouseResult OnMouseHover(MouseInputArgument arg) {
-    foreach (var receiver in arg.handlers) {
-      var result = receiver.OnMouseHover(arg);
-      if (result.HasFlag(MouseResult.BreakBehind)) {
-        break;
-      }
-      else if (result.HasFlag(MouseResult.Executing)) {
-        executingDispachers.Add(receiver);
-      }
-    }
-    return 0;
-  }
-
 }

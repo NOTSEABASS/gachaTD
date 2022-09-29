@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MouseInputDispacher :  MouseInputHandlerBase {
+public class MouseInputDispacher : MonoBehaviour {
   public bool isEnabled;
   public List<MouseInputCallback> onLeftMouseDown;
   public List<MouseInputCallback> onLeftMousePress;
@@ -20,38 +20,6 @@ public class MouseInputDispacher :  MouseInputHandlerBase {
 
   private void Update() {
 
-  }
-
-  public override MouseResult OnLeftMouseDown(MouseInputArgument arg) {
-    return Dispatch(arg, onLeftMouseDown);
-  }
-
-  public override MouseResult OnLeftMousePress(MouseInputArgument arg) {
-    return Dispatch(arg, onLeftMousePress);
-  }
-
-  public override MouseResult OnLeftMouseUp(MouseInputArgument arg) {
-    return Dispatch(arg, onLeftMouseUp);
-  }
-
-  public override MouseResult OnRightMouseDown(MouseInputArgument arg) {
-    return Dispatch(arg, onRightMouseDown);
-  }
-
-  public override MouseResult OnRightMousePress(MouseInputArgument arg) {
-    return Dispatch(arg, onRightMousePress);
-  }
-
-  public override MouseResult OnRightMouseUp(MouseInputArgument arg) {
-    return Dispatch(arg, onRightMouseUp);
-  }
-
-  public override MouseResult OnMouseHover(MouseInputArgument arg) {
-    return Dispatch(arg, onMouseHover);
-  }
-
-  public override MouseResult OnMouseExecuting(MouseInputArgument arg) {
-    return Dispatch(arg, onMouseExecuting);
   }
 
   private MouseResult Dispatch(MouseInputArgument arg, List<MouseInputCallback> callbacks) {
@@ -87,13 +55,10 @@ public class MouseInputCallback : SerializableCallback<MouseInputArgument, Mouse
 [Serializable]
 public class MouseInputArgument : UnityEngine.Object {
   [SerializeField]
-  public List<MouseInputHandlerBase> handlers;
   public MouseInput.MouseState leftState;
   public MouseInput.MouseState rightState;
 
-  public MouseInputArgument(List<MouseInputHandlerBase> handlers,
-      MouseInput.MouseState leftState, MouseInput.MouseState rightState) {
-    this.handlers = handlers;
+  public MouseInputArgument(MouseInput.MouseState leftState, MouseInput.MouseState rightState) {
     this.leftState = leftState;
     this.rightState = rightState;
   }

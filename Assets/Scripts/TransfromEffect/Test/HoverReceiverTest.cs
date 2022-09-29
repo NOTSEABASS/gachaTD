@@ -12,8 +12,7 @@ public class TestCubeTween : SwitchTween {
 
   protected override void OnInit() {
     RegisterTween("shake", () => transform.Shake(0.5f));
-    RegisterTween("rotate", () =>
-    {
+    RegisterTween("rotate", () => {
       var left = Quaternion.LookRotation(transform.right, Vector3.up);
       return transform.ShakeRotate(left, 0.5f);
     });
@@ -21,11 +20,11 @@ public class TestCubeTween : SwitchTween {
     RegisterTween("flowTilt", () => transform.FlowAndTilt(0.5f));
     RegisterTween("down", () => transform.FlowToDown(0.5f));
     RegisterTween("downTilt", () => transform.DownAndTilt(0.5f));
-    RegisterTween("throw", () => transform.ThrowTo(transform.position + new Vector3(1,0,0),0.5f));
+    RegisterTween("throw", () => transform.ThrowTo(transform.position + new Vector3(1, 0, 0), 0.5f));
   }
 }
 
-public class HoverReceiverTest : MouseInputHandlerBase {
+public class HoverReceiverTest : MonoBehaviour, IOnLeftMouseDown, IOnMouseExecuting, IOnMouseHover {
   private bool lastIsHovering = false;
   private bool isHovering = false;
   private bool isDragging = false;
@@ -56,18 +55,18 @@ public class HoverReceiverTest : MouseInputHandlerBase {
     isHovering = false;
   }
 
-  public override MouseResult OnMouseHover(MouseInputArgument arg) {
+  public MouseResult OnMouseHover(MouseInputArgument arg) {
     isHovering = true;
     return 0;
   }
 
-  public override MouseResult OnLeftMouseDown(MouseInputArgument arg) {
+  public MouseResult OnLeftMouseDown(MouseInputArgument arg) {
     isDragging = true;
     outline.enabled = true;
     return MouseResult.Executing;
   }
 
-  public override MouseResult OnMouseExecuting(MouseInputArgument arg) {
+  public MouseResult OnMouseExecuting(MouseInputArgument arg) {
     if (arg.leftState == MouseInput.MouseState.MouseUp) {
       isDragging = false;
       outline.enabled = false;

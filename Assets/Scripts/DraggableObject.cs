@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-public class DraggableObject : MouseInputHandlerBase {
+public class DraggableObject : MonoBehaviour, IOnLeftMouseDown, IOnMouseExecuting {
   private bool isDragging = false;
 
   private void Start() {
@@ -26,18 +26,18 @@ public class DraggableObject : MouseInputHandlerBase {
   }
 
   private void Place() {
-    print("Place");   
+    print("Place");
     Vector3 targetPos = Vector3.zero;
     MapGrid.Instance.MouseRaycastAlignedPosition(Input.mousePosition, out targetPos);
     transform.position = targetPos;
   }
 
-  public override MouseResult OnLeftMouseDown(MouseInputArgument arg) {
+  public MouseResult OnLeftMouseDown(MouseInputArgument arg) {
     isDragging = true;
     return MouseResult.Executing;
   }
 
-  public override MouseResult OnMouseExecuting(MouseInputArgument arg) {
+  public  MouseResult OnMouseExecuting(MouseInputArgument arg) {
     if (arg.leftState == MouseInput.MouseState.MouseUp) {
       isDragging = false;
       Place();

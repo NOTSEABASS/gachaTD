@@ -54,6 +54,7 @@ public class MouseInputCallback : SerializableCallback<MouseInputArgument, Mouse
 
 [Serializable]
 public class MouseInputArgument : UnityEngine.Object {
+  public Vector2 mousePosition;
   [SerializeField]
   public MouseInput.MouseState leftState;
   public MouseInput.MouseState rightState;

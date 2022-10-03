@@ -44,9 +44,15 @@ public interface IOnRightMouseUp : IMouseInputHandler {
 
 }
 
+//invoke as long as the mouse position is on object
 public interface IOnMouseHover : IMouseInputHandler {
   public MouseResult OnMouseHover(MouseInputArgument arg);
 
+}
+
+//invoke when mouse position is on object, and is not down/press/up
+public interface IOnMousePureHover : IMouseInputHandler {
+  public MouseResult OnMousePureHover(MouseInputArgument arg);
 }
 
 public interface IOnMouseExecuting : IMouseInputHandler {

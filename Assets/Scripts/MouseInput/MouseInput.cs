@@ -47,13 +47,13 @@ public class MouseInput : MonoSingleton<MouseInput> {
 
   private void Execute() {
     var arg = new MouseInputArgument(leftState, rightState);
+    arg.mousePosition = Input.mousePosition;
 
     for (int i = 0; i < executings.Count; i++) {
       var result = executings[i].OnMouseExecuting(arg);
-      if (result.HasFlag(MouseResult.BreakBehind)) {
-        return;
-      }
-      else if (!result.HasFlag(MouseResult.Executing)) {
+      // executing handlers should not break other executing
+      // it might cause troubles
+      if (!result.HasFlag(MouseResult.Executing)) {
         executings.RemoveAt(i);
         i--;
       }
@@ -64,45 +64,55 @@ public class MouseInput : MonoSingleton<MouseInput> {
     Array.Sort(hits, (x, y) => x.distance.CompareTo(y.distance));
 
     foreach (var hit in hits) {
-      CollectInterfacesAndInvoke(hit.transform, arg);
+      var res = CollectInterfacesAndInvoke(hit.transform, arg);
+      if (res.HasFlag(MouseResult.BreakBehind)) {
+        break;
+      }
     }
   }
 
-  private void CollectInterfacesAndInvoke(Transform transform, MouseInputArgument arg) {
+  private MouseResult CollectInterfacesAndInvoke(Transform transform, MouseInputArgument arg) {
+    MouseResult res = MouseResult.None;
+    // warning: 鉴于目前单个物体上多个handler的result都是可以通过或逻辑组合的，因此使用|=
+    //          如果mouse result有新内容，要注意是否满足这个约定
+    res |= CollectAndInvoke<IOnMouseHover>(transform, arg);
+
     switch (leftState) {
       case MouseState.MouseDown:
-        CollectAndInvoke<IOnLeftMouseDown>(transform, arg);
+        res |= CollectAndInvoke<IOnLeftMouseDown>(transform, arg);
         break;
       case MouseState.MousePress:
-        CollectAndInvoke<IOnLeftMousePress>(transform, arg);
+        res |= CollectAndInvoke<IOnLeftMousePress>(transform, arg);
         break;
       case MouseState.MouseUp:
-        CollectAndInvoke<IOnLeftMouseUp>(transform, arg);
+        res |= CollectAndInvoke<IOnLeftMouseUp>(transform, arg);
         break;
     }
 
     switch (rightState) {
       case MouseState.MouseDown:
-        CollectAndInvoke<IOnRightMouseDown>(transform, arg);
+        res |= CollectAndInvoke<IOnRightMouseDown>(transform, arg);
         break;
       case MouseState.MousePress:
-        CollectAndInvoke<IOnRightMousePress>(transform, arg);
+        res |= CollectAndInvoke<IOnRightMousePress>(transform, arg);
         break;
       case MouseState.MouseUp:
-        CollectAndInvoke<IOnRightMouseUp>(transform, arg);
+        res |= CollectAndInvoke<IOnRightMouseUp>(transform, arg);
         break;
     }
 
     if (leftState == MouseState.MouseHover) {
-      CollectAndInvoke<IOnMouseHover>(transform, arg);
+      res |= CollectAndInvoke<IOnMousePureHover>(transform, arg);
     }
+    return res;
   }
+
 
   private MouseResult CollectAndInvoke<T>(Transform transform, MouseInputArgument arg) where T : IMouseInputHandler {
     var leftMouseDowns = transform.GetComponents<T>();
-    MouseResult res = MouseResult.None;
+    bool breakAfterThisObject = false;
     foreach (var handler in leftMouseDowns) {
-      res = InvokeOnSpecificInterface<T>(handler, arg);
+      var res = InvokeOnSpecificInterface<T>(handler, arg);
       if (res.HasFlag(MouseResult.Executing)) {
         if (handler is IOnMouseExecuting me) {
           executings.Add(me);
@@ -112,10 +122,13 @@ public class MouseInput : MonoSingleton<MouseInput> {
         }
       }
       if (res.HasFlag(MouseResult.BreakBehind)) {
-        return res;
+        breakAfterThisObject = true;
       }
     };
-    return res;
+    if (breakAfterThisObject) {
+      return MouseResult.BreakBehind;
+    }
+    return MouseResult.None;
   }
 
 
@@ -132,6 +145,7 @@ public class MouseInput : MonoSingleton<MouseInput> {
     invokers[typeof(IOnRightMousePress)] = (h, arg) => ((IOnRightMousePress)h).OnRightMousePress(arg);
     invokers[typeof(IOnRightMouseUp)] = (h, arg) => ((IOnRightMouseUp)h).OnRightMouseUp(arg);
     invokers[typeof(IOnMouseHover)] = (h, arg) => ((IOnMouseHover)h).OnMouseHover(arg);
+    invokers[typeof(IOnMousePureHover)] = (h, arg) => ((IOnMousePureHover)h).OnMousePureHover(arg);
   }
   private MouseResult InvokeOnSpecificInterface<T>(IMouseInputHandler handler, MouseInputArgument arg) {
     InitInvokersIfNot();

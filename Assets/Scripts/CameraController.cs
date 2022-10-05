@@ -22,6 +22,8 @@ public class CameraController : MonoBehaviour {
   private float moveSpeed;
   [SerializeField]
   private float moveDuration;
+  [SerializeField, Range(0, 1)]
+  private float minMoveStep;
   [SerializeField]
   private float focusHeight;
   private Transform targetTransform => targetCamera.transform;
@@ -74,7 +76,7 @@ public class CameraController : MonoBehaviour {
     var verticalInput = Input.GetAxis("Vertical");
     var deltaPosition = new Vector2(horizontalInput, verticalInput);
     if (deltaPosition != Vector2.zero) {
-      StartMoveTween(deltaPosition.normalized * moveSpeed);
+      StartMoveTween(Mathf.Max(minMoveStep, deltaPosition.magnitude) * deltaPosition.normalized * moveSpeed);
     }
   }
 

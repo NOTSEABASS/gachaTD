@@ -3,13 +3,22 @@ using UnityEngine;
 
 public class DraggableObject : MonoBehaviour, IOnLeftMouseDown, IOnMouseExecuting {
   #region Inner Class
+  public interface IOnDragHandler {
+    void OnDrag();
+    void OnDragEnd();
+  }
+
   public abstract class PositionHandler {
     private DraggableObject lifeRef;
+    public float stackHeight => lifeRef != null ? lifeRef.stackHeight : 0;
+
+    public Transform transform => lifeRef != null ? lifeRef.transform : null;
+
     public void SetLifeRef(DraggableObject draggable) {
       lifeRef = draggable;
     }
 
-    public bool IsDraggableAlive() {
+    public bool IsAlive() {
       return lifeRef != null;
     }
 
@@ -20,11 +29,17 @@ public class DraggableObject : MonoBehaviour, IOnLeftMouseDown, IOnMouseExecutin
 
   private const float MOVE_DURATION = 0.5f;
 
+  [SerializeField, Min(0)]
+  protected float stackHeight;
+
+  private IOnDragHandler[] onDragHandlers;
   private UniqueTween moveUniqueTween = new UniqueTween();
   private PositionHandler positionHandler;
 
+
   private void Awake() {
     LifeCollector<DraggableObject>.AddObject(this);
+    onDragHandlers = GetComponents<IOnDragHandler>();
   }
 
   public void SetPositionHandler(PositionHandler positionHandler) {
@@ -33,11 +48,17 @@ public class DraggableObject : MonoBehaviour, IOnLeftMouseDown, IOnMouseExecutin
   }
 
   private void Drag(Vector2 mousePosition) {
+    foreach (var handler in onDragHandlers.SafeUObjects()) {
+      handler.OnDrag();
+    }
     positionHandler.OnMouseDrag(mousePosition);
     moveUniqueTween.SetAndPlay(GetMoveTween(GetDraggingPosition()), finishLastOne: false);
   }
 
   private void Place() {
+    foreach (var handler in onDragHandlers.SafeUObjects()) {
+      handler.OnDragEnd();
+    }
     moveUniqueTween.SetAndPlay(GetMoveTween(GetPlacePosition()), finishLastOne: false);
   }
 
@@ -50,11 +71,11 @@ public class DraggableObject : MonoBehaviour, IOnLeftMouseDown, IOnMouseExecutin
   }
 
   private Tween GetMoveTween(Vector3 position) {
-    return transform.DOMove(position, MOVE_DURATION).SetEase(Ease.OutQuint);
+    return transform.DOLocalMove(position, MOVE_DURATION).SetEase(Ease.OutQuint);
   }
 
   public MouseResult OnLeftMouseDown(MouseInputArgument arg) {
-    return MouseResult.Executing;
+    return MouseResult.Executing | MouseResult.BreakBehind;
   }
 
   public MouseResult OnMouseExecuting(MouseInputArgument arg) {

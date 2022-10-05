@@ -6,7 +6,7 @@ using UnityEngine;
 public class MapGrid : MonoSingleton<MapGrid> {
   #region Inner Classes
   private class Cell {
-    public List<DraggablePositionHandler> draggableHandlers = new List<DraggablePositionHandler>();
+    public DraggablePositionHandler handlerHead;
   }
 
   private class CollectorPlugin : LifeCollector<DraggableObject>.Plugin {
@@ -22,7 +22,12 @@ public class MapGrid : MonoSingleton<MapGrid> {
   private class DraggablePositionHandler : DraggableObject.PositionHandler {
     private MapGrid mapGrid;
     public Vector2Int cell;
+    private DraggablePositionHandler next;
+    private DraggablePositionHandler prior;
+    public DraggablePositionHandler Next => next;
+    public DraggablePositionHandler Prior => prior;
 
+    private DraggablePositionHandler() { }
     public DraggablePositionHandler(MapGrid mapGrid) {
       this.mapGrid = mapGrid;
     }
@@ -31,36 +36,120 @@ public class MapGrid : MonoSingleton<MapGrid> {
       cell = mapGrid.WorldToXZCell(draggable.transform.position);
     }
 
+    public void SetNext(DraggablePositionHandler handler) {
+      Debug.Assert(handler != null);
+      if (handler == this) {
+        Debug.LogError("Ilegal");
+        return;
+      }
+      if (handler != null) {
+        handler.transform.parent = transform;
+        next = handler;
+        handler.prior = this;
+      }
+    }
+
+    public void DisconnectWithPrior() {
+      if (prior != null) {
+        prior.next = null;
+        prior = null;
+        transform.parent = null;
+      }
+    }
+
+    public void DisconnectWithNext() {
+      if (next != null) {
+        next.prior = null;
+        next.transform.parent = null;
+        next = null;
+      }
+    }
+
+    private void RemoveFromCell(Cell cellData) {
+      if (cellData.handlerHead == this) {
+        cellData.handlerHead = null;
+        return;
+      }
+
+      var next = cellData.handlerHead;
+      while (next != null && next != this) {
+        next = next.next;
+      }
+      Debug.Assert(next == this);
+      next.DisconnectWithPrior();
+    }
+
+    private void AddToCell(Cell cellData) {
+      if (cellData.handlerHead == null) {
+        cellData.handlerHead = this;
+        return;
+      }
+
+      var next = cellData.handlerHead;
+      while (next != null && next.next != null) {
+        if (next == this) {
+          Debug.LogError(111);
+          break;
+        }
+        next = next.next;
+      }
+
+      next.SetNext(this);
+    }
+
+    private void UpdateCell(Vector2Int newCell) {
+      cell = newCell;
+      var next = this.next;
+      while (next != null) {
+        next.cell = newCell;
+        next = next.next;
+      }
+    }
+
     public override void OnMouseDrag(Vector2 mousePosition) {
       if (mapGrid.MouseRaycastCell(mousePosition, out var newCell) && newCell != cell) {
         var curCellData = mapGrid.GetCellDataNotNull(cell);
-        curCellData.draggableHandlers.Remove(this);
-
         var newCellData = mapGrid.GetCellDataNotNull(newCell);
-        newCellData.draggableHandlers.Add(this);
 
-        cell = newCell;
+        RemoveFromCell(curCellData);
+        AddToCell(newCellData);
+        UpdateCell(newCell);
+
       }
     }
 
     public override Vector3 GetPlacePosition() {
+
+      if (prior == null) {
+        var result = mapGrid.XZCellToWorld(cell);
+        return result;
+      }
+      else {
+        return Vector3.zero.SetY(prior.stackHeight);
+      }
+    }
+
+    [System.Obsolete]
+    private Vector3 GetWorldPlacePosition() {
       var cellData = mapGrid.GetCellDataNotNull(cell);
       var height = 0f;
-      for (int i = 0, count = cellData.draggableHandlers.SafeCount(); i < count; i++) {
-        if (cellData.draggableHandlers[i] == this) {
-          break;
-        }
-        height += 1; //todo: dynamic height
+      DraggablePositionHandler next = cellData.handlerHead;
+
+      while (next != null && next != this) {
+        height += next.stackHeight; //todo: dynamic height
+        next = next.next;
       }
 
       var result = mapGrid.XZCellToWorld(cell).SetY(height);
+
+
       return result;
     }
 
   }
 
   #endregion
-
+  private static readonly string[] rayCastLayers = { "MapGrid", "DraggableObject" };
 
   [SerializeField]
   private Grid grid;
@@ -75,7 +164,7 @@ public class MapGrid : MonoSingleton<MapGrid> {
   private bool MouseRaycastCell(Vector2 mousePosition, out Vector2Int cell) {
     cell = Vector2Int.zero;
 
-    var layerMask = LayerMask.GetMask("MapGrid");
+    var layerMask = LayerMask.GetMask(rayCastLayers);
     var ray = Camera.main.ScreenPointToRay(mousePosition);
     if (Physics.Raycast(ray, out RaycastHit hitInfo, 9999f, layerMask)) {
       var hitPosition = hitInfo.point;
@@ -105,7 +194,12 @@ public class MapGrid : MonoSingleton<MapGrid> {
     positionHandler.Init(draggable);
 
     var cellData = GetCellDataNotNull(positionHandler.cell);
-    cellData.draggableHandlers.Add(positionHandler);
+    if (cellData.handlerHead == null) {
+      cellData.handlerHead = positionHandler;
+    }
+    else {
+      cellData.handlerHead.SetNext(positionHandler);
+    }
 
     draggable.SetPositionHandler(positionHandler);
     draggable.transform.position = positionHandler.GetPlacePosition();
@@ -113,7 +207,8 @@ public class MapGrid : MonoSingleton<MapGrid> {
 
   private Cell GetCellDataNotNull(Vector2Int position) {
     if (!gridData.Contains(position)) {
-      gridData[position] = new Cell();
+      var cell = new Cell();
+      gridData[position] = cell;
     }
     return gridData[position];
   }

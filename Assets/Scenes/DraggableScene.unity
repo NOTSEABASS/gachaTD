@@ -307,6 +307,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acee06d63e918b6419b7988d5eccbb32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &579579449
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 579579450}
+  - component: {fileID: 579579451}
+  m_Layer: 0
+  m_Name: EnemyProxyManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &579579450
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579579449}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2136918553}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &579579451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579579449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7880013ac0e30ab40a0c31d820a253c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &617640020
 GameObject:
   m_ObjectHideFlags: 0
@@ -559,7 +603,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1078727104}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 5.23, y: 12.16, z: 23.99}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -579,7 +623,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolMaxmumSize: 20
-  enemyList: {fileID: 11400000, guid: eef76a4c8412a49408285edbc7b559f3, type: 2}
+  enemySource: {fileID: 11400000, guid: eef76a4c8412a49408285edbc7b559f3, type: 2}
+  testPrefab: {fileID: 7008705663147876077, guid: 9d421acaedccc73479f99c8569e6cd31, type: 3}
 --- !u!1 &1085057677
 GameObject:
   m_ObjectHideFlags: 0
@@ -1836,6 +1881,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1078727105}
+  - {fileID: 579579450}
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

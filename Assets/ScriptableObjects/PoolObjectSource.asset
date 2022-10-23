@@ -10,9 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 142ae5f07aff1a64dbb65be64413c03d, type: 3}
-  m_Name: EnemySource
+  m_Name: PoolObjectSource
   m_EditorClassIdentifier: 
-  list:
-  - name: Zombie
-    obj:
-      prefab: {fileID: 7008705663147876077, guid: 7583220d8ee044948849ab1589995a0d, type: 3}
+  list: []

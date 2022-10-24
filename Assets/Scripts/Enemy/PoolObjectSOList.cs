@@ -9,6 +9,6 @@ public class PoolObjectSource {
 }
 
 [CreateAssetMenu(menuName = "ScriptableObject/PoolObjectSourceSet",fileName = "PoolObjectSource")]
-public class PoolObjectSOList : ScriptableObjectSet<PoolObjectSource> {
+public class PoolObjectSOList : ScriptableObjectSet<PoolObject> {
   
 }

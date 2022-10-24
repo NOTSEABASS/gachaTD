@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 142ae5f07aff1a64dbb65be64413c03d, type: 3}
   m_Name: PoolObjectSource
   m_EditorClassIdentifier: 
-  list: []
+  list:
+  - name: zombie
+    obj: {fileID: 7045397675120153276, guid: 9d421acaedccc73479f99c8569e6cd31, type: 3}

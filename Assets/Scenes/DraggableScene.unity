@@ -619,12 +619,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1078727104}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a81ce7252aac6c47bfcb3094f581537, type: 3}
+  m_Script: {fileID: 11500000, guid: aa0c2e197115a3d47b4d53840d60c28b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolMaxmumSize: 20
-  enemySource: {fileID: 11400000, guid: eef76a4c8412a49408285edbc7b559f3, type: 2}
-  testPrefab: {fileID: 7008705663147876077, guid: 9d421acaedccc73479f99c8569e6cd31, type: 3}
+  poolMaxmumSize: 1000
+  poolObjectSoSource: {fileID: 11400000, guid: f6f467a7a8673c44da013ef2f95e3f1e, type: 2}
 --- !u!1 &1085057677
 GameObject:
   m_ObjectHideFlags: 0

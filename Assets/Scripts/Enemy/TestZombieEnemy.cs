@@ -21,15 +21,15 @@ public class TestZombieEnemy : PoolObject {
     }
   }
 
-  public override void OnCreate() {
+  protected override void _OnCreate() {
     Debug.Log("Zombie init");
   }
 
-  public override void OnRelease() {
+  protected override void _OnRelease() {
     Debug.Log("Zombie release");
   }
 
-  public override void OnGet() {
+  protected override void _OnGet() {
     transform.position = Vector3.zero;
     print("Zombie get");
   }

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 801706694883796115}
   - component: {fileID: 7164962338229342542}
   - component: {fileID: 752471962}
+  - component: {fileID: 2404556161736003709}
   m_Layer: 0
   m_Name: CannonBullet
   m_TagString: Untagged
@@ -111,3 +112,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+--- !u!114 &2404556161736003709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3688632467518928154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd089ec192bdf924d83aef09c26c1b70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poolName: 
+  utilFunction:
+    releaseAfterTime: 1
+    releaseTime: 5
+    useCallBackEvent: 0
+    onCreate:
+      m_PersistentCalls:
+        m_Calls: []
+    onGet:
+      m_PersistentCalls:
+        m_Calls: []
+    onRelease:
+      m_PersistentCalls:
+        m_Calls: []

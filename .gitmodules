@@ -1,3 +1,6 @@
 [submodule "Assets/gachaTD-Tools"]
 	path = Assets/gachaTD-Tools
 	url = git@github.com:Alex907795990/gachaTD-Tools.git
+[submodule "Assets/MyBox"]
+	path = Assets/MyBox
+	url = https://github.com/Deadcows/MyBox.git

@@ -1,0 +1,2 @@
+git update-index --skip-worktree <file>  
+更改某个文件后想ignore掉，但是添加到ignore后仍然追踪了本次更改，可以用这个取消追踪但是保留本地的更改

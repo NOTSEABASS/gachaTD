@@ -65,3 +65,6 @@ crashlytics-build.properties
 .vsconfig
 /[Uu]serSettings/
 *.dwlt
+
+#version
+ProjectSettings/ProjectVersion.txt

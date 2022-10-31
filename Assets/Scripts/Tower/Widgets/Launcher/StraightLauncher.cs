@@ -7,7 +7,7 @@ using UnityEngine;
 [System.Serializable]
 public class StraightLauncher {
   [SerializeField]
-  private PoolGetter<PoolObject> bulletGetter;
+  private PoolGetter<ProjectilePoolObject> bulletGetter;
   [SerializeField]
   private Transform launchPoint;
 
@@ -15,9 +15,12 @@ public class StraightLauncher {
     if (param.target == null) {
       return;
     }
-    if (bulletGetter.TryGet(out var bullet)) {
-      bullet.transform.position = launchPoint.position;
-      bullet.transform.LookAt(param.target.transform);
+    if (bulletGetter.TryGet(out var projectile)) {
+      projectile.transform.position = launchPoint.position;
+      projectile.transform.LookAt(param.target.transform);
+      if (param.projectilePlugin != null) {
+        projectile.SetPlugin(param.projectilePlugin);
+      }
     }
   }
 }

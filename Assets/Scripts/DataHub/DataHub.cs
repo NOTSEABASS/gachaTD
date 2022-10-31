@@ -20,15 +20,7 @@ namespace DataHub {
       instance = this;
     }
 
-    private void Update() {
-      OnResolve();
-    }
-
-    public void AddSystem(System system) {
-      (core).AddSystem(system);
-    }
-
-    protected bool TryGetData(int ptr, out TData res) {
+    public bool TryGetData(int ptr, out TData res) {
       return (core).TryGetData(ptr, out res);
     }
 
@@ -36,20 +28,12 @@ namespace DataHub {
       core.RegisterData(ptr, data);
     }
 
-    protected void DeleteData(int ptr) {
+    public void DeleteData(int ptr) {
       core.DeleteData(ptr);
     }
 
-    protected void SetData(int ptr, TData data) {
+    public void SetData(int ptr, TData data) {
       core.SetData(ptr, data);
-    }
-
-    protected void OnResolve() {
-      (core).OnResolve();
-    }
-
-    public void PushEvent(Event eve) {
-      (core).PushEvent(eve);
     }
   }
 }

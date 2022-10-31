@@ -10,7 +10,7 @@ public class CircleDetector : Detector {
     var pos0 = param.position + Vector3.up * CAPSULE_HEIGHT / 2;
     var pos1 = param.position + Vector3.down * CAPSULE_HEIGHT / 2;
 
-    var colliders = Physics.OverlapCapsule(pos0, pos1, radius, param.layerMask, QueryTriggerInteraction.Ignore);
+    var colliders = Physics.OverlapCapsule(pos0, pos1, radius, param.layerMask, QueryTriggerInteraction.Collide);
     if(colliders.Length == 0) {
       return new DetectResult();
     }

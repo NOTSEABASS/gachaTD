@@ -16,4 +16,4 @@ MonoBehaviour:
   - name: zombie
     obj: {fileID: 7045397675120153276, guid: 9d421acaedccc73479f99c8569e6cd31, type: 3}
   - name: cannon_bullet
-    obj: {fileID: 2404556161736003709, guid: 1d5ef60022a19d041afe9bc3e736ba9d, type: 3}
+    obj: {fileID: 7044685508209690342, guid: 1d5ef60022a19d041afe9bc3e736ba9d, type: 3}

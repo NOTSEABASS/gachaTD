@@ -313,18 +313,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 014b9a65039003b42bc4a19f61d1ab10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  num: 0
-  ueve:
-    m_PersistentCalls:
-      m_Calls: []
-    m_CallsDirty: 1
-  toggle: 0
-  testStruct:
-    struct_num: 0
-    strcut_str: 
-  cList:
-  - num: 0
-  - num: 0
 --- !u!1 &812778860
 GameObject:
   m_ObjectHideFlags: 0
@@ -944,10 +932,6 @@ PrefabInstance:
     - target: {fileID: 6416791907776535279, guid: 6047d6325fb614942aa302f044d40815, type: 3}
       propertyPath: m_Name
       value: Cannon
-      objectReference: {fileID: 0}
-    - target: {fileID: 6416791907873206579, guid: 6047d6325fb614942aa302f044d40815, type: 3}
-      propertyPath: launcher.bulletGetter.poolName
-      value: cannon_bullet
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6047d6325fb614942aa302f044d40815, type: 3}

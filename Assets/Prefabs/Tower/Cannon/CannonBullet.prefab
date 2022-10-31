@@ -13,8 +13,9 @@ GameObject:
   - component: {fileID: 801706694883796115}
   - component: {fileID: 7164962338229342542}
   - component: {fileID: 752471962}
-  - component: {fileID: 2404556161736003709}
-  m_Layer: 0
+  - component: {fileID: 3705921692005404678}
+  - component: {fileID: 7044685508209690342}
+  m_Layer: 9
   m_Name: CannonBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,8 +112,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 054c8606b5b610e41833be2923534114, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
---- !u!114 &2404556161736003709
+  speed: 15
+--- !u!114 &3705921692005404678
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,14 +122,42 @@ MonoBehaviour:
   m_GameObject: {fileID: 3688632467518928154}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd089ec192bdf924d83aef09c26c1b70, type: 3}
+  m_Script: {fileID: 11500000, guid: 91c93820453880348b0695a00546366d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rule: 0
+  localCallback:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 0
+--- !u!114 &7044685508209690342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3688632467518928154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8f56a48d230bd24e803a1ad12c4618f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   poolName: 
   utilFunction:
     releaseAfterTime: 1
-    releaseTime: 5
-    useCallBackEvent: 0
+    releaseTime: 1
+    useCallbackEvent: 0
     onCreate:
       m_PersistentCalls:
         m_Calls: []

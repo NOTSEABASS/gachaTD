@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Cannon : MonoBehaviour {
+public class Cannon : TowerBase {
   [SerializeField]
   private RotationAiming rotationAiming;
   [SerializeField]
@@ -33,12 +33,19 @@ public class Cannon : MonoBehaviour {
 
     if (detetecResult.singleResult != null && attackClock.IsReady()) {
       attackClock.Reset();
+      var damageEvent = new TowerDamageEvent() {
+        type = TowerDamageType.Attack,
+        towerPtr = DataPtr
+      };
 
       var launchParam = new LaunchParam {
-        target = detetecResult.singleResult
+        target = detetecResult.singleResult,
+        projectilePlugin = new ProjectilePlugin.TowerDamage(damageEvent)
       };
 
       launcher.Launch(launchParam);
     }
   }
+
 }
+

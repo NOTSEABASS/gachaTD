@@ -25,7 +25,7 @@ public static class PriorityRuleImpl {
     }
 
     return new DetectResult {
-      singleResult = closet.gameObject
+      singleResult = closet.transform.FindDataPtrObj()
     };
   }
 

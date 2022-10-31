@@ -170,7 +170,8 @@ MonoBehaviour:
     zAiming: 1
     aimRoot: {fileID: 6416791908366459598}
   launcher:
-    bulletPrefab: {fileID: 3688632467518928154, guid: 1d5ef60022a19d041afe9bc3e736ba9d, type: 3}
+    bulletGetter:
+      poolName: cannon_bullet
     launchPoint: {fileID: 2397106205314037685}
 --- !u!1 &6416791908346678767
 GameObject:

@@ -7,35 +7,9 @@ using DataHub;
 namespace DataHub {
 
   public partial class DataHub<TData> {
-
-
-    public abstract class Event {
-
-    }
-
-    public abstract class System {
-      protected DataHubCore hub;
-      public void SetDataHub(DataHubCore hub) {
-        this.hub = hub;
-      }
-
-      public abstract void Handle(Event eve);
-    }
-
     public class DataHubCore {
 
       private Dictionary<int, TData> datas = new Dictionary<int, TData>();
-      private List<System> systems = new List<System>();
-      private Queue<Event> eventBuffer = new Queue<Event>();
-
-      public void PushEvent(Event eve) {
-        eventBuffer.Enqueue(eve);
-      }
-
-      public void AddSystem(System system) {
-        system.SetDataHub(this);
-        systems.Add(system);
-      }
 
       public bool TryGetData(int ptr, out TData res) {
         return datas.TryGetValue(ptr, out res);
@@ -53,14 +27,6 @@ namespace DataHub {
       public void DeleteData(int ptr) {
         datas.Remove(ptr);
       }
-      public void OnResolve() {
-        while (eventBuffer.Count > 0) {
-          var eve = eventBuffer.Dequeue();
-          foreach (var sys in systems) {
-            sys.Handle(eve);
-          }
-        }
-      }
     }
 
     public abstract class Binder : MonoBehaviour {
@@ -69,7 +35,9 @@ namespace DataHub {
       private TData cachedData;
       protected TData Data => cachedData;
       protected int DataPtr => ptr;
+
       protected virtual void Awake() {
+        CheckLegal();
         ptr = gameObject.GetInstanceID();
       }
 
@@ -88,6 +56,12 @@ namespace DataHub {
 
       protected virtual void OnDataUpdate(TData data) {
 
+      }
+
+      private void CheckLegal() {
+        if (gameObject.tag != TagConsts.Data) {
+          Debug.LogError("[DataHub.Binder] Binder's gameObject is not tagged \"Data\"");
+        }
       }
     }
   }

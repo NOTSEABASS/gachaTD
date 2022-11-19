@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public static class ProjectilePlugin {
-  public class TowerDamage : ProjectilePoolObject.Plugin {
+  public class TowerTouchDamage : ProjectilePoolObject.Plugin {
     private TowerDamageEvent cachedDamageEvent;
 
-    public TowerDamage(TowerDamageEvent cachedDamageEvent) {
+    public TowerTouchDamage(TowerDamageEvent cachedDamageEvent) {
       this.cachedDamageEvent = cachedDamageEvent;
     }
 

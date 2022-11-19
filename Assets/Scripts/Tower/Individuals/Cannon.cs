@@ -40,7 +40,7 @@ public class Cannon : TowerBase {
 
       var launchParam = new LaunchParam {
         target = detetecResult.singleResult,
-        projectilePlugin = new ProjectilePlugin.TowerDamage(damageEvent)
+        projectilePlugin = new ProjectilePlugin.TowerTouchDamage(damageEvent)
       };
 
       launcher.Launch(launchParam);

@@ -65,7 +65,7 @@ public class MapGrid : MonoSingleton<MapGrid> {
       }
     }
 
-    private void RemoveFromCell(Cell cellData) {
+    private void _RemoveFromCell(Cell cellData) {
       if (cellData.handlerHead == this) {
         cellData.handlerHead = null;
         return;
@@ -75,11 +75,15 @@ public class MapGrid : MonoSingleton<MapGrid> {
       while (next != null && next != this) {
         next = next.next;
       }
-      Debug.Assert(next == this);
-      next.DisconnectWithPrior();
+      if (next == this) {
+        next.DisconnectWithPrior();
+      } else {
+        //在这个Cell上找不到这个positionHandler，那就无需操作
+        //可能发生在一个draggable刚生成时，还没有加入任何cellData
+      }
     }
 
-    private void AddToCell(Cell cellData) {
+    private void _AddToCell(Cell cellData) {
       if (cellData.handlerHead == null) {
         cellData.handlerHead = this;
         return;
@@ -97,7 +101,7 @@ public class MapGrid : MonoSingleton<MapGrid> {
       next.SetNext(this);
     }
 
-    private void UpdateCell(Vector2Int newCell) {
+    private void _UpdateCell(Vector2Int newCell) {
       cell = newCell;
       var next = this.next;
       while (next != null) {
@@ -106,25 +110,25 @@ public class MapGrid : MonoSingleton<MapGrid> {
       }
     }
 
+    public void MoveDatToCell(Vector2Int newCell) {
+      var curCellData = mapGrid.GetCellDataNotNull(cell);
+      var newCellData = mapGrid.GetCellDataNotNull(newCell);
+      _RemoveFromCell(curCellData);
+      _AddToCell(newCellData);
+      _UpdateCell(newCell);
+    }
+
     public override void OnMouseDrag(Vector2 mousePosition) {
       if (mapGrid.MouseRaycastCell(mousePosition, out var newCell) && newCell != cell) {
-        var curCellData = mapGrid.GetCellDataNotNull(cell);
-        var newCellData = mapGrid.GetCellDataNotNull(newCell);
-
-        RemoveFromCell(curCellData);
-        AddToCell(newCellData);
-        UpdateCell(newCell);
-
+        MoveDatToCell(newCell);
       }
     }
 
     public override Vector3 GetPlacePosition() {
-
       if (prior == null) {
         var result = mapGrid.XZCellToWorld(cell);
         return result;
-      }
-      else {
+      } else {
         return Vector3.zero.SetY(prior.stackHeight);
       }
     }
@@ -192,17 +196,11 @@ public class MapGrid : MonoSingleton<MapGrid> {
   protected void OnAddDraggable(DraggableObject draggable) {
     var positionHandler = new DraggablePositionHandler(this);
     positionHandler.Init(draggable);
-
-    var cellData = GetCellDataNotNull(positionHandler.cell);
-    if (cellData.handlerHead == null) {
-      cellData.handlerHead = positionHandler;
-    }
-    else {
-      cellData.handlerHead.SetNext(positionHandler);
-    }
-
     draggable.SetPositionHandler(positionHandler);
-    draggable.transform.position = positionHandler.GetPlacePosition();
+
+    positionHandler.MoveDatToCell(positionHandler.cell);
+
+    draggable.transform.localPosition = positionHandler.GetPlacePosition();
   }
 
   private Cell GetCellDataNotNull(Vector2Int position) {

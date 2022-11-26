@@ -124,6 +124,14 @@ public class MapGrid : MonoSingleton<MapGrid> {
       }
     }
 
+    public override void Recalculate() {
+      // Debug.Log("Before:"+cell);
+      var worldPlacePosition = transform.position;
+      var newPos = mapGrid.WorldToXZCell(worldPlacePosition);
+      MoveDatToCell(newPos);
+      // Debug.Log("After:"+cell);
+    }
+
     public override Vector3 GetPlacePosition() {
       if (prior == null) {
         var result = mapGrid.XZCellToWorld(cell);
@@ -133,7 +141,6 @@ public class MapGrid : MonoSingleton<MapGrid> {
       }
     }
 
-    [System.Obsolete]
     private Vector3 GetWorldPlacePosition() {
       var cellData = mapGrid.GetCellDataNotNull(cell);
       var height = 0f;
@@ -188,7 +195,7 @@ public class MapGrid : MonoSingleton<MapGrid> {
     return result;
   }
 
-  protected Vector2Int WorldToXZCell(Vector3 world) {
+  public Vector2Int WorldToXZCell(Vector3 world) {
     var result = grid.WorldToCell(world);
     return result.XZ();
   }
@@ -209,6 +216,10 @@ public class MapGrid : MonoSingleton<MapGrid> {
       gridData[position] = cell;
     }
     return gridData[position];
+  }
+
+  public bool GridNotNull(Vector2Int position) {
+    return GetCellDataNotNull(position).handlerHead != null;
   }
 
 }

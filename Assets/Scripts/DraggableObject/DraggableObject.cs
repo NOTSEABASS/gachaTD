@@ -23,6 +23,7 @@ public class DraggableObject : MonoBehaviour, IOnLeftMouseDown, IOnMouseExecutin
     }
 
     public abstract void OnMouseDrag(Vector2 mousePosition);
+    public abstract void Recalculate();
     public abstract Vector3 GetPlacePosition();
   }
   #endregion
@@ -60,6 +61,10 @@ public class DraggableObject : MonoBehaviour, IOnLeftMouseDown, IOnMouseExecutin
       handler.OnDragEnd();
     }
     moveUniqueTween.SetAndPlay(GetMoveTween(GetPlacePosition()), finishLastOne: false);
+  }
+
+  public void RePlace() {
+    positionHandler.Recalculate();
   }
 
   private Vector3 GetDraggingPosition() {

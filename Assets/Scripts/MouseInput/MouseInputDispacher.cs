@@ -52,16 +52,4 @@ public class MouseInputDispacher : MonoBehaviour {
 public class MouseInputCallback : SerializableCallback<MouseInputArgument, MouseResult> { }
 
 
-[Serializable]
-public class MouseInputArgument : UnityEngine.Object {
-  public Vector2 mousePosition;
-  [SerializeField]
-  public MouseInput.MouseState leftState;
-  public MouseInput.MouseState rightState;
 
-  public MouseInputArgument(MouseInput.MouseState leftState, MouseInput.MouseState rightState) {
-    this.leftState = leftState;
-    this.rightState = rightState;
-  }
-
-}

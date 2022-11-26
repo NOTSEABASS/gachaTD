@@ -16,4 +16,6 @@ public abstract class TowerBase : MonoBehaviour {
       return dataPtr;
     }
   }
+
+  public abstract void OnDataChange(TowerData data);
 }

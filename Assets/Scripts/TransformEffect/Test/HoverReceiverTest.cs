@@ -67,7 +67,7 @@ public class HoverReceiverTest : MonoBehaviour, IOnLeftMouseDown, IOnMouseExecut
   }
 
   public MouseResult OnMouseExecuting(MouseInputArgument arg) {
-    if (arg.leftState == MouseInput.MouseState.MouseUp) {
+    if (arg.leftState == MouseInput.State.Up) {
       isDragging = false;
       outline.enabled = false;
       return MouseResult.None;

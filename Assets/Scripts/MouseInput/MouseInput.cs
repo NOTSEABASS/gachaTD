@@ -3,52 +3,110 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Object = UnityEngine.Object;
+using UnityEditor.Experimental.GraphView;
+using UnityEngine.EventSystems;
+
+[Serializable]
+public class MouseInputArgument : UnityEngine.Object {
+  public Vector2 mousePosition;
+  [SerializeField]
+  public MouseInput.State leftState;
+  public MouseInput.State rightState;
+
+  public MouseInputArgument(MouseInput.State leftState, MouseInput.State rightState) {
+    this.leftState = leftState;
+    this.rightState = rightState;
+  }
+
+}
 
 public class MouseInput : MonoSingleton<MouseInput> {
-  public enum MouseState {
-    MouseDown,
-    MousePress,
-    MouseUp,
-    MouseHover
+  public interface IMouseInputHandler { }
+
+  public enum State {
+    Down,
+    Press,
+    Up,
+    Hover
   }
 
   private const int maxRayDistance = 1000;
 
-  private MouseState leftState;
-  private MouseState rightState;
+  [SerializeField, Min(0)]
+  private float dragThreshold;
+  private Vector2 dragOriginPosition;
+
+  private State leftState;
+  private State rightState;
+
+  private List<IOnMouseDrag> dragHandlersCache = new List<IOnMouseDrag>();
   private List<IOnMouseExecuting> executings = new List<IOnMouseExecuting>();
 
+  private RaycastHit[] rayHitBuffer;
+
   void Start() {
-    leftState = MouseState.MouseHover;
-    rightState = MouseState.MouseHover;
+    leftState = State.Hover;
+    rightState = State.Hover;
   }
 
   void Update() {
     UpdateState(ref leftState, 0);
     UpdateState(ref rightState, 1);
 
-    Execute();
-  }
+    var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+    rayHitBuffer = Physics.RaycastAll(ray, maxRayDistance);
+    Array.Sort(rayHitBuffer, (x, y) => x.distance.CompareTo(y.distance));
 
-  private void UpdateState(ref MouseState state, int button) {
-    if (Input.GetMouseButtonDown(button)) {
-      state = MouseState.MouseDown;
-    }
-    else if (Input.GetMouseButtonUp(button)) {
-      state = MouseState.MouseUp;
-    }
-    else if (Input.GetMouseButton(button)) {
-      state = MouseState.MousePress;
-    }
-    else {
-      state = MouseState.MouseHover;
-    }
-  }
-
-  private void Execute() {
     var arg = new MouseInputArgument(leftState, rightState);
     arg.mousePosition = Input.mousePosition;
 
+    UpdateExcuting(arg);
+
+    if (!EventSystem.current.IsPointerOverGameObject()) {
+      ExecuteDragInput(arg);
+      ExecuteMouseButtonInput(arg);
+    }
+  }
+
+  private void UpdateState(ref State state, int button) {
+    if (Input.GetMouseButtonDown(button)) {
+      state = State.Down;
+    } else if (Input.GetMouseButtonUp(button)) {
+      state = State.Up;
+    } else if (Input.GetMouseButton(button)) {
+      state = State.Press;
+    } else {
+      state = State.Hover;
+    }
+  }
+
+  private void ExecuteDragInput(MouseInputArgument arg) {
+    if (leftState == State.Down) {
+      foreach (var hit in rayHitBuffer) {
+        dragHandlersCache.AddRange(hit.collider.GetComponentsInChildren<IOnMouseDrag>());
+        dragOriginPosition = Input.mousePosition.XY();
+      }
+    } else if (leftState != State.Press) {
+      dragHandlersCache.Clear();
+    } else if (leftState == State.Press) {
+      var cur = Input.mousePosition;
+      if (Vector2.Distance(dragOriginPosition, cur) > dragThreshold) {
+        foreach (var dragHandler in dragHandlersCache) {
+          var res = dragHandler.OnMouseStartDrag(arg);
+          if (res.HasFlag(MouseResult.Executing) &&
+              dragHandler is IOnMouseExecuting me) {
+            executings.Add(me);
+          }
+          if (res.HasFlag(MouseResult.BreakBehind)) {
+            break;
+          }
+        }
+        dragHandlersCache.Clear();
+      }
+    }
+  }
+
+  private void UpdateExcuting(MouseInputArgument arg) {
     for (int i = 0; i < executings.Count; i++) {
       var result = executings[i].OnMouseExecuting(arg);
       // executing handlers should not break other executing
@@ -58,12 +116,11 @@ public class MouseInput : MonoSingleton<MouseInput> {
         i--;
       }
     }
+  }
 
-    var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-    var hits = Physics.RaycastAll(ray, maxRayDistance);
-    Array.Sort(hits, (x, y) => x.distance.CompareTo(y.distance));
+  private void ExecuteMouseButtonInput(MouseInputArgument arg) {
 
-    foreach (var hit in hits) {
+    foreach (var hit in rayHitBuffer) {
       var res = CollectInterfacesAndInvoke(hit.transform, arg);
       if (res.HasFlag(MouseResult.BreakBehind)) {
         break;
@@ -78,30 +135,30 @@ public class MouseInput : MonoSingleton<MouseInput> {
     res |= CollectAndInvoke<IOnMouseHover>(transform, arg);
 
     switch (leftState) {
-      case MouseState.MouseDown:
+      case State.Down:
         res |= CollectAndInvoke<IOnLeftMouseDown>(transform, arg);
         break;
-      case MouseState.MousePress:
+      case State.Press:
         res |= CollectAndInvoke<IOnLeftMousePress>(transform, arg);
         break;
-      case MouseState.MouseUp:
+      case State.Up:
         res |= CollectAndInvoke<IOnLeftMouseUp>(transform, arg);
         break;
     }
 
     switch (rightState) {
-      case MouseState.MouseDown:
+      case State.Down:
         res |= CollectAndInvoke<IOnRightMouseDown>(transform, arg);
         break;
-      case MouseState.MousePress:
+      case State.Press:
         res |= CollectAndInvoke<IOnRightMousePress>(transform, arg);
         break;
-      case MouseState.MouseUp:
+      case State.Up:
         res |= CollectAndInvoke<IOnRightMouseUp>(transform, arg);
         break;
     }
 
-    if (leftState == MouseState.MouseHover) {
+    if (leftState == State.Hover) {
       res |= CollectAndInvoke<IOnMousePureHover>(transform, arg);
     }
     return res;
@@ -116,8 +173,7 @@ public class MouseInput : MonoSingleton<MouseInput> {
       if (res.HasFlag(MouseResult.Executing)) {
         if (handler is IOnMouseExecuting me) {
           executings.Add(me);
-        }
-        else {
+        } else {
           Debug.LogError(handler.GetType());
         }
       }

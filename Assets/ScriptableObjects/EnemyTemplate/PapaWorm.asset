@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: PapaWorm
   m_EditorClassIdentifier: 
   enemyData:
-    hp: 10
+    enemyName: 0
+    hp: 100

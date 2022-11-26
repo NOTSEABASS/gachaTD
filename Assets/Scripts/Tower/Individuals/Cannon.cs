@@ -11,13 +11,13 @@ public class Cannon : TowerBase {
   private FixedClock attackClock = new FixedClock();
   private CircleDetector attackDetector = new CircleDetector();
 
-  public void OnDataChange(TowerData data) {
-    attackClock.interval = data.atkInterval;
+  public override void OnDataChange(TowerData data) {
+    attackClock.freq = data.atkFreq;
     attackDetector.radius = data.atkRadius;
   }
 
   private void FixedUpdate() {
-    attackClock.OnFixedUpdate();
+    attackClock.Update(Time.fixedDeltaTime);
 
     var detectParam = new DetectParam {
       position = transform.position,
@@ -32,7 +32,7 @@ public class Cannon : TowerBase {
     }
 
     if (detetecResult.singleResult != null && attackClock.IsReady()) {
-      attackClock.Reset();
+      attackClock.OnTrigger();
       var damageEvent = new TowerDamageEvent() {
         type = TowerDamageType.Attack,
         towerPtr = DataPtr

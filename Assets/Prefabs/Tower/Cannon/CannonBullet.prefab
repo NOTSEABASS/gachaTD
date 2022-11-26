@@ -155,7 +155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   poolName: 
   utilFunction:
-    releaseAfterTime: 1
+    useReleaseAfterTime: 0
     releaseTime: 1
     useCallbackEvent: 0
     onCreate:

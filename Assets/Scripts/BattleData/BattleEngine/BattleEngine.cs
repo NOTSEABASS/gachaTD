@@ -33,6 +33,7 @@ public class BattleEngine : MonoSingleton<BattleEngine> {
   protected override void Awake() {
     base.Awake();
     AddSystem(new TowerDamageSystem());
+    AddSystem(new EnemyDeathSystem());
   }
 
   private void Update() {

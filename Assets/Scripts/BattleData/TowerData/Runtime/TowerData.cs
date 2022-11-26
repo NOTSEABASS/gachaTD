@@ -9,7 +9,7 @@ public struct TowerData : IData<TowerData> {
 
   public int hp;
   public int atk;
-  public float atkInterval;
+  public float atkFreq;
   public float atkRadius;
 
   public bool HasDiff(TowerData data) {
@@ -22,5 +22,6 @@ public struct TowerData : IData<TowerData> {
 }
 
 public enum TowerDataTemplateId {
-  Cannon
+  Cannon,
+  Buddy
 }

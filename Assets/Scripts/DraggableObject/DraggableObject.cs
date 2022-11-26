@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-public class DraggableObject : MonoBehaviour, IOnLeftMouseDown, IOnMouseExecuting {
+public class DraggableObject : MonoBehaviour, IOnMouseDrag, IOnMouseExecuting {
   #region Inner Class
   public interface IOnDragHandler {
     void OnDrag();
@@ -79,17 +79,13 @@ public class DraggableObject : MonoBehaviour, IOnLeftMouseDown, IOnMouseExecutin
     return transform.DOLocalMove(position, MOVE_DURATION).SetEase(Ease.OutQuint);
   }
 
-  public MouseResult OnLeftMouseDown(MouseInputArgument arg) {
-    return MouseResult.Executing | MouseResult.BreakBehind;
-  }
-
   public MouseResult OnMouseExecuting(MouseInputArgument arg) {
     if (positionHandler == null) {
       Debug.LogError("have no valid position handler");
       return MouseResult.None;
     }
 
-    if (arg.leftState == MouseInput.MouseState.MouseUp) {
+    if (arg.leftState == MouseInput.State.Up) {
       Place();
       return MouseResult.None;
     }
@@ -97,4 +93,8 @@ public class DraggableObject : MonoBehaviour, IOnLeftMouseDown, IOnMouseExecutin
     return MouseResult.Executing;
   }
 
+  public MouseResult OnMouseStartDrag(MouseInputArgument arg) {
+    print(1);
+    return MouseResult.Executing | MouseResult.BreakBehind;
+  }
 }

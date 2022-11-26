@@ -15,3 +15,5 @@ MonoBehaviour:
   list:
   - key: 0
     val: {fileID: 11400000, guid: a9ebbaffb7481da43b2b3744ce779d6a, type: 2}
+  - key: 1
+    val: {fileID: 11400000, guid: 252c25e02fad76e4e813a20f26325e92, type: 2}

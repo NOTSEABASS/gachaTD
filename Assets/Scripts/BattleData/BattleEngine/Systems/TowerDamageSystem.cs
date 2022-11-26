@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using UnityEngine;
 
 public class TowerDamageSystem : BattleEngine.System {
@@ -18,7 +19,11 @@ public class TowerDamageSystem : BattleEngine.System {
 
     if (tde.type == TowerDamageType.Attack) {
       enemyData.hp -= towerData.atk;
+      if (enemyData.hp <= 0) {
+        enemyData.isDead = true;
+      }
       enemyData.UpdateVersion();
+
       enemyDataHub.SetData(tde.enemyPtr, enemyData);
     }
   }

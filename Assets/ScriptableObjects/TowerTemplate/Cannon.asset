@@ -15,5 +15,5 @@ MonoBehaviour:
   towerData:
     hp: 0
     atk: 1
-    atkInterval: 0.1
+    atkFreq: 3
     atkRadius: 5

@@ -11,6 +11,7 @@ public class MouseInputDispacher : MonoBehaviour {
   public List<MouseInputCallback> onRightMouseDown;
   public List<MouseInputCallback> onRightMousePress;
   public List<MouseInputCallback> onRightMouseUp;
+  public List<MouseInputCallback> onMouseExit;
   public List<MouseInputCallback> onMouseHover;
   public List<MouseInputCallback> onMouseExecuting;
 

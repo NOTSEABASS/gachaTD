@@ -56,6 +56,15 @@ public static class TransformEffects {
     return sequence;
   }
   
+  public static Tween Pressed(this Transform transform,float strength, float time) {
+    Sequence sequence = DOTween.Sequence();
+    var y = transform.position.y;
+    var down = transform.DOMoveY(y-strength, 0.1f);
+    var up = transform.DOMoveY(y, 0.1f);
+    sequence.Append(down).Append(up);
+    return sequence;
+  }
+  
   public static Tween ThrowTo(this Transform transform, Vector3 position,float time)
   {
     Sequence sequence = DOTween.Sequence();

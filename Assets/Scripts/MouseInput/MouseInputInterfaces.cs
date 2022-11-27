@@ -52,6 +52,9 @@ public interface IOnMousePureHover : MouseInput.IMouseInputHandler {
   public MouseResult OnMousePureHover(MouseInputArgument arg);
 }
 
+public interface IOnMouseExit : MouseInput.IMouseInputHandler {
+  public MouseResult OnMouseExiting(MouseInputArgument arg);
+}
 public interface IOnMouseExecuting : MouseInput.IMouseInputHandler {
   public MouseResult OnMouseExecuting(MouseInputArgument arg);
 
@@ -60,3 +63,4 @@ public interface IOnMouseExecuting : MouseInput.IMouseInputHandler {
 public interface IOnMouseDrag : MouseInput.IMouseInputHandler {
   public MouseResult OnMouseStartDrag(MouseInputArgument arg);
 }
+

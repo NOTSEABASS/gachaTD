@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 using Object = UnityEngine.Object;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine.EventSystems;
@@ -42,20 +43,38 @@ public class MouseInput : MonoSingleton<MouseInput> {
   private List<IOnMouseDrag> dragHandlersCache = new List<IOnMouseDrag>();
   private List<IOnMouseExecuting> executings = new List<IOnMouseExecuting>();
 
+  private Dictionary<Transform,bool> mouseHoverCache;
+  public List<Transform> Cache;
+
   private RaycastHit[] rayHitBuffer;
 
   void Start() {
     leftState = State.Hover;
     rightState = State.Hover;
+    mouseHoverCache = new Dictionary<Transform, bool>();
+    Cache = new List<Transform>();
   }
 
   void Update() {
     UpdateState(ref leftState, 0);
     UpdateState(ref rightState, 1);
 
+    Transform[] transforms = mouseHoverCache.Keys.ToArray();
+    foreach (var element in transforms) {
+      mouseHoverCache[element] = false;
+    }
+    Cache.Clear();
+    
     var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
     rayHitBuffer = Physics.RaycastAll(ray, maxRayDistance);
     Array.Sort(rayHitBuffer, (x, y) => x.distance.CompareTo(y.distance));
+
+    foreach (var hitInfo in rayHitBuffer) {
+      var target = hitInfo.transform;
+      mouseHoverCache[target] = true;
+    }
+    
+    
 
     var arg = new MouseInputArgument(leftState, rightState);
     arg.mousePosition = Input.mousePosition;
@@ -65,6 +84,15 @@ public class MouseInput : MonoSingleton<MouseInput> {
     if (!EventSystem.current.IsPointerOverGameObject()) {
       ExecuteDragInput(arg);
       ExecuteMouseButtonInput(arg);
+    }
+
+    var temp = new Dictionary<Transform, bool>(mouseHoverCache) ;
+    foreach (var cache in temp) {
+      Cache.Add(cache.Key);
+      if (!mouseHoverCache[cache.Key]) {
+        CollectAndInvoke<IOnMouseExit>(cache.Key, arg);
+        mouseHoverCache.Remove(cache.Key);
+      }
     }
   }
 
@@ -119,7 +147,6 @@ public class MouseInput : MonoSingleton<MouseInput> {
   }
 
   private void ExecuteMouseButtonInput(MouseInputArgument arg) {
-
     foreach (var hit in rayHitBuffer) {
       var res = CollectInterfacesAndInvoke(hit.transform, arg);
       if (res.HasFlag(MouseResult.BreakBehind)) {
@@ -202,6 +229,7 @@ public class MouseInput : MonoSingleton<MouseInput> {
     invokers[typeof(IOnRightMouseUp)] = (h, arg) => ((IOnRightMouseUp)h).OnRightMouseUp(arg);
     invokers[typeof(IOnMouseHover)] = (h, arg) => ((IOnMouseHover)h).OnMouseHover(arg);
     invokers[typeof(IOnMousePureHover)] = (h, arg) => ((IOnMousePureHover)h).OnMousePureHover(arg);
+    invokers[typeof(IOnMouseExit)] = (h, arg) => ((IOnMouseExit)h).OnMouseExiting(arg);
   }
   private MouseResult InvokeOnSpecificInterface<T>(IMouseInputHandler handler, MouseInputArgument arg) {
     InitInvokersIfNot();

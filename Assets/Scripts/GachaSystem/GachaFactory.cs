@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 using Random = UnityEngine.Random;
 
 public class GachaFactory : MonoSingleton<GachaFactory> {
@@ -16,29 +17,30 @@ public class GachaFactory : MonoSingleton<GachaFactory> {
     _randomGeneratorUtil.ConsturctDataFromDict(test);
   }
   //Test Funtion
-  public void GachaGenerator() {
+  public GameObject GachaGenerator() {
     var tag = _randomGeneratorUtil.GetRandomMetaData();
     switch (tag) {
       case "A" :
-        GenrateObject(0);
-        break;
+        return GenerateGachaObject(0);
       case "B" :
-        GenrateObject(1);
-        break;
+        return GenerateGachaObject(1);
       case "C" :
-        GenrateObject(2);
-        break;
+        return GenerateGachaObject(2);
       case "D" :
-        GenrateObject(3);
-        break;
+        return GenerateGachaObject(3);
       case "E" :
-        GenrateObject(4);
-        break;
+        return GenerateGachaObject(4);
     }
-   
+
+    return null;
   }
 
-  private void GenrateObject(int _index) {
+  private GameObject GenerateGachaObject(int _index) {
+    GameObject gachaObj = Instantiate(testResources[_index], new Vector3(0, 0, 0), Quaternion.identity);
+    return gachaObj;
+  }
+
+  private void GenerateObjectInGrid(int _index) {
     GameObject newTower = Instantiate(testResources[_index], new Vector3(0, 0, 0), Quaternion.identity);
     UniqueTween moveUniqueTween = new UniqueTween();
     var targetPos = new Vector3(Random.Range(-1, 1), 0, Random.Range(-1, 1));

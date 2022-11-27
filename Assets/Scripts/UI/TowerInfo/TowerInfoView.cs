@@ -9,10 +9,15 @@ public class TowerInfoView : MonoSingleton<TowerInfoView> {
   private RectTransform viewContainer;
   [SerializeField]
   private float showTime;
+  [SerializeField]
+  private TowerBarView towerBarView;
+  [SerializeField]
+  private TowerPropertyGroupView propertyGroupView;
 
   private bool isShow;
 
   public void SetShow(bool isShow) {
+    print(isShow);
     if (isShow != this.isShow) {
       this.isShow = isShow;
       if (isShow) {
@@ -22,4 +27,11 @@ public class TowerInfoView : MonoSingleton<TowerInfoView> {
       }
     }
   }
+
+  public void Render(TowerData data) {
+    towerBarView.Render(data);
+    propertyGroupView.Render(data);
+  }
+
+
 }

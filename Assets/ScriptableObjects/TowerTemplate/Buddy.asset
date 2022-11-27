@@ -13,7 +13,11 @@ MonoBehaviour:
   m_Name: Buddy
   m_EditorClassIdentifier: 
   towerData:
-    hp: 0
+    hp: 10
+    maxHp: 10
     atk: 1
     atkFreq: 2
-    atkRadius: 5
+    atkRadius: 2.5
+    energy: 10
+    maxEnergy: 10
+    energyRecover: 0

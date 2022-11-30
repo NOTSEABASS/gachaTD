@@ -12,7 +12,7 @@ public enum MouseResult {
 
 
 public interface IOnLeftMouseDown : MouseInput.IMouseInputHandler {
-  public MouseResult OnLeftMouseUp(MouseInputArgument arg);
+  public MouseResult OnLeftMouseDown(MouseInputArgument arg);
 
 }
 
@@ -28,7 +28,7 @@ public interface IOnLeftMouseUp : MouseInput.IMouseInputHandler {
 }
 
 public interface IOnRightMouseDown : MouseInput.IMouseInputHandler {
-  public MouseResult OnRightMouseUp(MouseInputArgument arg);
+  public MouseResult OnRightMouseDown(MouseInputArgument arg);
 
 }
 

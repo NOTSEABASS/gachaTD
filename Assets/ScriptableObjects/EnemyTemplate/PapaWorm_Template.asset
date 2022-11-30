@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5607d27beb62cfd4daa7889a290d1090, type: 3}
-  m_Name: PapaWorm
+  m_Name: PapaWorm_Template
   m_EditorClassIdentifier: 
   enemyData:
     enemyName: 0
     hp: 100
+    maxHp: 100

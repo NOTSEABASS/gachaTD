@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b189f2408af8b33459ab545053743c0f, type: 3}
+  m_Name: '#_Tower_Resources_Set'
+  m_EditorClassIdentifier: 
+  list:
+  - key: 0
+    val: {fileID: 11400000, guid: 982105a1954d9a442a86628e4a9c0d16, type: 2}

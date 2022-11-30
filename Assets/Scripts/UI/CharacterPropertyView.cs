@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using System.Runtime.Remoting.Channels;
 
-public class TowerPropertyView : MonoBehaviour {
+public class CharacterPropertyView : MonoBehaviour {
   public enum PropertyObject {
     AttackValue,
     AttackFreq,

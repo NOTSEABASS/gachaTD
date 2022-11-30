@@ -3,38 +3,20 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 
-public class TowerPropertyGroupView : MonoBehaviour {
-  [SerializeField]
-  private TowerPropertyView propertyViewPrefab;
-  [SerializeField]
-  private Transform propertyContainer;
-
-  private List<TowerPropertyView> propertyViews = new List<TowerPropertyView>();
-  private int propertyPointer;
-
+public class TowerPropertyGroupView : CharacterPropertyGroupView {
   public void Render(TowerData data) {
-    foreach (var propertyView in propertyViews) {
-      propertyView.Clear();
-    }
-    propertyPointer = 0;
+    Clear();
 
     var property = GetPropertyViewByPointer();
-    property.Render(TowerPropertyView.PropertyObject.AttackValue, data.atk);
+    property.Render(CharacterPropertyView.PropertyObject.AttackValue, data.atk);
 
     property = GetPropertyViewByPointer();
-    property.Render(TowerPropertyView.PropertyObject.AttackRadius, data.atkRadius);
+    property.Render(CharacterPropertyView.PropertyObject.AttackRadius, data.atkRadius);
 
     property = GetPropertyViewByPointer();
-    property.Render(TowerPropertyView.PropertyObject.AttackFreq, data.atkFreq);
+    property.Render(CharacterPropertyView.PropertyObject.AttackFreq, data.atkFreq);
 
     property = GetPropertyViewByPointer();
-    property.Render(TowerPropertyView.PropertyObject.EnergyRecover, data.energyRecover);
-  }
-
-  private TowerPropertyView GetPropertyViewByPointer() {
-    if (propertyPointer >= propertyViews.Count) {
-      propertyViews.Add(Instantiate(propertyViewPrefab, propertyContainer));
-    }
-    return propertyViews[propertyPointer++];
+    property.Render(CharacterPropertyView.PropertyObject.EnergyRecover, data.energyRecover);
   }
 }

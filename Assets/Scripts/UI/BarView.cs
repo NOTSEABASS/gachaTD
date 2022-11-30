@@ -14,8 +14,6 @@ public class BarView : MonoBehaviour {
   [SerializeField]
   private TMP_Text currentText;
   [SerializeField]
-  private TMP_Text maxText;
-  [SerializeField]
   private RectTransform scale;
 
   public void Render(Model model) {
@@ -26,22 +24,13 @@ public class BarView : MonoBehaviour {
       normalized = (float)model.current / model.max;
     }
     if (currentText != null) {
-      currentText.text = model.current.ToString();
-    }
-    if (maxText != null) {
-      maxText.text = model.max.ToString();
+      currentText.text = $"{model.current} / {model.max}";
     }
     if (scale != null) {
-      scale.DOScaleZ(normalized, 0.17f);
+      scale.DOScaleX(normalized, 0.17f).Play();
     }
-    StartCoroutine(Refresh());
   }
 
-  private IEnumerator Refresh() {
-    currentText.enabled = false;
-    yield return null;
-    currentText.enabled = true;
-  }
 
 
 }

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-//Åö×²´¥·¢¹æÔò£¬Ö»Åö×²Ò»´Î¡¢³ÖĞøÅö×²¡¢ÓĞÏŞ´ÎÅö×²µÈ
+//ç¢°æ’è§¦å‘è§„åˆ™ï¼Œåªç¢°æ’ä¸€æ¬¡ã€æŒç»­ç¢°æ’ã€æœ‰é™æ¬¡ç¢°æ’ç­‰
 public enum TriggerRule {
   SingleUse
 }
@@ -28,7 +28,7 @@ public class TriggerCallback : MonoBehaviour {
   [SerializeField]
   private UnityEvent<TriggerContext> localCallback;
 
-  private Action<TriggerContext> dynCallback; // ´úÂëÖĞÖ¸¶¨µÄ»Øµ÷
+  private Action<TriggerContext> dynCallback; // ä»£ç ä¸­æŒ‡å®šçš„å›è°ƒ
 
   public void SetDynCallback(Action<TriggerContext> callback) {
     dynCallback = callback;

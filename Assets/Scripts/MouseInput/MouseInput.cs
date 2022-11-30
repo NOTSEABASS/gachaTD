@@ -221,10 +221,10 @@ public class MouseInput : MonoSingleton<MouseInput> {
     if (hasInitInvokers) {
       return;
     }
-    invokers[typeof(IOnLeftMouseDown)] = (h, arg) => ((IOnLeftMouseDown)h).OnLeftMouseUp(arg);
+    invokers[typeof(IOnLeftMouseDown)] = (h, arg) => ((IOnLeftMouseDown)h).OnLeftMouseDown(arg);
     invokers[typeof(IOnLeftMousePress)] = (h, arg) => ((IOnLeftMousePress)h).OnLeftMousePress(arg);
     invokers[typeof(IOnLeftMouseUp)] = (h, arg) => ((IOnLeftMouseUp)h).OnLeftMouseUp(arg);
-    invokers[typeof(IOnRightMouseDown)] = (h, arg) => ((IOnRightMouseDown)h).OnRightMouseUp(arg);
+    invokers[typeof(IOnRightMouseDown)] = (h, arg) => ((IOnRightMouseDown)h).OnRightMouseDown(arg);
     invokers[typeof(IOnRightMousePress)] = (h, arg) => ((IOnRightMousePress)h).OnRightMousePress(arg);
     invokers[typeof(IOnRightMouseUp)] = (h, arg) => ((IOnRightMouseUp)h).OnRightMouseUp(arg);
     invokers[typeof(IOnMouseHover)] = (h, arg) => ((IOnMouseHover)h).OnMouseHover(arg);

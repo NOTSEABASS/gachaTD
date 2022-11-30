@@ -11,8 +11,8 @@ public class EnemyDataBinder : EnemyDataHub.Binder, IPoolCallback {
   [SerializeField]
   private UnityEvent<EnemyData> onDataChange;
 
-  private bool isRegistered; //ÊÇ·ñ×¢²áÁËÊı¾İ£¬Ò»¸ö¶ÔÏóµÄÉúÃüÖÜÆÚÄÚÖ»×¢²áÒ»´Î
-  private bool isDataLoaded; //ÊÇ·ñ¶ÁÈ¡ÁËÊı¾İ£¬±»¶ÔÏó³Ø¸´ÓÃÊ±ĞèÒª¶ÁÈ¡¶à´ÎÊı¾İ
+  private bool isRegistered; //æ˜¯å¦æ³¨å†Œäº†æ•°æ®ï¼Œä¸€ä¸ªå¯¹è±¡çš„ç”Ÿå‘½å‘¨æœŸå†…åªæ³¨å†Œä¸€æ¬¡
+  private bool isDataLoaded; //æ˜¯å¦è¯»å–äº†æ•°æ®ï¼Œè¢«å¯¹è±¡æ± å¤ç”¨æ—¶éœ€è¦è¯»å–å¤šæ¬¡æ•°æ®
 
   protected override void OnDataUpdate(EnemyData data) {
     onDataChange.Invoke(Data);
@@ -43,7 +43,7 @@ public class EnemyDataBinder : EnemyDataHub.Binder, IPoolCallback {
 
   }
 
-  public void OnRelease() {
+  public void OnGet() {
     isDataLoaded = false;
   }
 

@@ -25,6 +25,7 @@ namespace DataHub {
     }
 
     public void RegisterData(int ptr, TData data) {
+      OnBeforeRegisterData(ptr, ref data);
       core.RegisterData(ptr, data);
     }
 
@@ -33,7 +34,16 @@ namespace DataHub {
     }
 
     public void SetData(int ptr, TData data) {
+      OnBeforeSetData(ptr, ref data);
       core.SetData(ptr, data);
+    }
+
+    protected virtual void OnBeforeRegisterData(int ptr,ref TData data) {
+
+    }
+
+    protected virtual void OnBeforeSetData(int ptr,ref TData data) {
+
     }
   }
 }

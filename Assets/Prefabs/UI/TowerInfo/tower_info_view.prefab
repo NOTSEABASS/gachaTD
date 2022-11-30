@@ -52,10 +52,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6991dfd5229c7c4489572b60aa784e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewContainer: {fileID: 0}
-  showTime: 0.17
   towerBarView: {fileID: 2478786020874766706}
   propertyGroupView: {fileID: 2478786021879363183}
+  towerNameText: {fileID: 2478786021527742355}
 --- !u!1 &2478786020874766700
 GameObject:
   m_ObjectHideFlags: 0
@@ -256,7 +255,7 @@ GameObject:
   - component: {fileID: 2478786021879363182}
   - component: {fileID: 2478786021879363183}
   m_Layer: 5
-  m_Name: tower_property_container
+  m_Name: property_container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

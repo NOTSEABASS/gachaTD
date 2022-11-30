@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac4e0dacbcea08e4e976e7edd2d9d956, type: 3}
-  m_Name: Cannon
+  m_Script: {fileID: 11500000, guid: e26655774800e9944893d8cfa7cfe48f, type: 3}
+  m_Name: '#_Enemy_Resources_Set'
   m_EditorClassIdentifier: 
-  towerData:
-    hp: 0
-    atk: 1
-    atkFreq: 3
-    atkRadius: 5
+  list:
+  - key: 0
+    val: {fileID: 11400000, guid: 7eb194d7fe9754f469f0b7540a7bdb44, type: 2}

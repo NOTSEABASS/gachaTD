@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ceebc8c9c5992a40aeaa4dcd8e438b5, type: 3}
-  m_Name: Tower Template Set
+  m_Script: {fileID: 11500000, guid: 0284140a895dfdd4399925f623435cd0, type: 3}
+  m_Name: PapaWorm_Resources
   m_EditorClassIdentifier: 
-  list:
-  - key: 0
-    val: {fileID: 11400000, guid: a9ebbaffb7481da43b2b3744ce779d6a, type: 2}
-  - key: 1
-    val: {fileID: 11400000, guid: 252c25e02fad76e4e813a20f26325e92, type: 2}
+  poolName: papaworm
+  displayName: "\u6C34\u8548\u517D"

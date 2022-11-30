@@ -9,15 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac4e0dacbcea08e4e976e7edd2d9d956, type: 3}
-  m_Name: Buddy
+  m_Script: {fileID: 11500000, guid: 9ceebc8c9c5992a40aeaa4dcd8e438b5, type: 3}
+  m_Name: '#_Tower_ Template_Set'
   m_EditorClassIdentifier: 
-  towerData:
-    hp: 10
-    maxHp: 10
-    atk: 1
-    atkFreq: 2
-    atkRadius: 2.5
-    energy: 10
-    maxEnergy: 10
-    energyRecover: 0
+  list:
+  - key: 0
+    val: {fileID: 11400000, guid: a9ebbaffb7481da43b2b3744ce779d6a, type: 2}
+  - key: 1
+    val: {fileID: 11400000, guid: 252c25e02fad76e4e813a20f26325e92, type: 2}

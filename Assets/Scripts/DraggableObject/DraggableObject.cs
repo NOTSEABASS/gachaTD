@@ -94,7 +94,6 @@ public class DraggableObject : MonoBehaviour, IOnMouseDrag, IOnMouseExecuting {
   }
 
   public MouseResult OnMouseStartDrag(MouseInputArgument arg) {
-    print(1);
     return MouseResult.Executing | MouseResult.BreakBehind;
   }
 }

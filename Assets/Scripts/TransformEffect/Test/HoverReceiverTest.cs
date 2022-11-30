@@ -60,7 +60,7 @@ public class HoverReceiverTest : MonoBehaviour, IOnLeftMouseDown, IOnMouseExecut
     return 0;
   }
 
-  public MouseResult OnLeftMouseUp(MouseInputArgument arg) {
+  public MouseResult OnLeftMouseDown(MouseInputArgument arg) {
     isDragging = true;
     outline.enabled = true;
     return MouseResult.Executing;

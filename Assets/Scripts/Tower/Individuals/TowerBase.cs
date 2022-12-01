@@ -7,7 +7,7 @@ public abstract class TowerBase : MonoBehaviour {
   private int dataPtr;
   private bool hasDataPtr;
 
-  protected int DataPtr {
+  protected int cachedDataPtr {
     get {
       if (!hasDataPtr) {
         hasDataPtr = true;
@@ -15,6 +15,10 @@ public abstract class TowerBase : MonoBehaviour {
       }
       return dataPtr;
     }
+  }
+
+  protected virtual void Awake() {
+    LifeCollector<TowerBase>.AddObject(this);
   }
 
   public abstract void OnDataChange(TowerData data);

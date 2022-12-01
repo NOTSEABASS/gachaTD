@@ -24,6 +24,8 @@ public class FixedClock {
 
   public float normalizedTime => Mathf.Clamp01(m_counter / Mathf.Max(m_interval, 0.0001f));
 
+  public bool isReady => m_counter >= m_interval;
+
   public void SetInterval(float interval) {
     this.m_interval = interval;
   }
@@ -36,9 +38,7 @@ public class FixedClock {
     m_counter = 0;
   }
 
-  public bool IsReady() {
-    return m_counter >= m_interval;
-  }
+
 
 
 }

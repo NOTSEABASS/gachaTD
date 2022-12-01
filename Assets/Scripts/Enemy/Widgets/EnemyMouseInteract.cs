@@ -20,7 +20,6 @@ public class EnemyMouseInteract : MonoBehaviour, IOnLeftMouseUp, IOnMouseHover {
     if (EnemyDataHub.Instance.TryGetData(ptr, out var data)) {
       InfoPanelView.Instance.SetShow(true);
       InfoPanelView.Instance.ShowViewObject(InfoPanelView.Object.EnemyInfo);
-      print(EnemyInfoView.Instance);
       EnemyInfoView.Instance.Render(data);
     }
     return MouseResult.BreakBehind;

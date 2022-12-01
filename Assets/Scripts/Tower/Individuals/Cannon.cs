@@ -31,11 +31,11 @@ public class Cannon : TowerBase {
       rotationAiming.Aim(detetecResult.singleResult);
     }
 
-    if (detetecResult.singleResult != null && attackClock.IsReady()) {
+    if (detetecResult.singleResult != null && attackClock.isReady) {
       attackClock.OnTrigger();
       var damageEvent = new TowerDamageEvent() {
         type = TowerDamageType.Attack,
-        towerPtr = DataPtr
+        towerPtr = cachedDataPtr
       };
 
       var launchParam = new LaunchParam {

@@ -31,6 +31,7 @@ public class EnemyDataBinder : EnemyDataHub.Binder, IPoolCallback {
       }
 
       var data = EnemyDataLoader.Instance.LoadData(dataTemplate);
+      data.UpdateVersion();
       if (!isRegistered) {
         EnemyDataHub.Instance.RegisterData(DataPtr, data);
         isRegistered = true;

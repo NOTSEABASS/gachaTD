@@ -30,6 +30,9 @@ ModelImporter:
   - first:
       74: -8174297497461417188
     second: CharacterArmature|Yes
+  - first:
+      74: -7834884072323577149
+    second: CharacterArmature|Bite_Front
   externalObjects: {}
   materials:
     materialImportMode: 2

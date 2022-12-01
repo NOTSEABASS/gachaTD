@@ -45,7 +45,7 @@ public class DDAnimator : MonoBehaviour {
 
   public void Update() {
     if (status.mode == UpdateMode.Loop) {
-      SetNormalizedTime(status.loopTimer / status.loopTime);
+      Play(status.loopTimer / status.loopTime);
       status.loopTimer += Time.deltaTime;
       status.loopTimer %= status.loopTime;
     }
@@ -65,7 +65,7 @@ public class DDAnimator : MonoBehaviour {
   }
 
 
-  public bool SetState(string stateName, float stateOffset, float transitDuration = 0) {
+  public bool SetState(string stateName, float stateOffset, float transitDuration = 0.15f) {
     var statusIsEmpty = status.stateName == "";
     var equalToState = stateName == status.stateName && stateOffset == status.stateOffset;
     var equalToNextState = stateName == status.nextStateName && stateOffset == status.nextStateOffset;
@@ -104,7 +104,7 @@ public class DDAnimator : MonoBehaviour {
     return true;
   }
 
-  public void SetNormalizedTime(float normalizedTime) {
+  public void Play(float normalizedTime) {
     normalizedTime = Mathf.Clamp01(normalizedTime);
     if (status.isTransiting) {
       {

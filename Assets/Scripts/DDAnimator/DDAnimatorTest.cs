@@ -46,8 +46,8 @@ public class DDAnimatorTest : MonoBehaviour {
 
     if (isAttacking) {
       clock.Update(Time.deltaTime);
-      DDAnimator.SetNormalizedTime(clock.normalizedTime); //用逻辑计时器更新动画
-      if (clock.IsReady()) {
+      DDAnimator.Play(clock.normalizedTime); //用逻辑计时器更新动画
+      if (clock.isReady) {
         Launch();
         clock.OnTrigger();
       }
@@ -64,7 +64,7 @@ public class DDAnimatorTest : MonoBehaviour {
       if (DDAnimator.SetState("Idle", 0, transitionDuration)) {
         timer = 0;
       }
-      DDAnimator.SetNormalizedTime(timer / atkTime);
+      DDAnimator.Play(timer / atkTime);
       timer += Time.deltaTime;
       timer %= atkTime;
     }
@@ -73,7 +73,7 @@ public class DDAnimatorTest : MonoBehaviour {
       if (DDAnimator.SetState("Move", atkOffset, transitionDuration)) {
         timer = 0;
       }
-      DDAnimator.SetNormalizedTime(timer / atkTime);
+      DDAnimator.Play(timer / atkTime);
       timer += Time.deltaTime;
       timer %= atkTime;
     }

@@ -17,6 +17,8 @@ public struct EnemyData : IData<EnemyData> {
   public int atkRadius;
   public int atkFreq;
 
+  public float moveSpeed;
+
   [NonSerialized]
   public bool isDead; 
   [NonSerialized]

@@ -34,6 +34,7 @@ public class BattleEngine : MonoSingleton<BattleEngine> {
     base.Awake();
     AddSystem(new TowerDamageSystem());
     AddSystem(new EnemyDeathSystem());
+    AddSystem(new EnemyDamageSystem());
   }
 
   private void Update() {

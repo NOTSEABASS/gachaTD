@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: PapaWorm_Template
   m_EditorClassIdentifier: 
   enemyData:
-    enemyName: 0
+    name: 0
     hp: 100
     maxHp: 100
+    atk: 1
+    atkRadius: 1
+    atkFreq: 2
+    moveSpeed: 1

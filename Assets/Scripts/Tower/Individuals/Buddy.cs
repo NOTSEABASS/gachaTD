@@ -38,17 +38,17 @@ public class Buddy : TowerBase {
       rotationAiming.Aim(detetecResult.singleResult);
       DDAnimator.SetState("Slash", atkAnimationOffset, 0.25f);
       DDAnimator.SetUpdateMode(DDAnimator.UpdateMode.Manual);
-      DDAnimator.SetNormalizedTime(attackClock.normalizedTime);
+      DDAnimator.Play(attackClock.normalizedTime);
     } else {
       DDAnimator.SetState("Idle", 0, 0.25f);
       DDAnimator.SetUpdateMode(DDAnimator.UpdateMode.Loop, idleAnimationLoopTime);
     }
 
-    if (detetecResult.singleResult != null && attackClock.IsReady()) {
+    if (detetecResult.singleResult != null && attackClock.isReady) {
       attackClock.OnTrigger();
       var damageEvent = new TowerDamageEvent() {
         type = TowerDamageType.Attack,
-        towerPtr = DataPtr
+        towerPtr = cachedDataPtr
       };
 
       var launchParam = new LaunchParam {

@@ -20,6 +20,8 @@ public struct TowerData : IData<TowerData> {
 
   [NonSerialized]
   public int ptr;
+  [NonSerialized]
+  public bool isDead;
 
   public bool HasDiff(TowerData data) {
     return version != data.version;

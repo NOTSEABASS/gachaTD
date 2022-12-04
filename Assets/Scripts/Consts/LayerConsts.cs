@@ -3,5 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public static class LayerConsts {
-  public static LayerMask Enemy => LayerMask.GetMask("Enemy");
+  public static LayerMask EnemyMask => LayerMask.GetMask("Enemy");
+  public static int EnemyLayer => LayerMask.NameToLayer("Enemy");
 }

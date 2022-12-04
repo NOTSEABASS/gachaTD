@@ -28,10 +28,17 @@ public class PapaWorm : EnemyBase {
   }
 
   private void Update() {
+    if (!cachedData.isInBattle) {
+      return;
+    }
     searchAndMove.Update();
   }
 
   private void FixedUpdate() {
+    if (!cachedData.isInBattle) {
+      return;
+    }
+
     attackClock.Update(Time.fixedDeltaTime);
 
     bool hasTarget = searchAndMove.Target != null;

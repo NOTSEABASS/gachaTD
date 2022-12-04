@@ -14,4 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   list:
   - key: 0
+    val: {fileID: 11400000, guid: 6cd3e08f08c8a8f4ba8860d4f74d425e, type: 2}
+  - key: 1
     val: {fileID: 11400000, guid: 6f13cfed4595edf4b91caa3f398bde86, type: 2}
+  - key: 2
+    val: {fileID: 11400000, guid: 748e522f950410a48914c4d6647e5fde, type: 2}

@@ -28,7 +28,7 @@ public class Buddy : TowerBase {
 
     var detectParam = new DetectParam {
       position = transform.position,
-      layerMask = LayerConsts.Enemy,
+      layerMask = LayerConsts.EnemyMask,
       priorityRule = PriorityRule.Closet
     };
 

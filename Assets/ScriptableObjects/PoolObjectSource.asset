@@ -19,3 +19,7 @@ MonoBehaviour:
     obj: {fileID: 7044685508209690342, guid: 1d5ef60022a19d041afe9bc3e736ba9d, type: 3}
   - name: papaworm
     obj: {fileID: 4169229779018128566, guid: 7a1d76cb7eddbdd449c4fca9122403c2, type: 3}
+  - name: chicken
+    obj: {fileID: 737376122048425661, guid: 91e5aa6d6be0d9e4696d64579acfd38c, type: 3}
+  - name: wizard
+    obj: {fileID: 2679250022379657473, guid: f68a64d7e08eb3c4ebaffb4fbb9e3d01, type: 3}

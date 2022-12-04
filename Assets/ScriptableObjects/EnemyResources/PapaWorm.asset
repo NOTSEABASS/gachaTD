@@ -9,14 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5607d27beb62cfd4daa7889a290d1090, type: 3}
-  m_Name: PapaWorm_Template
+  m_Script: {fileID: 11500000, guid: 0284140a895dfdd4399925f623435cd0, type: 3}
+  m_Name: PapaWorm
   m_EditorClassIdentifier: 
-  enemyData:
-    name: 0
-    hp: 100
-    maxHp: 100
-    atk: 1
-    atkRadius: 1
-    atkFreq: 2
-    moveSpeed: 1
+  poolName: papaworm
+  displayName: "\u6D6E\u6E38\u6C34\u8548\u517D"

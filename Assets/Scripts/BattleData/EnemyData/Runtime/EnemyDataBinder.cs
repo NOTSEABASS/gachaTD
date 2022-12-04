@@ -38,7 +38,6 @@ public class EnemyDataBinder : EnemyDataHub.Binder, IPoolCallback {
       } else {
         EnemyDataHub.Instance.SetData(DataPtr, data);
       }
-
       isDataLoaded = true;
     }
 
@@ -46,6 +45,7 @@ public class EnemyDataBinder : EnemyDataHub.Binder, IPoolCallback {
 
   public void OnGet() {
     isDataLoaded = false;
+    InitDataIfNot();
   }
 
 }

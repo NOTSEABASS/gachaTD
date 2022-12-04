@@ -8,21 +8,28 @@ using System;
 public struct EnemyData : IData<EnemyData> {
   private int version;
 
-
   public EnemyName name;
   public int hp;
   public int maxHp;
 
   public int atk;
-  public int atkRadius;
-  public int atkFreq;
+  public float atkRadius;
+  public float atkFreq;
 
   public float moveSpeed;
 
   [NonSerialized]
-  public bool isDead; 
+  public bool isDead;
   [NonSerialized]
   public int ptr;
+  [NonSerialized]
+  public bool hasInited; //每次从池中取出后是否初始化
+  [NonSerialized]
+  public int moveBatchIndex;  //属于第几小波怪
+
+  [NonSerialized]
+  public bool isInBattle;  //是否已经在逻辑上进入战斗
+
 
   public bool HasDiff(EnemyData data) {
     return version != data.version;
@@ -43,9 +50,13 @@ public struct EnemyData : IData<EnemyData> {
  */
 
 public enum EnemyTemplateId {
-  PapaWorm
+  PapaWorm,
+  Chicken,
+  Wizard,
 }
 
 public enum EnemyName {
-  PapaWorm
+  PapaWorm,
+  Chicken,
+  Wizard,
 }

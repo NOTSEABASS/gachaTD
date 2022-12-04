@@ -28,4 +28,8 @@ public class WidgetGUILayout : MonoSingleton<WidgetGUILayout> {
   public static bool Button(string text, string hash) {
     return InstanceNotNull._Button(text, hash);
   }
+
+  public static bool Button(string text) {
+    return InstanceNotNull._Button(text, text);
+  }
 }

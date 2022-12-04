@@ -7,6 +7,7 @@ using System.Security;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class DDAnimator : MonoBehaviour {
   public enum UpdateMode {
     Manual,
@@ -33,7 +34,7 @@ public class DDAnimator : MonoBehaviour {
 
   }
 
-  [SerializeField]
+  [SerializeField, AutoProperty]
   private Animator animator;
   [SerializeField, ReadOnly]
   private Status status;

@@ -9,16 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac4e0dacbcea08e4e976e7edd2d9d956, type: 3}
-  m_Name: Buddy_Template
+  m_Script: {fileID: 11500000, guid: 5607d27beb62cfd4daa7889a290d1090, type: 3}
+  m_Name: Chicken
   m_EditorClassIdentifier: 
-  towerData:
-    name: 0
-    hp: 10
-    maxHp: 10
-    atk: 50
-    atkFreq: 4
-    atkRadius: 4
-    energy: 10
-    maxEnergy: 10
-    energyRecover: 0
+  enemyData:
+    name: 1
+    hp: 80
+    maxHp: 80
+    atk: 1
+    atkRadius: 1
+    atkFreq: 1.5
+    moveSpeed: 0.4

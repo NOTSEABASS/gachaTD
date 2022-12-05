@@ -157,16 +157,16 @@ public class EnemyBase : MonoBehaviour, IPoolCallback {
 
     public void Update() {
       target = EnemySearchTarget.Instance.SearchForCloset(self.transform.position);
-      if (target == null) {
-        return;
-      }
-
+      //if (target == null) {
+      //  return;
+      //}
       var toward = target.transform.position - self.transform.position;
-
-      isMoving = toward.magnitude > stopDistance;
-      if (!isMoving) {
-        return;
-      }
+      toward = Vector3.forward * 2;
+      isMoving = true;
+      //isMoving = toward.magnitude > stopDistance;
+      //if (!isMoving) {
+      //  return;
+      //}
 
       toward.y = 0;
       transform.rotation = Quaternion.LookRotation(toward, Vector3.up);

@@ -18,11 +18,17 @@ public class DraggableObject : MonoBehaviour, IOnMouseDrag, IOnMouseExecuting {
       lifeRef = draggable;
     }
 
+    public void SwitchToHandler(PositionHandler positionHandler) {
+      lifeRef.SetPositionHandler(positionHandler);
+    }
+
     public bool IsAlive() {
       return lifeRef != null;
     }
 
+    public abstract void OnMouseStartDrag();
     public abstract void OnMouseDrag(Vector2 mousePosition);
+    public abstract void OnMouseStopDrag();
     public abstract void Recalculate();
     public abstract Vector3 GetPlacePosition();
   }
@@ -86,14 +92,22 @@ public class DraggableObject : MonoBehaviour, IOnMouseDrag, IOnMouseExecuting {
     }
 
     if (arg.leftState == MouseInput.State.Up) {
+      positionHandler.OnMouseStopDrag();
       Place();
-      return MouseResult.None;
+      return MouseResult.Freeze;
     }
     Drag(arg.mousePosition);
     return MouseResult.Executing;
   }
 
   public MouseResult OnMouseStartDrag(MouseInputArgument arg) {
+    if (positionHandler == null) {
+      Debug.LogError("have no valid position handler");
+      return MouseResult.None;
+    }
+
+    moveUniqueTween.SetAndPlay(null);
+    positionHandler.OnMouseStartDrag();
     return MouseResult.Executing | MouseResult.BreakBehind;
   }
 }

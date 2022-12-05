@@ -37,7 +37,7 @@ public class EnemySpawner_01 : EnemySpawner {
       var joggle = Random.insideUnitCircle * spawnJoggle;
       var volume = new EnemySpawnVolume();
       volume.pos = point.position.XZ() + joggle;
-      volume.radius = 0.5f;
+      volume.radius = 0.1f;
       volumes.Add(volume);
 
       var info = new EnemySpawnInfo();
@@ -86,7 +86,7 @@ public class EnemySpawner_01 : EnemySpawner {
     for (int i = 0; i < infos.Count; i++) {
       var volume = new EnemySpawnVolume();
       volume.pos = GetRandomPosition();
-      volume.radius = 0.5f;
+      volume.radius = 0.25f;
       volumes.Add(volume);
     }
 

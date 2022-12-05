@@ -19,4 +19,4 @@ MonoBehaviour:
     atk: 1
     atkRadius: 1
     atkFreq: 1.5
-    moveSpeed: 0.4
+    moveSpeed: 1.6

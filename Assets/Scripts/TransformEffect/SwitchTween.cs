@@ -17,7 +17,12 @@ public class UniqueTween {
       }
       m_tween.Kill();
     }
-    m_tween = tween.Play();
+
+    if (tween != null) {
+      m_tween = tween.Play();
+    } else {
+      m_tween = null;
+    }
   }
 
   public void SetAfterKillAndPlay(Func<Tween> tweenFunc, bool finishLastOne = true) {
@@ -64,5 +69,5 @@ public abstract class SwitchTween {
     tweenDict[name] = tween;
   }
 
-    
+
 }

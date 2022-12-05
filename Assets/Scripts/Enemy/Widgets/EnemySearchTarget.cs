@@ -17,7 +17,7 @@ public class EnemySearchTarget : MonoSingleton<EnemySearchTarget> {
         continue;
       }
 
-      if (data.isDead) {
+      if (data.isDead || data.isInBattle) {
         continue;
       }
 

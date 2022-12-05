@@ -2,9 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using System.Linq;
-using Object = UnityEngine.Object;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine.EventSystems;
 
 [Serializable]
@@ -32,6 +29,7 @@ public class MouseInput : MonoSingleton<MouseInput> {
   }
 
   private const int maxRayDistance = 1000;
+  private const float freezeTime = 0.05f;
 
   [SerializeField, Min(0)]
   private float dragThreshold;
@@ -43,57 +41,42 @@ public class MouseInput : MonoSingleton<MouseInput> {
   private List<IOnMouseDrag> dragHandlersCache = new List<IOnMouseDrag>();
   private List<IOnMouseExecuting> executings = new List<IOnMouseExecuting>();
 
-  private Dictionary<Transform,bool> mouseHoverCache;
-  public List<Transform> Cache;
+  private Dictionary<Transform, bool> mouseHoverCache = new Dictionary<Transform, bool>();
+  private List<Transform> removeCache = new List<Transform>();
 
   private RaycastHit[] rayHitBuffer;
+
+  private bool isFreezing;
 
   void Start() {
     leftState = State.Hover;
     rightState = State.Hover;
-    mouseHoverCache = new Dictionary<Transform, bool>();
-    Cache = new List<Transform>();
   }
 
   void Update() {
     UpdateState(ref leftState, 0);
     UpdateState(ref rightState, 1);
 
-    Transform[] transforms = mouseHoverCache.Keys.ToArray();
-    foreach (var element in transforms) {
-      mouseHoverCache[element] = false;
-    }
-    Cache.Clear();
-    
-    var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-    rayHitBuffer = Physics.RaycastAll(ray, maxRayDistance);
-    Array.Sort(rayHitBuffer, (x, y) => x.distance.CompareTo(y.distance));
+    ResetHoverCache();
 
-    foreach (var hitInfo in rayHitBuffer) {
-      var target = hitInfo.transform;
-      mouseHoverCache[target] = true;
-    }
-    
-    
+    UpdateRayHitBuffer();
+
+    UpdateHoverCache();
 
     var arg = new MouseInputArgument(leftState, rightState);
     arg.mousePosition = Input.mousePosition;
 
     UpdateExcuting(arg);
 
-    if (!EventSystem.current.IsPointerOverGameObject()) {
+    var isPointingOnCanvasUI = EventSystem.current.IsPointerOverGameObject();
+    if (!isFreezing && !isPointingOnCanvasUI) {
       ExecuteDragInput(arg);
       ExecuteMouseButtonInput(arg);
     }
 
-    var temp = new Dictionary<Transform, bool>(mouseHoverCache) ;
-    foreach (var cache in temp) {
-      Cache.Add(cache.Key);
-      if (!mouseHoverCache[cache.Key]) {
-        CollectAndInvoke<IOnMouseExit>(cache.Key, arg);
-        mouseHoverCache.Remove(cache.Key);
-      }
-    }
+    ExecuteMouseExit(arg);
+
+    print(dragHandlersCache.Count);
   }
 
   private void UpdateState(ref State state, int button) {
@@ -106,6 +89,48 @@ public class MouseInput : MonoSingleton<MouseInput> {
     } else {
       state = State.Hover;
     }
+  }
+
+  private IEnumerator Freeze() {
+    isFreezing = true;
+    yield return new WaitForSeconds(freezeTime);
+    isFreezing = false;
+  }
+
+  private void ResetHoverCache() {
+    foreach (var key in mouseHoverCache.Keys) {
+      mouseHoverCache[key] = false;
+    }
+    removeCache.Clear();
+  }
+
+  private void UpdateHoverCache() {
+    foreach (var hitInfo in rayHitBuffer) {
+      var target = hitInfo.transform;
+      mouseHoverCache[target] = true;
+    }
+  }
+
+  private void ExecuteMouseExit(MouseInputArgument arg) {
+    foreach (var cache in mouseHoverCache) {
+      removeCache.Add(cache.Key);
+      if (!mouseHoverCache[cache.Key]) {
+        var res = CollectAndInvoke<IOnMouseExit>(cache.Key, arg);
+        if (res.HasFlag(MouseResult.Freeze)) {
+          StartCoroutine(Freeze());
+        }
+      }
+    }
+    foreach (var key in removeCache) {
+      mouseHoverCache.Remove(key);
+    }
+    removeCache.Clear();
+  }
+
+  private void UpdateRayHitBuffer() {
+    var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+    rayHitBuffer = Physics.RaycastAll(ray, maxRayDistance);
+    Array.Sort(rayHitBuffer, (x, y) => x.distance.CompareTo(y.distance));
   }
 
   private void ExecuteDragInput(MouseInputArgument arg) {
@@ -143,6 +168,10 @@ public class MouseInput : MonoSingleton<MouseInput> {
         executings.RemoveAt(i);
         i--;
       }
+
+      if (result.HasFlag(MouseResult.Freeze)) {
+        StartCoroutine(Freeze());
+      }
     }
   }
 
@@ -151,6 +180,9 @@ public class MouseInput : MonoSingleton<MouseInput> {
       var res = CollectInterfacesAndInvoke(hit.transform, arg);
       if (res.HasFlag(MouseResult.BreakBehind)) {
         break;
+      }
+      if (res.HasFlag(MouseResult.Freeze)) {
+        StartCoroutine(Freeze());
       }
     }
   }

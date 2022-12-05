@@ -8,6 +8,7 @@ public enum MouseResult {
   None = 0,
   BreakBehind = 1 << 0,
   Executing = 1 << 1,
+  Freeze = 1 << 2,
 }
 
 

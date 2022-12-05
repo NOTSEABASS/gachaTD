@@ -22,6 +22,8 @@ public struct TowerData : IData<TowerData> {
   public int ptr;
   [NonSerialized]
   public bool isDead;
+  [NonSerialized]
+  public bool isInBattle;
 
   public bool HasDiff(TowerData data) {
     return version != data.version;

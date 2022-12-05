@@ -157,6 +157,11 @@ public class MapGrid : MonoSingleton<MapGrid> {
       return result;
     }
 
+    public override void OnMouseStartDrag() {
+    }
+
+    public override void OnMouseStopDrag() {
+    }
   }
 
   #endregion

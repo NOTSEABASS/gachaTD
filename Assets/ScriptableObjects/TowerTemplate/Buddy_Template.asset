@@ -17,7 +17,7 @@ MonoBehaviour:
     hp: 10
     maxHp: 10
     atk: 50
-    atkFreq: 4
+    atkFreq: 10
     atkRadius: 4
     energy: 10
     maxEnergy: 10

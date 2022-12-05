@@ -7,24 +7,25 @@ using UnityEngine.Events;
 
 public class GachaButton : InteractableObject, IOnLeftMouseDown {
   [SerializeField] private UnityEvent OnButtonPressed;
-  private float originY;
-  private void Start() {
-    originY = transform.position.y;
-  }
+  private UniqueTween moveUniqueTween;
 
-  private void Update() {
-    
+  private void Awake() {
+    base.Awake();
+    moveUniqueTween = new UniqueTween();
   }
-
   public MouseResult OnLeftMouseDown(MouseInputArgument arg) {
+    ButtonPressTween();
     OnButtonPressed.Invoke();
     return MouseResult.None;
   }
 
-  public void ButtonPressTween() {
+  private void ButtonPressTween() {
     var t = transform.GetChild(0);
-    UniqueTween moveUniqueTween = new UniqueTween();
-    var tween = t.Pressed(0.05f, 0.3f);
+    var tween = t.DoPressed(0.05f, 0.1f);
     moveUniqueTween.SetAndPlay(tween);
+  }
+
+  public MouseResult OnLeftMouseUp(MouseInputArgument arg) {
+    return MouseResult.None;
   }
 }

@@ -13,6 +13,7 @@ public class UniqueTween {
   public void SetAndPlay(Tween tween, bool finishLastOne = true) {
     if (m_tween.IsActive()) {
       if (finishLastOne) {
+      Debug.Log("Finish and Kill:"+m_tween.Duration());
         m_tween.Goto(m_tween.Duration());
       }
       m_tween.Kill();

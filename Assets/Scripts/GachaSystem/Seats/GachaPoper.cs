@@ -29,7 +29,7 @@ public class GachaPoper : MonoBehaviour {
       UniqueTween moveUniqueTween = new UniqueTween();
       var tween = gachaObj.transform.DOMoveY(.5f,0.3f);
       moveUniqueTween.SetAndPlay(tween);
-      tween.OnComplete(() => {
+      tween.OnPlay(() => {
         var draggableObject = gachaObj.GetComponent<DraggableObject>();
         if (draggableObject == null) {
           Debug.LogError("DraggableObject Component Not Found");
@@ -38,11 +38,5 @@ public class GachaPoper : MonoBehaviour {
         //Recalculate position on grid
         draggableObject.RePlace();
       });
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

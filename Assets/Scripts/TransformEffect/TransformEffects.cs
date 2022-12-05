@@ -56,11 +56,11 @@ public static class TransformEffects {
     return sequence;
   }
   
-  public static Tween Pressed(this Transform transform,float strength, float time) {
+  public static Tween DoPressed(this Transform transform,float strength, float time) {
     Sequence sequence = DOTween.Sequence();
     var y = transform.position.y;
-    var down = transform.DOMoveY(y-strength, 0.1f);
-    var up = transform.DOMoveY(y, 0.1f);
+    var down = transform.DOMoveY(y-strength, time / 2);
+    var up = transform.DOMoveY(y, time / 2);
     sequence.Append(down).Append(up);
     return sequence;
   }

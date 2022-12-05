@@ -7,7 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(Outline))]
 public abstract class InteractableObject : MonoBehaviour, IOnMousePureHover, IOnMouseExit {
     private Outline _outline;
-    private void Awake() {
+    protected void Awake() {
         _outline = GetComponent<Outline>();
     }
 

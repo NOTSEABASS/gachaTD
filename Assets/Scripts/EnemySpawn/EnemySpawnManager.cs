@@ -28,6 +28,7 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager> {
 
   private IEnumerator DelayRelease() {
     yield return new WaitForSeconds(1);
+    EnemyMoveBatchManager.Instance.ResetState();
     EnemyMoveBatchManager.Instance.StartRelease();
   }
 }

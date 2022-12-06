@@ -45,10 +45,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   utilFunction:
-    deathDelay: 0
+    deathDelay: 3
     onDeath:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 5829309507640064199}
+          m_TargetAssemblyTypeName: EnemyEffect, Assembly-CSharp
+          m_MethodName: OnDeath
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
   DDAnimator: {fileID: 3927433709449754418}
   atkAnimationOffset: 0.55
   runAnimationLoopTime: 0.25
@@ -437,6 +449,7 @@ GameObject:
   - component: {fileID: 8664481333453584663}
   - component: {fileID: 1791851551318468841}
   - component: {fileID: 3927433709449754418}
+  - component: {fileID: 5829309507640064199}
   - component: {fileID: 969400951585339104}
   - component: {fileID: 4248506882106234420}
   m_Layer: 8
@@ -509,6 +522,18 @@ MonoBehaviour:
     nextStateOffset: 0
     normalizedTransitionDuration: 0
     lastApplyNormalizedTime: 0
+--- !u!114 &5829309507640064199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8319761982004700077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04709171e7f04ff409627a79476536c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!136 &969400951585339104
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -663,6 +688,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8388938963883817320, guid: 02ce956369726614d9eee5dbd249fe05, type: 3}
       propertyPath: utilFunction.useCallbackEvent
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8388938963883817320, guid: 02ce956369726614d9eee5dbd249fe05, type: 3}
+      propertyPath: utilFunction.useReleaseAfterTime
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

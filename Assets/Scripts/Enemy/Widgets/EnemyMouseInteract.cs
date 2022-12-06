@@ -28,7 +28,7 @@ public class EnemyMouseInteract : MonoBehaviour, IOnLeftMouseUp, IOnMouseHover {
   public MouseResult OnMouseHover(MouseInputArgument arg) {
     hover = true;
     outline.enabled = true;
-    return MouseResult.None;
+    return MouseResult.BreakBehind;
   }
 
 

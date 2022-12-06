@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 543450652730384278}
   - component: {fileID: 2081761891}
   - component: {fileID: 2081761890}
+  - component: {fileID: 5584726472551591309}
   m_Layer: 0
   m_Name: Mushnub
   m_TagString: Untagged
@@ -58,7 +59,7 @@ Transform:
   m_GameObject: {fileID: 919132149058274604}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5450003305807880160}
@@ -111,6 +112,18 @@ MonoBehaviour:
     nextStateOffset: 0
     normalizedTransitionDuration: 0
     lastApplyNormalizedTime: 0
+--- !u!114 &5584726472551591309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132149058274604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04709171e7f04ff409627a79476536c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1154686780292883469
 GameObject:
   m_ObjectHideFlags: 0
@@ -188,10 +201,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   utilFunction:
-    deathDelay: 0
+    deathDelay: 3
     onDeath:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 5584726472551591309}
+          m_TargetAssemblyTypeName: EnemyEffect, Assembly-CSharp
+          m_MethodName: OnDeath
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
   DDAnimator: {fileID: 2081761890}
   atkAnimationOffset: 0.55
   runAnimationLoopTime: 0.25
@@ -255,7 +280,7 @@ Transform:
   m_GameObject: {fileID: 3603029911010670486}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_LocalScale: {x: 80, y: 80, z: 80}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 543450652730384278}
@@ -408,7 +433,7 @@ Transform:
   m_GameObject: {fileID: 5844622625787106358}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_LocalScale: {x: 80, y: 80, z: 80}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 683016263090128523}
@@ -564,6 +589,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8388938963883817320, guid: 02ce956369726614d9eee5dbd249fe05, type: 3}
       propertyPath: utilFunction.useCallbackEvent
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8388938963883817320, guid: 02ce956369726614d9eee5dbd249fe05, type: 3}
+      propertyPath: utilFunction.useReleaseAfterTime
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -11,7 +11,6 @@ public class DraggableObject : MonoBehaviour, IOnMouseDrag, IOnMouseExecuting {
   public abstract class PositionHandler {
     private DraggableObject lifeRef;
     public float stackHeight => lifeRef != null ? lifeRef.stackHeight : 0;
-
     public Transform transform => lifeRef != null ? lifeRef.transform : null;
 
     public void SetLifeRef(DraggableObject draggable) {
@@ -43,6 +42,9 @@ public class DraggableObject : MonoBehaviour, IOnMouseDrag, IOnMouseExecuting {
   private UniqueTween moveUniqueTween = new UniqueTween();
   private PositionHandler positionHandler;
 
+  public PositionHandler GetPositionHandler() {
+    return positionHandler;
+  }
 
   private void Awake() {
     LifeCollector<DraggableObject>.AddObject(this);

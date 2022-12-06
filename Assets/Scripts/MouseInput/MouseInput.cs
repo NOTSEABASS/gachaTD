@@ -76,7 +76,6 @@ public class MouseInput : MonoSingleton<MouseInput> {
 
     ExecuteMouseExit(arg);
 
-    print(dragHandlersCache.Count);
   }
 
   private void UpdateState(ref State state, int button) {
@@ -98,7 +97,9 @@ public class MouseInput : MonoSingleton<MouseInput> {
   }
 
   private void ResetHoverCache() {
-    foreach (var key in mouseHoverCache.Keys) {
+    removeCache.Clear();
+    removeCache.AddRange(mouseHoverCache.Keys);
+    foreach (var key in removeCache) {
       mouseHoverCache[key] = false;
     }
     removeCache.Clear();
@@ -113,12 +114,12 @@ public class MouseInput : MonoSingleton<MouseInput> {
 
   private void ExecuteMouseExit(MouseInputArgument arg) {
     foreach (var cache in mouseHoverCache) {
-      removeCache.Add(cache.Key);
       if (!mouseHoverCache[cache.Key]) {
         var res = CollectAndInvoke<IOnMouseExit>(cache.Key, arg);
         if (res.HasFlag(MouseResult.Freeze)) {
           StartCoroutine(Freeze());
         }
+        removeCache.Add(cache.Key);
       }
     }
     foreach (var key in removeCache) {

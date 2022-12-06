@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.Events;
 using System.CodeDom;
+using DG.Tweening;
 
 public class EnemyBase : MonoBehaviour, IPoolCallback {
   [SerializeField]
@@ -54,7 +55,7 @@ public class EnemyBase : MonoBehaviour, IPoolCallback {
 
     _cachedData = data;
     InitIfNot(data);
-    inBattleSwitch.SetInBattle(data.isInBattle);
+    inBattleSwitch.SetInBattle(data.isInBattle && !data.isDead);
     DeathJudge(data);
     DoDeath();
   }

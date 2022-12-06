@@ -26,6 +26,9 @@ public class DraggingMountManager : MonoSingleton<DraggingMountManager> {
     private Vector3 startPosition;
 
     private Transform cachedMount;
+
+    public bool isPlaceable => cachedMount != null;
+
     public override Vector3 GetPlacePosition() {
       return placePosition;
     }
@@ -53,7 +56,7 @@ public class DraggingMountManager : MonoSingleton<DraggingMountManager> {
       } else {
         planePoint = startPosition;
       }
-      var plane = new Plane(Vector3.up, startPosition);
+      var plane = new Plane(Vector3.up, planePoint);
       if (plane.Raycast(ray, out var d)) {
         placePosition = ray.GetPoint(d);
       }

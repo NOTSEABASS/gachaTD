@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class EnemyMoveBatchManager : MonoSingleton<EnemyMoveBatchManager> {
@@ -20,7 +19,6 @@ public class EnemyMoveBatchManager : MonoSingleton<EnemyMoveBatchManager> {
   }
 
   private bool CheckCurrentBatchClear() {
-    print(currentAlives.Count);
     return currentAlives.Count == 0;
   }
 
@@ -28,9 +26,13 @@ public class EnemyMoveBatchManager : MonoSingleton<EnemyMoveBatchManager> {
     isReleasing = true;
   }
 
-  public void TryReleaseBatch(int batchIdx) {
+  public void ResetState() {
+    currentMoveBatch = -1;
+  }
+
+  private void TryReleaseBatch(int batchIdx) {
     if (!batchToPtrs.ContainsKey(batchIdx)) {
-      print("stop at "+batchIdx);
+      print("stop at " + batchIdx);
       isReleasing = false;
       return;
     }
@@ -45,6 +47,7 @@ public class EnemyMoveBatchManager : MonoSingleton<EnemyMoveBatchManager> {
       EnemyDataHub.Instance.SetData(ptr, data);
       currentAlives.Add(ptr);
     }
+    list.Clear();
   }
 
   public void OnEnemyDeath(int ptr) {

@@ -12,7 +12,7 @@ public class PoolObjectCreator : MonoBehaviour {
   private Vector3 position;
   private void OnGUI() {
     if (WidgetGUILayout.Button($"Create [{poolName}]", gameObject.GetInstanceID().ToString())) {
-      PoolManager.Instance.GetObjectByPoolName<EnemyPoolObject>(poolName, out var obj);
+      PoolManager.Instance.TryGetObjectByPoolName<EnemyPoolObject>(poolName, out var obj);
       obj.transform.position = position;
     }
   }

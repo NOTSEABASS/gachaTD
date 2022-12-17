@@ -10,19 +10,19 @@ public class EnemySearchTarget : MonoSingleton<EnemySearchTarget> {
 
   public TowerBase SearchForCloset(Vector3 fromPosition) {
     TowerBase res = null;
-    float maxDistance = -1;
+    float maxDistance = float.PositiveInfinity;
     foreach (var tower in LifeCollector<TowerBase>.GetObjects()) {
       var ptr = tower.FindDataPtr();
       if (!TowerDataHub.Instance.TryGetData(ptr, out var data)) {
         continue;
       }
 
-      if (data.isDead || data.isInBattle) {
+      if (!data.isInBattle) {
         continue;
       }
 
       var d = Vector3.Distance(fromPosition, tower.transform.position);
-      if (d > maxDistance) {
+      if (d < maxDistance) {
         res = tower;
         maxDistance = d;
       }

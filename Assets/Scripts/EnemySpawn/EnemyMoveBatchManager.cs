@@ -30,10 +30,14 @@ public class EnemyMoveBatchManager : MonoSingleton<EnemyMoveBatchManager> {
     currentMoveBatch = -1;
   }
 
+  private void OnAllBatchClear() {
+    isReleasing = false;
+    BattleSession.Instnace.isEnd = true;
+  }
+
   private void TryReleaseBatch(int batchIdx) {
     if (!batchToPtrs.ContainsKey(batchIdx)) {
-      print("stop at " + batchIdx);
-      isReleasing = false;
+      OnAllBatchClear();
       return;
     }
     var list = batchToPtrs[batchIdx];
@@ -42,7 +46,7 @@ public class EnemyMoveBatchManager : MonoSingleton<EnemyMoveBatchManager> {
         continue;
       }
 
-      data.isInBattle = true;
+      data.isInMoveBatch = true;
       data.UpdateVersion();
       EnemyDataHub.Instance.SetData(ptr, data);
       currentAlives.Add(ptr);

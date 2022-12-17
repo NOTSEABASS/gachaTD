@@ -2,9 +2,6 @@ using DG.Tweening;
 using MyBox;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Security;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class CameraController : MonoBehaviour {
+public class CameraController : MonoSingleton<CameraController> {
   [SerializeField]
   private Camera targetCamera;
   [SerializeField]
@@ -26,6 +26,15 @@ public class CameraController : MonoBehaviour {
   private float minMoveStep;
   [SerializeField]
   private float focusHeight;
+
+  private Vector3 _virtualOffset;
+  public Vector3 virtualOffset {
+    get => _virtualOffset;
+    set {
+      _virtualOffset = value;
+      RecaculateTransform();
+    }
+  }
   private Transform targetTransform => targetCamera.transform;
 
   private Vector3 originVirtualPosition;
@@ -117,7 +126,7 @@ public class CameraController : MonoBehaviour {
 
     //virtual position 
     var worldFixedPointInLocal = mat.MultiplyPoint(Vector3.zero);
-    var newLocalPosition = worldFixedPointInLocal + virtualPositoin - originVirtualPosition;
+    var newLocalPosition = worldFixedPointInLocal + virtualPositoin + virtualOffset - originVirtualPosition;
 
     targetTransform.position = targetTransform.localToWorldMatrix.MultiplyPoint(newLocalPosition);
 
@@ -134,7 +143,7 @@ public class CameraController : MonoBehaviour {
 
   //move 和 zoom不应该被合并， 因为这是两个可以并行Tween的操作
   private Tween GetMoveTween(Vector2 delta) {
-    var targetPosition = virtualPositoin.XY() + delta;
+    var targetPosition = virtualPositoin.XY() + virtualOffset.XY() + delta;
     return DOTween.To(() => virtualPositoin.XY(), SetPlanePosition, targetPosition, moveDuration).SetEase(Ease.OutQuint);
   }
 

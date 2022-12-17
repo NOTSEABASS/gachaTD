@@ -5,6 +5,8 @@ using System;
 using UnityEngine.Events;
 using System.CodeDom;
 using DG.Tweening;
+using UnityEditor.U2D;
+using MyBox;
 
 public class EnemyBase : MonoBehaviour, IPoolCallback {
   [SerializeField]
@@ -51,11 +53,11 @@ public class EnemyBase : MonoBehaviour, IPoolCallback {
   }
 
   public virtual void OnDataChange(EnemyData data) {
+    data.isInMoveBatch = true;
     Debug.Assert(!isDying || IsDying == data.isDead);
-
     _cachedData = data;
     InitIfNot(data);
-    inBattleSwitch.SetInBattle(data.isInBattle && !data.isDead);
+    inBattleSwitch.SetInBattle(data.isInBattle);
     DeathJudge(data);
     DoDeath();
   }
@@ -67,7 +69,6 @@ public class EnemyBase : MonoBehaviour, IPoolCallback {
       data.UpdateVersion();
       EnemyDataHub.Instance.SetData(cachedDataPtr, data);
       LookAtCenter();
-
     }
   }
 
@@ -104,6 +105,13 @@ public class EnemyBase : MonoBehaviour, IPoolCallback {
     }
   }
 
+  private void OnTriggerEnter(Collider other) {
+    if (other.tag == TagConsts.Core) {
+      isDying = true;
+      EnemyCoreDamage.Instance.DealDamage(transform.position, cachedDataPtr);
+      DoDeath();
+    }
+  }
 
   #endregion
 
@@ -137,11 +145,10 @@ public class EnemyBase : MonoBehaviour, IPoolCallback {
 
   }
 
-
   protected class SearchAndMove_01 {
-    private const float stopDistanceBuff = 0.2f; //从停止到重新开始移动的缓冲距离
     private EnemyBase self;
     private Transform transform;
+    private EnemyBoidIdentity boidIdentity;
 
     private bool isMoving = true;
     public bool IsMoving => isMoving;
@@ -149,35 +156,70 @@ public class EnemyBase : MonoBehaviour, IPoolCallback {
     private TowerBase target;
     public TowerBase Target => target;
 
+    //params
     public float speed;
     public float stopDistance;
+    public float interestRadius;
+
+    public bool isValidBoid {
+      set {
+        if (boidIdentity == null ||
+           (value && !boidIdentity.isValid)) {
+          boidIdentity = new EnemyBoidIdentity(transform);
+        }
+        boidIdentity.isValid = value;
+      }
+    }
+
     public SearchAndMove_01(EnemyBase self) {
       this.self = self;
       transform = self.FindDataPtrObj().transform;
     }
 
-    public void Update() {
-      target = EnemySearchTarget.Instance.SearchForCloset(self.transform.position);
-      //if (target == null) {
-      //  return;
-      //}
-      var toward = target.transform.position - self.transform.position;
-      toward = Vector3.forward * 2;
-      isMoving = true;
-      //isMoving = toward.magnitude > stopDistance;
-      //if (!isMoving) {
-      //  return;
-      //}
-
-      toward.y = 0;
-      transform.rotation = Quaternion.LookRotation(toward, Vector3.up);
-
-      transform.Translate(speed * toward.normalized * Time.deltaTime, Space.World);
-
+    public void SetData(EnemyData data) {
+      speed = data.moveSpeed;
+      stopDistance = data.atkRadius;
+      isValidBoid = data.isInBattle;
+      interestRadius = data.interestRadius;
     }
 
+    public void Update() {
+      if (boidIdentity == null || !boidIdentity.isValid) {
+        boidIdentity = new EnemyBoidIdentity(transform);
+      }
 
+      target = EnemySearchTarget.Instance.SearchForCloset(self.transform.position);
+      if (target != null) {
+        if (Vector3.Distance(transform.position, target.transform.position) > interestRadius) {
+          target = null;
+        }
+      }
+
+      Vector3 direction;
+      if (target != null) {
+        direction = target.transform.position - self.transform.position;
+        isMoving = direction.magnitude > stopDistance;
+      } else {
+        direction = Vector3.zero - transform.position;
+        isMoving = true;
+      }
+
+
+      if (!isMoving) {
+        return;
+      }
+
+      transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
+      var speedMove = speed * direction.normalized * Time.deltaTime;
+      var boidMove = boidIdentity.boidForce * Time.deltaTime;
+      var final = speedMove + boidMove;
+      final.y = 0;
+      transform.Translate(final, Space.World);
+    }
   }
+
+
+
   #endregion 
 }
 

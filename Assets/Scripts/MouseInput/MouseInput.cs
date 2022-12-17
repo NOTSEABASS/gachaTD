@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 
 [Serializable]
 public class MouseInputArgument : UnityEngine.Object {
+  public Vector2 dragOriginPosition;
   public Vector2 mousePosition;
   [SerializeField]
   public MouseInput.State leftState;
@@ -65,6 +66,7 @@ public class MouseInput : MonoSingleton<MouseInput> {
 
     var arg = new MouseInputArgument(leftState, rightState);
     arg.mousePosition = Input.mousePosition;
+    arg.dragOriginPosition = dragOriginPosition;
 
     UpdateExcuting(arg);
 
@@ -137,7 +139,8 @@ public class MouseInput : MonoSingleton<MouseInput> {
   private void ExecuteDragInput(MouseInputArgument arg) {
     if (leftState == State.Down) {
       foreach (var hit in rayHitBuffer) {
-        dragHandlersCache.AddRange(hit.collider.GetComponentsInChildren<IOnMouseDrag>());
+        var dragHandlers = hit.collider.GetComponentsInChildren<IOnMouseDrag>();
+        dragHandlersCache.AddRange(dragHandlers);
         dragOriginPosition = Input.mousePosition.XY();
       }
     } else if (leftState != State.Press) {

@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.UI;
 
 public abstract class EnemySpawner : MonoBehaviour {
   public abstract void Spawn(EnemySpawnContext context);
 }
+
 public class EnemySpawnManager : MonoSingleton<EnemySpawnManager> {
   [SerializeField]
   private EnemySpawner spawner;
@@ -17,13 +17,15 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager> {
     var context = new EnemySpawnContext();
     context.FillInfoBySpawnResources(spawnResources);
     spawner.Spawn(context);
+
+    StartCoroutine(DelayRelease());
   }
 
   private void OnGUI() {
-    if (WidgetGUILayout.Button("Start Spawn")) {
-      StartSpawn();
-      StartCoroutine(DelayRelease());
-    }
+    //if (WidgetGUILayout.Button("Start Spawn")) {
+    //  StartSpawn();
+    //  StartCoroutine(DelayRelease());
+    //}
   }
 
   private IEnumerator DelayRelease() {

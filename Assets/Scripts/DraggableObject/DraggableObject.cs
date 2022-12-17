@@ -42,6 +42,9 @@ public class DraggableObject : MonoBehaviour, IOnMouseDrag, IOnMouseExecuting {
   private UniqueTween moveUniqueTween = new UniqueTween();
   private PositionHandler positionHandler;
 
+  private bool isDragging;
+  private bool isInteractable = true;
+
   public PositionHandler GetPositionHandler() {
     return positionHandler;
   }
@@ -49,6 +52,13 @@ public class DraggableObject : MonoBehaviour, IOnMouseDrag, IOnMouseExecuting {
   private void Awake() {
     LifeCollector<DraggableObject>.AddObject(this);
     onDragHandlers = GetComponents<IOnDragHandler>();
+  }
+
+  public void SetInteractable(bool isInteractable) {
+    this.isInteractable = isInteractable;
+    if (!isInteractable && isDragging) {
+      Debug.LogError("Need to Fix");
+    }
   }
 
   public void SetPositionHandler(PositionHandler positionHandler) {
@@ -94,6 +104,7 @@ public class DraggableObject : MonoBehaviour, IOnMouseDrag, IOnMouseExecuting {
     }
 
     if (arg.leftState == MouseInput.State.Up) {
+      isDragging = false;
       positionHandler.OnMouseStopDrag();
       Place();
       return MouseResult.Freeze;
@@ -103,11 +114,16 @@ public class DraggableObject : MonoBehaviour, IOnMouseDrag, IOnMouseExecuting {
   }
 
   public MouseResult OnMouseStartDrag(MouseInputArgument arg) {
+    if (!isInteractable) {
+      return MouseResult.None;
+    }
+
     if (positionHandler == null) {
       Debug.LogError("have no valid position handler");
       return MouseResult.None;
     }
 
+    isDragging = true;
     moveUniqueTween.SetAndPlay(null);
     positionHandler.OnMouseStartDrag();
     return MouseResult.Executing | MouseResult.BreakBehind;

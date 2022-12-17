@@ -58,7 +58,7 @@ public class EnemySpawner_01 : EnemySpawner {
         continue;
       }
 
-      if (!PoolManager.Instance.GetObjectByPoolName<EnemyPoolObject>(resources.poolName, out var poolObject)) {
+      if (!PoolManager.Instance.TryGetObjectByPoolName<EnemyPoolObject>(resources.poolName, out var poolObject)) {
         Debug.LogError("Invalid PoolName: " + resources.poolName);
         continue;
       }

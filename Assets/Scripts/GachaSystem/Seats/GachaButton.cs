@@ -9,10 +9,11 @@ public class GachaButton : InteractableObject, IOnLeftMouseDown {
   [SerializeField] private UnityEvent OnButtonPressed;
   private UniqueTween moveUniqueTween;
 
-  private void Awake() {
+  protected override void Awake() {
     base.Awake();
     moveUniqueTween = new UniqueTween();
   }
+
   public MouseResult OnLeftMouseDown(MouseInputArgument arg) {
     ButtonPressTween();
     OnButtonPressed.Invoke();

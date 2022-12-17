@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PapaWorm : EnemyBase {
   [SerializeField]
@@ -22,8 +23,7 @@ public class PapaWorm : EnemyBase {
 
   public override void OnDataChange(EnemyData data) {
     base.OnDataChange(data);
-    searchAndMove.speed = data.moveSpeed;
-    searchAndMove.stopDistance = data.atkRadius;
+    searchAndMove.SetData(data);
     attackClock.freq = data.atkFreq;
   }
 
@@ -33,6 +33,7 @@ public class PapaWorm : EnemyBase {
     }
     searchAndMove.Update();
   }
+
 
   private void FixedUpdate() {
     if (!cachedData.isInBattle) {
@@ -58,6 +59,11 @@ public class PapaWorm : EnemyBase {
           towerPtr = searchAndMove.Target.FindDataPtr(),
           type = EnmeyDamageType.Attack
         };
+
+        if (PoolManager.Instance.TryGetObjectByPoolName<LightbeamVFX>("lightbeam_vfx", out var lightbeam)) {
+          var offset = 0.5f * Vector3.up + Random.insideUnitSphere * 0.17f;
+          lightbeam.Render(transform.position + offset, searchAndMove.Target.transform.position + offset);
+        }
 
         BattleEngine.Instance.PushEvent(damageEvent);
       }

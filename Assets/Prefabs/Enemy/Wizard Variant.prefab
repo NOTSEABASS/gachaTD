@@ -1,69 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &113546472619774233
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3228879239455479370}
-  - component: {fileID: 19717375834217745}
-  m_Layer: 0
-  m_Name: Function
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3228879239455479370
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 113546472619774233}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8682253836823773173}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &19717375834217745
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 113546472619774233}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b07576bdc7451a042933584698f66a8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  utilFunction:
-    deathDelay: 3
-    onDeath:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 5829309507640064199}
-          m_TargetAssemblyTypeName: EnemyEffect, Assembly-CSharp
-          m_MethodName: OnDeath
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  DDAnimator: {fileID: 3927433709449754418}
-  atkAnimationOffset: 0.55
-  runAnimationLoopTime: 0.25
 --- !u!1 &3162023731425126268
 GameObject:
   m_ObjectHideFlags: 0
@@ -466,7 +402,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8319761982004700077}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -474,8 +410,8 @@ Transform:
   - {fileID: 3753362716196092257}
   - {fileID: 5948176818052700765}
   - {fileID: 5277090363109839141}
-  m_Father: {fileID: 8682253836823773173}
-  m_RootOrder: 1
+  m_Father: {fileID: 8315490869742739683}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1791851551318468841
 Animator:
@@ -602,6 +538,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2459927306829480074, guid: 02ce956369726614d9eee5dbd249fe05, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2970242583419740034, guid: 02ce956369726614d9eee5dbd249fe05, type: 3}
       propertyPath: m_Name
       value: Wizard Variant
@@ -625,7 +565,7 @@ PrefabInstance:
     - target: {fileID: 2970242583419740035, guid: 02ce956369726614d9eee5dbd249fe05, type: 3}
       propertyPath: onDataChange.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 19717375834217745}
+      objectReference: {fileID: 4187625393071205874}
     - target: {fileID: 2970242583419740035, guid: 02ce956369726614d9eee5dbd249fe05, type: 3}
       propertyPath: onDataChange.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -636,7 +576,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2970242583419740035, guid: 02ce956369726614d9eee5dbd249fe05, type: 3}
       propertyPath: onDataChange.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: EnemyBase, Assembly-CSharp
+      value: PapaWorm, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2970242583419740035, guid: 02ce956369726614d9eee5dbd249fe05, type: 3}
       propertyPath: onDataChange.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -694,8 +634,54 @@ PrefabInstance:
       propertyPath: utilFunction.useReleaseAfterTime
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8527556305987121743, guid: 02ce956369726614d9eee5dbd249fe05, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02ce956369726614d9eee5dbd249fe05, type: 3}
+--- !u!1 &3480439849801401428 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6992090913448731709, guid: 02ce956369726614d9eee5dbd249fe05, type: 3}
+  m_PrefabInstance: {fileID: 5856337826896928873}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4187625393071205874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3480439849801401428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b07576bdc7451a042933584698f66a8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  utilFunction:
+    deathDelay: 3
+    onDeath:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5829309507640064199}
+          m_TargetAssemblyTypeName: EnemyEffect, Assembly-CSharp
+          m_MethodName: OnDeath
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  DDAnimator: {fileID: 3927433709449754418}
+  atkAnimationOffset: 0.55
+  runAnimationLoopTime: 0.25
+--- !u!4 &8315490869742739683 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2459927306829480074, guid: 02ce956369726614d9eee5dbd249fe05, type: 3}
+  m_PrefabInstance: {fileID: 5856337826896928873}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8682253836823773163 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2970242583419740034, guid: 02ce956369726614d9eee5dbd249fe05, type: 3}
@@ -714,8 +700,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.8, z: 0.5}
   m_Center: {x: 0, y: 0.4, z: 0}
---- !u!4 &8682253836823773173 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2970242583419740060, guid: 02ce956369726614d9eee5dbd249fe05, type: 3}
-  m_PrefabInstance: {fileID: 5856337826896928873}
-  m_PrefabAsset: {fileID: 0}

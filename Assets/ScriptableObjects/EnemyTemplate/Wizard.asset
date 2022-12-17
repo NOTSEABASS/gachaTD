@@ -16,6 +16,7 @@ MonoBehaviour:
     name: 2
     hp: 200
     maxHp: 200
+    interestRadius: 4
     atk: 1
     atkRadius: 2
     atkFreq: 1.5

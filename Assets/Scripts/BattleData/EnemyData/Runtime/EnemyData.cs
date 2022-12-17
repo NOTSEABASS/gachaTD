@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DataHub;
 using System;
+using System.Security.Permissions;
 
 [System.Serializable]
 public struct EnemyData : IData<EnemyData> {
@@ -11,6 +12,8 @@ public struct EnemyData : IData<EnemyData> {
   public EnemyName name;
   public int hp;
   public int maxHp;
+
+  public float interestRadius;
 
   public int atk;
   public float atkRadius;
@@ -26,10 +29,10 @@ public struct EnemyData : IData<EnemyData> {
   public bool hasInited; //每次从池中取出后是否初始化
   [NonSerialized]
   public int moveBatchIndex;  //属于第几小波怪
-
   [NonSerialized]
-  public bool isInBattle;  //是否已经在逻辑上进入战斗
+  public bool isInMoveBatch;  //是否已经在逻辑上进入战斗
 
+  public bool isInBattle => !isDead && isInMoveBatch;
 
   public bool HasDiff(EnemyData data) {
     return version != data.version;

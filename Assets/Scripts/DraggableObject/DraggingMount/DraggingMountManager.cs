@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -34,7 +32,7 @@ public class DraggingMountManager : MonoSingleton<DraggingMountManager> {
     }
     public override void OnMouseStartDrag() {
       startMount = transform.parent;
-      startPosition = startMount ? transform.localPosition : Vector3.zero;
+      startPosition = startMount ? transform.localPosition : transform.position;
       transform.parent = null;
     }
 

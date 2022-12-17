@@ -160,70 +160,6 @@ Transform:
   m_Father: {fileID: 769993312686389399}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &5966678664080335714
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8908008832562776415}
-  - component: {fileID: 5156619135182695171}
-  m_Layer: 0
-  m_Name: Function
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8908008832562776415
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5966678664080335714}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6298490525428189257}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5156619135182695171
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5966678664080335714}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b07576bdc7451a042933584698f66a8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  utilFunction:
-    deathDelay: 3
-    onDeath:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 3909265456100158813}
-          m_TargetAssemblyTypeName: EnemyEffect, Assembly-CSharp
-          m_MethodName: OnDeath
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  DDAnimator: {fileID: 8065381087180315773}
-  atkAnimationOffset: 0.55
-  runAnimationLoopTime: 0.25
 --- !u!1 &6920903140404274423
 GameObject:
   m_ObjectHideFlags: 0
@@ -405,15 +341,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8065381087180315772}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2922512547723200176}
   - {fileID: 2599151583275606821}
-  m_Father: {fileID: 6298490525428189257}
-  m_RootOrder: 1
+  m_Father: {fileID: 6661873872367621983}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &8065381087180315774
 Animator:
@@ -511,6 +447,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2459927306829480074, guid: 02ce956369726614d9eee5dbd249fe05, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2970242583419740034, guid: 02ce956369726614d9eee5dbd249fe05, type: 3}
       propertyPath: m_Name
       value: Chicken Variant
@@ -530,7 +470,7 @@ PrefabInstance:
     - target: {fileID: 2970242583419740035, guid: 02ce956369726614d9eee5dbd249fe05, type: 3}
       propertyPath: onDataChange.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 5156619135182695171}
+      objectReference: {fileID: 1101965552404796896}
     - target: {fileID: 2970242583419740035, guid: 02ce956369726614d9eee5dbd249fe05, type: 3}
       propertyPath: onDataChange.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -541,7 +481,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2970242583419740035, guid: 02ce956369726614d9eee5dbd249fe05, type: 3}
       propertyPath: onDataChange.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: EnemyBase, Assembly-CSharp
+      value: PapaWorm, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2970242583419740035, guid: 02ce956369726614d9eee5dbd249fe05, type: 3}
       propertyPath: onDataChange.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -599,28 +539,51 @@ PrefabInstance:
       propertyPath: utilFunction.useReleaseAfterTime
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8527556305987121743, guid: 02ce956369726614d9eee5dbd249fe05, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02ce956369726614d9eee5dbd249fe05, type: 3}
---- !u!4 &6298490525428189257 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2970242583419740060, guid: 02ce956369726614d9eee5dbd249fe05, type: 3}
-  m_PrefabInstance: {fileID: 9102003715324729301}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &6298490525428189271 stripped
+--- !u!1 &2258614055410234344 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 2970242583419740034, guid: 02ce956369726614d9eee5dbd249fe05, type: 3}
+  m_CorrespondingSourceObject: {fileID: 6992090913448731709, guid: 02ce956369726614d9eee5dbd249fe05, type: 3}
   m_PrefabInstance: {fileID: 9102003715324729301}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &7644780868865928633
-BoxCollider:
+--- !u!114 &1101965552404796896
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6298490525428189271}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_GameObject: {fileID: 2258614055410234344}
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.8, z: 0.5}
-  m_Center: {x: 0, y: 0.4, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b07576bdc7451a042933584698f66a8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  utilFunction:
+    deathDelay: 3
+    onDeath:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3909265456100158813}
+          m_TargetAssemblyTypeName: EnemyEffect, Assembly-CSharp
+          m_MethodName: OnDeath
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  DDAnimator: {fileID: 8065381087180315773}
+  atkAnimationOffset: 0.55
+  runAnimationLoopTime: 0.25
+--- !u!4 &6661873872367621983 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2459927306829480074, guid: 02ce956369726614d9eee5dbd249fe05, type: 3}
+  m_PrefabInstance: {fileID: 9102003715324729301}
+  m_PrefabAsset: {fileID: 0}

@@ -12,11 +12,12 @@ public class Cannon : TowerBase {
   private CircleDetector attackDetector = new CircleDetector();
 
   public override void OnDataChange(TowerData data) {
+    base.OnDataChange(data);
     attackClock.freq = data.atkFreq;
     attackDetector.radius = data.atkRadius;
   }
 
-  private void FixedUpdate() {
+  protected void FixedUpdate() {
     attackClock.Update(Time.fixedDeltaTime);
 
     var detectParam = new DetectParam {

@@ -1622,11 +1622,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testResources:
-  - {fileID: 6416791907776535279, guid: 6047d6325fb614942aa302f044d40815, type: 3}
   - {fileID: 6269818392011601556, guid: f70149f358b57ee438e62233be0a5e24, type: 3}
-  - {fileID: 6369679528976387822, guid: 38f88ecfa700d3549a1899a0b190a36e, type: 3}
-  - {fileID: 2961846819340326107, guid: 1743f03ecc86f2c4e9f5ea15fdbc612c, type: 3}
-  - {fileID: 6448052290298406556, guid: b32d573ff8ad7504d9d56186e97433c2, type: 3}
+  - {fileID: 6269818392011601556, guid: f70149f358b57ee438e62233be0a5e24, type: 3}
+  - {fileID: 6269818392011601556, guid: f70149f358b57ee438e62233be0a5e24, type: 3}
 --- !u!1 &5858485137796993400
 GameObject:
   m_ObjectHideFlags: 0

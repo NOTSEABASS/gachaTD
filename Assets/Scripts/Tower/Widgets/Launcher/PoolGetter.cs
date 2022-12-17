@@ -13,7 +13,7 @@ public class PoolGetter<T> where T : PoolObject {
       return false;
     }
 
-    if (PoolManager.Instance.GetObjectByPoolName<T>(poolName, out obj)) {
+    if (PoolManager.Instance.TryGetObjectByPoolName<T>(poolName, out obj)) {
       return true;
     }
     Debug.LogError("[PoolGetter] can't get object from pool manager");

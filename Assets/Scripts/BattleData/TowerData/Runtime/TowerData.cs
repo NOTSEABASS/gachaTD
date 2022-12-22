@@ -44,12 +44,14 @@ public struct TowerData : IData<TowerData> {
 
 
 public enum TowerName {
-  Buddy
+  Buddy,
+  Wizardgun
 }
 
 public enum TowerDataTemplateId {
   Cannon,
-  Buddy
+  Buddy,
+  Wizardgun
 }
 
 

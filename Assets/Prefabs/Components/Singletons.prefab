@@ -37,6 +37,50 @@ Transform:
   m_Father: {fileID: 3143375722882118937}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &808426515231777406
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2527893874831778248}
+  - component: {fileID: 4329377190772550195}
+  m_Layer: 0
+  m_Name: HealthBarManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2527893874831778248
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 808426515231777406}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3143375722882118937}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4329377190772550195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 808426515231777406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4515a899aa8b974d813678ab2ccc8bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3143375721867087386
 GameObject:
   m_ObjectHideFlags: 0
@@ -153,7 +197,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3143375722301361411}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.2759156, y: 0.7374666, z: 3.0325031}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -217,7 +261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6b2883f32575b642b8435975ccdf1a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gachaPoper: {fileID: 0}
+  gachaZone: {fileID: 0}
 --- !u!1 &3143375722503615418
 GameObject:
   m_ObjectHideFlags: 0
@@ -478,6 +522,7 @@ Transform:
   - {fileID: 2038692012999480030}
   - {fileID: 3665731790780687040}
   - {fileID: 6382228022627371753}
+  - {fileID: 2527893874831778248}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -506,7 +551,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3143375723128525908}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.793, y: -0.25, z: 2.189}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -731,7 +776,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4290973584240896620}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.3383684, y: -0.37286022, z: -12.405238}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -787,7 +832,7 @@ MonoBehaviour:
   playerData:
     version: 0
     coreHealth: 100
-    gachaToken: 1000
+    gachaToken: 100000
 --- !u!1 &5498744794689948378
 GameObject:
   m_ObjectHideFlags: 0
@@ -832,4 +877,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afc29e6c447092b419177fed247076ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testResources: []
+  unboxPrefab: {fileID: 3933003705413707626, guid: 66cd664bafbdbee4194ab3605d478a07, type: 3}
+  tier1:
+  - {fileID: 6269818392011601556, guid: f70149f358b57ee438e62233be0a5e24, type: 3}
+  tier2:
+  - {fileID: 6269818392011601556, guid: f70149f358b57ee438e62233be0a5e24, type: 3}
+  tier3:
+  - {fileID: 6269818392011601556, guid: f70149f358b57ee438e62233be0a5e24, type: 3}

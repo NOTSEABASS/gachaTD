@@ -43,6 +43,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8ec2abf5fadaaec42bec780cf1d36580, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8ec2abf5fadaaec42bec780cf1d36580, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8ec2abf5fadaaec42bec780cf1d36580, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8ec2abf5fadaaec42bec780cf1d36580, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -256,7 +268,7 @@ MonoBehaviour:
     bulletGetter:
       poolName: cannon_bullet
     launchPoint: {fileID: 3150466445899943343}
-    zAiming: 0
+    zAiming: 1
   DDAnimator: {fileID: 9082927790161936997}
   atkAnimationOffset: 0.56
   idleAnimationLoopTime: 1

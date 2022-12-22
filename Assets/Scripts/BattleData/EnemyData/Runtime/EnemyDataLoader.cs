@@ -1,3 +1,4 @@
+using MyBox.Internal;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,7 +17,13 @@ public class EnemyDataLoader : MonoSingleton<EnemyDataLoader> {
     if (!templateSet.ContainsKey(template)) {
       Debug.LogError(template);
     }
-    return templateSet[template].GetData();
+    var data = templateSet[template].GetData();
+    Preprocess(ref data);
+    return data;
+  }
+
+  private void Preprocess(ref EnemyData data) {
+    data.hp = data.maxHp;
   }
 
 }

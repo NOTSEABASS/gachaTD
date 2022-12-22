@@ -56,13 +56,13 @@ public class EnemyBase : MonoBehaviour, IPoolCallback {
     data.isInMoveBatch = true;
     Debug.Assert(!isDying || IsDying == data.isDead);
     _cachedData = data;
-    InitIfNot(data);
+    InitFunctionIfNot(data);
     inBattleSwitch.SetInBattle(data.isInBattle);
     DeathJudge(data);
     DoDeath();
   }
 
-  private void InitIfNot(EnemyData data) {
+  private void InitFunctionIfNot(EnemyData data) {
     if (!data.hasInited) {
       data.hasInited = true;
       EnemyMoveBatchManager.Instance.Register(data.moveBatchIndex, cachedDataPtr);

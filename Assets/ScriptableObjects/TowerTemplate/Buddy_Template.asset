@@ -18,7 +18,7 @@ MonoBehaviour:
     maxHp: 10
     atk: 50
     atkFreq: 2
-    atkRadius: 4
+    atkRadius: 10
     energy: 10
     maxEnergy: 10
     energyRecover: 0

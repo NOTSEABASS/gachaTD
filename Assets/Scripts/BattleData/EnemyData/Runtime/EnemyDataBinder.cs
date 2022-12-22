@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Events;
@@ -31,6 +32,7 @@ public class EnemyDataBinder : EnemyDataHub.Binder, IPoolCallback {
       }
 
       var data = EnemyDataLoader.Instance.LoadData(dataTemplate);
+      data.gameObject = gameObject;
       data.UpdateVersion();
       if (!isRegistered) {
         EnemyDataHub.Instance.RegisterData(DataPtr, data);
@@ -47,5 +49,4 @@ public class EnemyDataBinder : EnemyDataHub.Binder, IPoolCallback {
     isDataLoaded = false;
     InitDataIfNot();
   }
-
 }

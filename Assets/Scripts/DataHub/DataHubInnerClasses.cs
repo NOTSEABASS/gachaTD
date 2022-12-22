@@ -11,6 +11,8 @@ namespace DataHub {
 
       private Dictionary<int, TData> datas = new Dictionary<int, TData>();
 
+      public IEnumerable<TData> allDatas => datas.Values;
+
       public bool TryGetData(int ptr, out TData res) {
         return datas.TryGetValue(ptr, out res);
       }

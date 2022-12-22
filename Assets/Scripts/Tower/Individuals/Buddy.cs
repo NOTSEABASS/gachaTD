@@ -1,5 +1,7 @@
+using MyBox;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using System.Runtime.InteropServices.ComTypes;
 using UnityEngine;
 
@@ -24,7 +26,7 @@ public class Buddy : TowerBase {
     attackDetector.radius = data.atkRadius;
   }
 
-  protected  void FixedUpdate() {
+  protected void FixedUpdate() {
     if (!cachedData.isInBattle) {
       return;
     }
@@ -53,12 +55,13 @@ public class Buddy : TowerBase {
       attackClock.OnTrigger();
       var damageEvent = new TowerDamageEvent() {
         type = TowerDamageType.Attack,
-        towerPtr = cachedDataPtr
+        towerPtr = cachedDataPtr,
+        enemyPtr = detetecResult.singleResult.FindDataPtr()
       };
 
       var launchParam = new LaunchParam {
         target = detetecResult.singleResult,
-        projectilePlugin = new ProjectilePlugin.TowerTouchDamage(damageEvent)
+        projectilePlugin = new ProjectilePlugin.TowerLockDamage(damageEvent, detetecResult.singleResult.transform)
       };
 
       launcher.Launch(launchParam);

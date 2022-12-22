@@ -20,6 +20,8 @@ namespace DataHub {
       instance = this;
     }
 
+    public IEnumerable<TData> AllDatas => core.allDatas;
+
     public bool TryGetData(int ptr, out TData res) {
       return (core).TryGetData(ptr, out res);
     }
@@ -38,11 +40,11 @@ namespace DataHub {
       core.SetData(ptr, data);
     }
 
-    protected virtual void OnBeforeRegisterData(int ptr,ref TData data) {
+    protected virtual void OnBeforeRegisterData(int ptr, ref TData data) {
 
     }
 
-    protected virtual void OnBeforeSetData(int ptr,ref TData data) {
+    protected virtual void OnBeforeSetData(int ptr, ref TData data) {
 
     }
   }

@@ -12,16 +12,26 @@ public class ProjectilePoolObject : PoolObject {
     public ProjectilePoolObject poolObject;
 
     public abstract void OnSetPlugin();
+
+    public virtual void OnUpdate() { }
   }
   #endregion
 
+  private Plugin plugin;
 
 
   protected override void Awake() {
     base.Awake();
   }
 
+  private void Update() {
+    if (plugin != null) {
+      plugin.OnUpdate();
+    }
+  }
+
   public void SetPlugin(Plugin plugin) {
+    this.plugin = plugin;
     plugin.poolObject = this;
     plugin.triggerCallback = GetComponent<TriggerCallback>();
     plugin.OnSetPlugin();

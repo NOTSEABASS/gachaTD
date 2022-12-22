@@ -10,6 +10,7 @@ public struct EnemyData : IData<EnemyData> {
   private int version;
 
   public EnemyName name;
+  [NonSerialized]
   public int hp;
   public int maxHp;
 
@@ -22,6 +23,8 @@ public struct EnemyData : IData<EnemyData> {
   public float moveSpeed;
 
   [NonSerialized]
+  public GameObject gameObject;
+  [NonSerialized]
   public bool isDead;
   [NonSerialized]
   public int ptr;
@@ -31,6 +34,8 @@ public struct EnemyData : IData<EnemyData> {
   public int moveBatchIndex;  //属于第几小波怪
   [NonSerialized]
   public bool isInMoveBatch;  //是否已经在逻辑上进入战斗
+  [NonSerialized]
+  public bool hasHealthBar; //是否有血条
 
   public bool isInBattle => !isDead && isInMoveBatch;
 
